@@ -1,0 +1,174 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">客户列表</a>&nbsp;&gt;&nbsp;{$vo.company}
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'客户列表', 'url'=>'__URL__'),
+			array('title'=>'添加客户', 'url'=>'__URL__/add', 'add'=>'true', 'showControl'=>true, 'show'=>$access['ACCOUNTS']['ADD']),
+			array('title'=>'客户信息', 'url'=>'__URL__/add', 'selected'=>'true'),
+			array('title'=>'联系人', 'url'=>'__URL__/showContacts/id/'.$vo['id'], 'showControl'=>true, 'show'=>$access['ACCOUNTS']['SHOWCONTACTS']),
+		)
+	))}
+	<div class="clearfix">
+		<div class="left" style="width:75%">
+			{:W("Form", array(
+				'formId'=>'form',
+				'module'=>'Accounts',
+				'type'=>'show',
+				'data'=>$vo,
+			))}
+			<div class="p5">
+				<present name="access.ACCOUNTS.EDIT">
+				<input class="edit" type="button" value="编辑" onClick="window.location='__URL__/edit/id/{$vo.id}'"/>
+				</present>
+				<present name="access.CONTACTS.ADD">
+				<input class="action" type="button" value="添加联系人" onClick="window.location='__APP__/contacts/add/cid/{$vo.id}'" />
+				</present>
+			</div>
+		</div>
+		<div class="left p5" style="width:20%">
+			<p class="p5">信用额度：{$credit|formatCurrency}</p>
+			
+			<p class="p5">订单总额：{$order_amount}</p>
+			<p class="p5">最近订单：{$last_order|getTime}</p>
+			<p class="p5">客户欠款：{$arrears}</p>
+			<p class="p5">未开发票：{$invoice}</p>
+			<p class="p5">完成订单：{$order_quant}&nbsp;个</p>
+			<p class="p5">未完订单：{$unfinished_order_quant}&nbsp;个</p>
+			
+			<p class="p5">联系人数：<a href="{:u('accounts/showContacts',array('id'=>$vo['id']))}">{$contacts_quant}&nbsp;位&nbsp;</a></p>
+			
+			<p class="p5">拜访次数：{$activiry_quant}&nbsp;次</p>
+			<p class="p5">最近拜访：{$last_activity|getTime}</p>
+		</div>
+	</div>
+	{:W("Files",array('module'=>MODULE_NAME,'recordId'=>$vo['id'],'upload'=>true,'delete'=>true))}
+	<div class="tt">客户视图</div>
+	<div class="clearfix">
+		<div class="left" style="width:33%">
+			<present name="access.CREDIT.INDEX">
+			<div class="p5">
+			{:W("Tabs", array(
+				'tabs'=>array(
+					array('title'=>'客户折扣', 'url'=>'__URL__', 'selected'=>'true'),
+				)
+			))}
+			{:W("Grid", array(
+				'header'=>array(
+					array('display'=>'产品类型','name'=>'type_id', 'width'=>'120', 'align'=>'left', 'func'=>'getPicklistValue'),
+					array('display'=>'折扣(%)','name'=>'discount', 'width'=>'100', 'align'=>'right'),
+				),
+				'data'=>$discountList,
+			))}
+			</div>
+			</present>
+			<present name="access.QUOTES.INDEX">
+			<div class="p5">
+			{:W("Tabs", array(
+				'tabs'=>array(
+					array('title'=>'报价单', 'url'=>'__URL__', 'selected'=>'true'),
+				)
+			))}
+			{:W("Grid", array(
+				'header'=>array(
+					array('display'=>'日期','name'=>'cTime', 'width'=>'70', 'align'=>'center', 'func'=>'getTime'),
+					array('display'=>'状态','name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'getStatus'),
+					array('display'=>'摘要','name'=>'abstract', 'width'=>'160', 'align'=>'left', 'url'=>'__APP__/quotes/show/id/', 'url_id'=>'id'),
+				),
+				'data'=>$quotesList,
+			))}
+			</div>
+			</present>
+			<present name="access.INVOICE.INDEX">
+			<div class="p5">
+			{:W("Tabs", array(
+				'tabs'=>array(
+					array('title'=>'客户付款', 'url'=>'__URL__', 'selected'=>'true'),
+				)
+			))}
+			{:W("Grid", array(
+				'header'=>array(
+					array('display'=>'日期','name'=>'cTime', 'width'=>'70', 'align'=>'center', 'func'=>'getTime'),
+					array('display'=>'付款金额','name'=>'amount', 'width'=>'80', 'align'=>'right', 'func'=>'formatCurrency'),
+					array('display'=>'状态','name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'getStatus'),
+				),
+				'data'=>$receiptList,
+			))}
+			</div>
+			</present>
+		</div>
+		<div class="left" style="width:33%">
+			<present name="access.ACTIVITY.INDEX">
+			<div class="p5">
+			{:W("Tabs", array(
+				'tabs'=>array(
+					array('title'=>'联系记录', 'url'=>'__URL__', 'selected'=>'true'),
+				)
+			))}
+			{:W("Grid", array(
+				'header'=>array(
+					array('display'=>'联系人','name'=>'name', 'width'=>'60', 'align'=>'left', 'url'=>'__APP__/contacts/show/id/', 'url_id'=>'contact_id'),
+					array('display'=>'日期','name'=>'cTime', 'width'=>'70', 'align'=>'center', 'func'=>'getTime'),
+					array('display'=>'主题','name'=>'abstract', 'width'=>'120', 'align'=>'left'),
+				),
+				'data'=>$activityList,
+			))}
+			</div>
+			</present>
+			<present name="access.SALESORDER.INDEX">
+			<div class="p5">
+			{:W("Tabs", array(
+				'tabs'=>array(
+					array('title'=>'销售订单', 'url'=>'__URL__', 'selected'=>'true'),
+				)
+			))}
+			{:W("Grid", array(
+				'header'=>array(
+					array('display'=>'日期','name'=>'cTime', 'width'=>'70', 'align'=>'center', 'func'=>'getTime'),
+					array('display'=>'状态','name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'getStatus'),
+					array('display'=>'摘要','name'=>'abstract', 'width'=>'160', 'align'=>'left', 'url'=>'__APP__/salesorder/show/id/', 'url_id'=>'id'),
+				),
+				'data'=>$salesorderList,
+			))}
+			</div>
+			</present>
+		</div>
+		<div class="left" style="width:33%">
+			<div class="p5">
+			{:W("Tabs", array(
+				'tabs'=>array(
+					array('title'=>'反馈', 'url'=>'__URL__', 'selected'=>'true'),
+				)
+			))}
+			{:W("Grid", array(
+				'header'=>array(
+					array('display'=>'日期','name'=>'cTime', 'width'=>'70', 'align'=>'center', 'func'=>'getTime'),
+					array('display'=>'标题','name'=>'title', 'width'=>'160', 'align'=>'left', 'url'=>'__APP__/feedback/show/id/', 'url_id'=>'id'),
+				),
+				'data'=>$feedbackList,
+			))}
+			</div>
+			<present name="access.INVOICE.INDEX">
+			<div class="p5">
+			{:W("Tabs", array(
+				'tabs'=>array(
+					array('title'=>'销售发票', 'url'=>'__URL__', 'selected'=>'true'),
+				)
+			))}
+			{:W("Grid", array(
+				'header'=>array(
+					array('display'=>'日期','name'=>'cTime', 'width'=>'70', 'align'=>'center', 'func'=>'getTime'),
+					array('display'=>'金额','name'=>'amount', 'width'=>'80', 'align'=>'right', 'func'=>'formatCurrency'),
+					array('display'=>'状态','name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'getInvoiceStatus'),
+				),
+				'data'=>$invoiceList,
+			))}
+			</div>
+			</present>
+		</div>
+	</div>
+</div>
+<include file="Public:footer" />

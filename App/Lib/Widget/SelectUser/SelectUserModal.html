@@ -1,0 +1,29 @@
+<script type="text/javascript" src="__PUBLIC__/js/selectUser.js"></script>
+<div id="su_userPanel_{$id}" style="padding:5px;">
+	<table cellpadding="1" cellspacing="1" width="100%" class="user-form">
+	<tr><td width="150px"><input id="su_button_all_{$id}" type="checkbox" onClick="selectUser_{$id}.checkAll(this);" >全选/不选</td></td><td></tr>
+	<php>
+	foreach($dpts as $dpt){
+		echo "<tr><td><div>
+		<input type='checkbox' value='".$dpt['id']."' class='d' onClick='selectUser_".$id.".checkDpt(this);' >".$dpt['title']."</div></td><td>";
+		foreach($users as $user){
+			if($user['department_id'] == $dpt['id'])echo "
+			<div style='display:block;width:80px;float:left;'>
+				<input type='checkbox' value='".$user['id']."' 
+				class='p d_".$dpt['id']." u_".$user['id']."' 
+				onClick='selectUser_".$id.".checkUser(this);' />".$user['name']."</div>";
+		}
+		echo "</td></tr>";
+	}
+	</php>
+	</table>
+	<div class="center">
+		<input type="button" value="确定" class="save" onClick="selectUser_{$id}.submit(true);">
+		<input type="button" value="取消" class="action" onClick="selectUser_{$id}.close();">
+	</div>
+</div>
+<script type="text/javascript">
+	$$('#su_userPanel_{$id} input').set('check', false);
+	var selectUser_{$id} = new select({$id});
+	selectUser_{$id}.load();
+</script>

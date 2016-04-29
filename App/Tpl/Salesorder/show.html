@@ -1,0 +1,80 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">销售订单</a>&nbsp;&gt;&nbsp;{$vo.id}
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'销售订单', 'url'=>'__URL__'),
+			array('title'=>'新建销售订单', 'url'=>'__URL__/add', 'add'=>'true', 'showControl'=>true, 'show'=>$access['SALESORDER']['ADD']),
+			array('title'=>'销售订单-'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'其他信息', 'url'=>'__URL__/advShow/id/'.$vo['id'], 'showControl'=>true, 'show'=>$access['SALESORDER']['ADVSHOW']),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Salesorder',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'订单明细',
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'100', 'align'=>'left', 'input'=>'type="hidden" col="pid"', 'input_value'=>'product_id'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'product_id'),
+			array('display'=>'订单数量','name'=>'qty', 'width'=>'50', 'align'=>'right'),
+			array('display'=>'发货数量','name'=>'deli_qty', 'width'=>'50', 'align'=>'right'),
+			array('display'=>'库存','name'=>'', 'width'=>'25', 'align'=>'center', 'def'=>'<a class="inventory-qty" href="javascript:;">查看</a>'),
+			array('display'=>'单价','name'=>'unit_price', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'折扣','name'=>'', 'width'=>'25', 'align'=>'center', 'def'=>'<a class="discount" href="javascript:;">计算</a>'),
+			array('display'=>'折扣(%)','name'=>'discount', 'width'=>'40', 'align'=>'right'),
+			array('display'=>'售价','name'=>'sale_price', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'其他费用','name'=>'other_price', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'合计','name'=>'sum_price', 'width'=>'80', 'align'=>'right'),
+			array('display'=>'中文描述','name'=>'ch_description', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'英文描述','name'=>'description', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$details,
+	))}
+	<eq name="allowApprove" value="true">
+	<div class="tips">
+		<p class="p5">未付金额：{$stat.arrears}，未开发票：{$stat.invoice}，信用额度：{$credit}</p>
+	</div>
+	<notempty name="discountList">
+	<div class="tips">
+		<h3 class="p5">超限折扣：</h3>
+		<volist name="discountList" id="di">
+		<p>[ <a href="__APP__/products/show/id/{$di.product_id}">{$di.productname} - {$di.catno}</a>] 的售价 {$di.sale_price} 已经低于折扣价格 {$di.discount_price}，最低折扣{$di.discount}%。</p>
+		</volist>
+	</div>
+	</notempty>
+	</eq>
+	{:W("Workflow",array('module'=>MODULE_NAME,'vo'=>$vo,'allowApprove'=>$allowApprove))}
+	<div class="tt">操作：</div>
+	<div class="p5">
+		<present name="access.SALESORDER.REPORT">
+			<input type="button" class="print" value="打印" title="报表的打印和单据的导出" onClick="window.location='__URL__/report/id/{$vo.id}';" />
+		</present>
+		<present name="access.SALESORDER.ADD">
+			<input type="button" class="edit" value="复制" onClick="window.location='__URL__/duplicate/id/{$vo.id}';" />
+		</present>
+		{:W("EditButton",array('module'=>MODULE_NAME,'id'=>$vo['id']))}
+		<eq name="vo.status" value="3">
+			<empty name="vo.ship_completion_date">
+				<input type="button" class="action" value="发货" onClick="javascript:window.location='__APP__/delivery/add/order_id/{$vo.id}';"/>
+			</empty>
+			<empty name="vo.invoice_completion_date">
+				<input type="button" class="action" value="销售发票" onClick="javascript:window.location='__APP__/invoice/add/order_id/{$vo.id}';"/>
+			</empty>
+			<input type="button" class="action" value="退货" onClick="javascript:window.location='__APP__/returns/add/order_id/{$vo.id}';"/>
+		</eq>
+		<eq name="vo.status" value="5">
+			<input type="button" class="action" value="退货" onClick="javascript:window.location='__APP__/returns/add/order_id/{$vo.id}';"/>
+		</eq>
+		<input type="hidden" class="company_id" value="{$vo.company_id}" />
+	</div>
+	{:W("Files",array('module'=>MODULE_NAME,'recordId'=>$vo['id'],'upload'=>true,'delete'=>true))}
+	{:W("Record",array('module'=>MODULE_NAME,'recordId'=>$vo['id']))}
+</div>
+<include file="Public:footer" />

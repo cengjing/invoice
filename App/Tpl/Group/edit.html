@@ -1,0 +1,50 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;分组
+	</div>
+	{:W("Tabs", array(
+		'module'=>$module,
+		'tabs'=>array(
+			array('title'=>'分组模块', 'url'=>'__URL__'),
+			array('title'=>'分组详情', 'url'=>'__URL__/show/uid/'.$uid),
+			array('title'=>'修改分组', 'selected'=>'true'),
+		)
+	))}
+	<div class="tt">分组绑定用户：{$uid|getUserInfoById}，分组模块：{$moduleName}</div>
+	<form method="post" action="__URL__/update">
+	<div style="width:100%">
+		<div class="pannel-subtitle">全部用户：</div>
+		<div style="padding-left:20px;">
+			<div class="p5"><label for="allPerm">全部</label><input type="checkbox" name="allPerm" id="allPerm" style="margin:2px;" <eq name="allPerm" value="true"> checked </eq>/></div>
+			<p class="p5 gray">选择全部以后，再选择部门和其他成员将无效。</p>
+		</div>
+		<div class="pannel-subtitle">部门：</div>
+		<div style="padding-left:20px;">
+			<div class="p5">{:W("MultiSelectBox", $department)}</div>
+			<p class="p5 gray">上级部门被选择后，下属部门也将有效</p>
+		</div>
+		<div class="pannel-subtitle">其他成员：</div>
+		<div style="padding-left:20px;">
+			<div class="p5 clearfix">{:W("SelectUser", array('module'=>'group','toUserId'=>$others))}</div>
+			<p class="p5 gray">选择部门以外的其他成员</p>
+		</div>
+		<div class="pannel-subtitle">其它选项：</div>
+		<div style="padding-left:20px;">
+			<div class="p5">
+			<input type="checkbox" name="allStatus" id="allStatus" style="margin:2px;" <eq name="allStatus" value="true"> checked </eq> />
+			<label for="allStatus">查看离职员工</label>
+			</div>
+			<p class="p5 gray">查看在范围"部门"和"其他成员"中离职的员工</p>
+		</div>
+	</div>
+	<div class="p5">
+		<input type="hidden" name="uid" value="{$uid}">
+		<input type="hidden" name="group_id" value="{$group_id}">
+		<input type="hidden" name="module_id" value="{$module_id}">
+		<input type="submit" class="save" value="确定">
+		<input type="button" class="action" value="清除" onClick="javascript:if(confirm('确定要清除管理权限么？')){ window.location='__URL__/delete/id/{$id}'; }">
+	</div>
+	</form>
+</div>
+<include file="Public:footer" />

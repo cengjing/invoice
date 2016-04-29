@@ -1,0 +1,26 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;个人档案
+	</div>
+	<div class="clearfix">
+		<div class="left" style="width:240px;margin-right:20px;">
+			<img src="{:getUserFace($vo['id'],'large',$vo['sex'])}"  alt="头像" />
+			<h2 class="p5">{$vo.name}</h2>
+			<div class="p5">{$vo.sex|getSex}</div>
+			<div class="p5">部门：{$vo.department}</div>
+			<div class="p5">手机：{$vo.mobilephone}</div>
+			<div class="p5">电子邮件：{$vo.email}</div>
+			<div class="p5">登录时间：{$vo.last_login_time|getTime}</div>
+			<div class="p5">登录IP：{$vo.login_IP}</div>
+			<div class="p5">介绍：{$vo.abstract}</div>
+			<if condition="Think.session.administrator eq true">
+			<div class="p5"><input type="button" class="edit" value="修改用户" onClick="javascript:window.location='__APP__/user/edit/id/{$vo.id}';" /></div>
+			</if>
+		</div>
+		<div class="left">
+			<include file="Members:perm" />
+		</div>
+	</div>
+</div>
+<include file="Public:footer" />

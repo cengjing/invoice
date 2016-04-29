@@ -1,0 +1,23 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;商品折扣</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'商品折扣', 'url'=>'__URL__'),
+			array('title'=>'新建折扣', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'查看折扣', 'url'=>'__URL__/add', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Discount',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	<div class="p5">
+		<present name="access.DISCOUNT.EDIT">
+		<input class="edit" type="button" value="编辑" onClick="window.location='__URL__/edit/id/{$vo.id}'"/>
+		</present>
+	</div>
+</div>
+<include file="Public:footer" />

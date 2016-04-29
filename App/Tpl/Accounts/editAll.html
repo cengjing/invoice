@@ -1,0 +1,65 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">客户信息</a>&nbsp;&gt;&nbsp;
+		批量修改
+	</div>
+	{:W("Tabs", array(
+		'module'=>'Products',
+		'tabs'=>array(
+			array('title'=>'客户信息', 'url'=>'__URL__'),
+			array('title'=>'添加客户', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'批量修改', 'selected'=>'true'),
+		)
+	))}
+	<div class="tt">过滤条件：</div>
+	<empty name="items">
+	<dl class="lineD">
+   		<dt>负责人：</dt>
+   		<dd>
+   			<input type="hidden" id="from_id" name="from_id" />
+	    	{:W("SelectUser", array('module'=>'Accounts', 'single'=>true, 'singleId'=>'from_id'))}
+	    </dd>
+   	</dl>
+   	<dl class="lineD">
+   		<dt>省份：</dt>
+   		<dd>
+	    	{:W("SelectBox", array('name'=>'province','module'=>'network','filter'=>'where|pid=0'))}
+	    </dd>
+	</dl>
+   	<dl class="lineD">
+   		<dt>邮编：</dt>
+   		<dd>
+	    	<input id="postalcode" name="postalcode" type="text" maxlength="6" />
+	    </dd>
+	</dl>
+   	<dl class="lineD">
+   		<dt>区号：</dt>
+   		<dd>
+	    	<input id="regioncode" name="regioncode" type="text" maxlength="4" />
+	    </dd>
+	</dl>
+	
+	<else/>
+		<div class="p5">
+		<volist name="list" id="item">
+			[{$item.company}]，
+		</volist>
+		</div>
+		<input type="hidden" name="items" value="{$items}" />
+	</empty>
+	<div class="tt">修改内容：</div>
+	<dl class="lineD">
+   		<dt>负责人：</dt>
+   		<dd>
+   			<input type="hidden" id="to_id" name="to_id" />
+	    	{:W("SelectUser", array('module'=>'Accounts', 'single'=>true, 'singleId'=>'to_id'))}
+	    </dd>
+   	</dl>
+	<div class="tips">修改内容信息如果为空，则表示不需要被修改。</div>
+	<div class="p5">
+		<input id="allEditBtn" type="button" class="save" value="批量修改"/>
+	</div>
+</div>
+<include file="Public:footer" />

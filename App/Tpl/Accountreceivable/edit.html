@@ -1,0 +1,22 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;应收单列表</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'应收款', 'url'=>'__URL__'),
+			array('title'=>'新建应收款', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'应收单-'.$vo['company'], 'url'=>'__URL__/add', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'AccountReceivable',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	<div class="p5">
+		<input type="hidden" name="id" value="{$vo.id}" />
+		<input id="submit_update" type="button" class="save" value="修改">
+	</div>
+</div>
+<include file="Public:footer" />

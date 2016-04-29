@@ -1,0 +1,43 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">核销单列表</a>
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'核销单', 'url'=>'__URL__'),
+			array('title'=>'新建核销单', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'核销单-'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Reconciliation',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'核销明细',
+		'header'=>array(
+			array('display'=>'类型', 'name'=>'type', 'width'=>'120', 'align'=>'left'),
+			array('display'=>'金额', 'name'=>'amount', 'width'=>'100', 'align'=>'right', 'func'=>'formatCurrency'),
+			array('display'=>'借贷方向', 'name'=>'loan', 'width'=>'50', 'align'=>'center'),
+			array('display'=>'单据','name'=>'document_id', 'width'=>'100', 'align'=>'left', 'forShow'=>'true'),
+		),
+		'data'=>$details,
+	))}
+	<div class="tt">操作：</div>
+	<eq name="vo.status" value="5">
+		<input type="button" class="action" onClick="del()" value="删除" />
+		<script type="text/javascript">
+		function del(){
+			if( confirm("您确定要删除吗？") ){
+				window.location=URL+'/delete/id/{$vo.id}';
+			}
+		}
+		</script>
+	</eq>
+	{:W("Record",array('module'=>MODULE_NAME,'recordId'=>$vo['id']))}
+</div>
+<include file="Public:footer" />

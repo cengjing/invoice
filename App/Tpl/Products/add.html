@@ -1,0 +1,25 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">商品目录</a>&nbsp;&gt;&nbsp;
+		新增商品
+	</div>
+	{:W("Tabs", array(
+		'module'=>'Products',
+		'tabs'=>array(
+			array('title'=>'商品目录', 'url'=>'__URL__'),
+			array('title'=>'新增商品', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Products',
+		'type'=>'add',
+		'data'=>$data,
+	))}
+	<div class="p5">
+		<input id="submit_insert" type="button" class="save" value="保存"/>
+	</div>
+</div>
+<include file="Public:footer" />

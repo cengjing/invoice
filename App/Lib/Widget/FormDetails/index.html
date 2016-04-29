@@ -1,0 +1,30 @@
+<div style="margin:20px 0;border-bottom: 1px solid #000;">
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+	<thead>
+		<tr>
+			<td style="border-top: 1px solid #000;border-bottom: 1px solid #000; line-height:28px; font-weight:bold;">#</td>
+			<volist name="th" id="t">
+				<if condition="$t['type'] eq '2'">
+					<td style="border-top: 1px solid #000;border-bottom: 1px solid #000; line-height:28px; font-weight:bold; text-align:right;padding-left:5px;">{$t.title}</td>
+				<else />
+					<td style="border-top: 1px solid #000;border-bottom: 1px solid #000; line-height:28px; font-weight:bold;padding-left:5px;">{$t.title}</td>
+				</if>
+			</volist>
+		</tr>
+	</thead>
+	<tbody>
+	<volist name="data" id="d" key="k">
+		<tr>
+			<td style="line-height:24px;">{$k}</td>
+			<volist name="th" id="t">
+				<if condition="$t['type'] eq '2'">
+					<td style="line-height:24px;text-align:right;padding-left:5px;">{$d[$t['field']]}</td>
+				<else />
+					<td style="line-height:24px;padding-left:5px;">{$d[$t['field']]}</td>
+				</if>
+			</volist>
+		</tr>
+	</volist>
+	</tbody>
+</table>
+</div>

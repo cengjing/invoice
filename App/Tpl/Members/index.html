@@ -1,0 +1,61 @@
+<include file="Public:header" />
+<style type="text/css">
+.avatar{
+	width: 60px;float: left; display: inline;margin: 10px; padding: 0;position: relative;
+}
+.avatar .pic50 {position: relative;z-index: 0;}
+.avatar:hover .pic50 {z-index: 999;}
+.avatar-info {
+	position: absolute;
+	left: -10px; top: -10px;
+	padding: 10px 10px 10px 80px;
+	width: 220px;
+	display: none;
+	background: #FFF3D9;
+	border: 1px solid #FEE2A1;
+	font-size: 1em;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+.avatar:hover .avatar-info {display: block;z-index: 1;}
+.avatar .avatar-info p {line-height: 20px;}
+</style>
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;组织结构</div>
+	<div class="tips">当前在线：{$online}/{$allStaff}</div>
+	<volist name="departments" id="d">
+	<div style="border-bottom: 1px dashed #DDD;">
+		<h3 class="p5" style="padding-left:{$d.padding}px; ">{$d.title}</h3>
+		<div class="p5" style="padding-left:{$d.padding}px">
+			<volist name="d['members']" id="v">
+			<div class="avatar">
+				<span class="pic50">
+					<a href="__URL__/show/id/{$v.id}">
+						<present name="v.online">
+							<img class="profile" src="{:getUserFace($v['id'],'small',$v['sex'])}" alt="" />
+						<else/>
+							<img class="profile offline" src="{:getUserFace($v['id'],'small',$v['sex'])}" alt="" />
+						</present>
+					</a>
+					<present name="v.online">
+					<img class="online" src="__PUBLIC__/images/icon/light_bulb.png" />
+					</present>
+				</span>
+				<p style="text-align:center;"><present name="v.online"><span class="rs"><else/><span class="gray"></present>{$v.name}</span></p>
+				<p style="text-align:center;color:gray;"><span style="font-size:11px;">{$v.activeTime}</span></p>
+				<div class="avatar-info">
+		            <p><a href="__URL__/show/id/{$v.id}"><span style="font-weight:bold;">{$v.name}</span></a>&nbsp;&nbsp;{$v.sex|getSex}</p>
+		            <p>手机：&nbsp;{$v.mobilephone}</p>
+		            <p>Email：&nbsp;{$v.email}</p>
+		            <p style="color:gray;">{$v.abstract|Input::forShow}</p>
+		            <p><a href="__APP__/notify/write/t/{$v.id}">发送短消息</a></p>
+		        </div>
+	        </div>
+			</volist>
+			<div class="clear"></div>
+		</div>
+	</div>
+	</volist>
+</div>
+<include file="Public:footer" />

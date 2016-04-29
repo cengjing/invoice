@@ -1,0 +1,28 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">客户列表</a>&nbsp;&gt;&nbsp;{$vo.company}
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'客户列表', 'url'=>'__URL__'),
+			array('title'=>'添加客户', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'客户信息', 'url'=>'__URL__/show/id/'.$id),
+			array('title'=>'联系人', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'客户姓名', 'name'=>'name', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/contacts/show/id/', 'url_id'=>'id'),
+			array('display'=>'性别', 'name'=>'sex', 'width'=>'40', 'align'=>'left',  'func'=>'getSex'),
+			array('display'=>'有效', 'name'=>'status', 'width'=>'40', 'align'=>'left',  'func'=>'bool2text'),
+			array('display'=>'职务', 'name'=>'duty', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'手机', 'name'=>'mobilephone', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'描述', 'name'=>'description', 'width'=>'300', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+	))}
+</div>
+<include file="Public:footer" />

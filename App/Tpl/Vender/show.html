@@ -1,0 +1,24 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/vender">供货商</a>&nbsp;&gt;&nbsp;修改供货商
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'供货商', 'url'=>'__URL__'),
+			array('title'=>'添加供货商', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'供货商-'.$vo['company'], 'url'=>'__URL__/add', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Vender',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	<div class="p5">
+		<input type="button" class="edit" onClick="javascript:window.location='__URL__/edit/id/{$vo.id}'" value="编辑" />
+	</div>
+</div>
+<include file="Public:footer" />

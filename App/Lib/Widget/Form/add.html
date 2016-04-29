@@ -1,0 +1,104 @@
+<script type="text/javascript" src="__PUBLIC__/js/datepicker/datepicker.js"></script>
+<link href="__PUBLIC__/js/datepicker/datepicker_vista/style.css" rel="stylesheet" type="text/css"/>
+<volist name="fields" id="r">
+	<notempty name="r.data">
+	<div class="form-header">{$r.title}</div>
+	</notempty>
+	<table class="form clear" cellspacing="0" cellpadding="0" border="0" width="100%">
+		<tbody>
+			<volist name="r.data" id="vo" mod="2">
+				<eq name="mod" value="0"><tr height="25px"></eq>
+				<td class="info" style="width:20%">
+					<div class="label">
+						<eq name="vo.check" value="1"><span class="rs">*</span>&nbsp;</eq>
+						<neq name="vo.notes" value=""><span id="{$vo.field}_lable" class="form-tip" style="cursor:help" rel="{$vo.notes}"><span class="rs">[?]</span>&nbsp;
+						<else/><span id="{$vo.field}_lable" style="cursor:default"></neq>{$vo.title}</span>
+					</div>
+				</td>
+				<td style="width:30%">
+					<div style="text-align:left; padding:3px 10px;">
+					<switch name="vo.type">
+						<case value="1||2||100">
+							<input 
+								id="{$vo.field}"
+								type="text"
+								class='bd <eq name="vo.readonly" value="1"> readonly </eq>' 
+								name="{$vo.field}"
+								maxlength="{$vo.length}"
+								<if condition="$vo['type'] eq 2">style='width:120px; text-align:right;'</if>
+								<eq name="vo.readonly" value="1"> readonly </eq>
+								value="{$data[$vo['field']]|Input::forTag}"
+							/>
+							<if condition="$vo['type'] eq 2"><span style="line-height:22px;">&nbsp;{$vo.select_items}</span></if>
+						</case>
+						<case value="3">
+							<input id="{$vo.field}" type="text" name="{$vo['field']}" class="date demo_vista bd" style='width:120px;' value="{$data[$vo['field']]|getTime}" />
+						</case>
+						<case value="4">
+							{:W('SelectBox', $vo['_param'])}
+						</case>
+						<case value="6">
+							<input type="hidden" id="{$vo.field}" name="{$vo.field}" />
+							{:W("SelectUser", array('module'=>$module, 'toUserId'=>$data['assignto'], 'single'=>$vo['select_items'], 'singleId'=>$vo['field']))}
+						</case>
+						<case value="8">
+							{:W($vo['from_module'], array('data'=>$data))}
+						</case>
+						<case value="9">
+							<textarea id="{$vo.field}" name="{$vo.field}" class='bd' style="height:auto;overflow-y:scroll;" rows="3" cols="20"></textarea>
+						</case>
+						<case value="10">
+							<input type="checkbox" id="{$vo.field}" name="{$vo.field}" value="1" <if condition="$data[$vo['field']] eq 1"> checked </if> style="width: auto;"/>
+						</case>
+						<case value="11">
+							{:W('SelectBox', array( 'pick_id'=>$vo['from_module'], 'name'=>$vo['field'], 'allSelect'=>$vo['select_items']))}
+						</case>
+						<case value="12">
+							{:W('MultiSelectBox', array('name'=>$vo['field'], 'module'=>$vo['from_module'], 'filter'=>$vo['select_items']))}
+						</case>
+						<case value="101">&nbsp;</case>
+					</switch>
+					</div>
+				</td>
+				<eq name="mod" value="1"></tr></eq>
+			</volist>
+		</tbody>
+	</table>
+</volist>
+<present name="def">
+<div class="form-header">自定义信息</div>
+<table class="form clear" cellspacing="0" cellpadding="0" border="0" width="100%">
+<volist name="def" id="d" mod="2">
+	<eq name="mod" value="0"><tr></eq>
+		<td class="field" style="width:20%"><div class="label">{$d['title']}</div></td>
+		<td style="width:30%"><div style="text-align:left; padding:3px 10px;">
+		<if condition="$d['dbfield'] neq ''">
+			<input type="text" class="bd" name="{$d['dbfield']}" />
+		<else />
+			&nbsp;
+		</if>
+		</div></td>
+	<eq name="mod" value="1"></tr></eq>
+</volist>
+</table>
+</present>
+<script type="text/javascript">
+window.addEvent('domready', function(){
+	//$$('input[type=text]').set('value', '');
+	if($('content').getElement('.demo_vista')){
+		new DatePicker($$('.demo_vista'), {
+			pickerClass: 'datepicker_vista',
+			format: '%Y-%m-%d'
+		});
+	}
+	$$('.form-tip').each(function(el){
+		var content = el.getProperty('rel');
+		new mBox.Tooltip({
+			content: content,
+			pointer: ['left', 40],
+			attach: el,
+			target: 'mouse'
+		});
+	});
+});
+</script>

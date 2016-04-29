@@ -1,0 +1,157 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;	
+		<a href="__APP__/invoice">销售发票列表</a>&nbsp;&gt;&nbsp;新建销售发票
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'销售发票', 'url'=>'__URL__'),
+			array('title'=>'新建销售发票', 'url'=>'__URL__', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W('StepProcess', array(
+		'title'=>array('选择客户','填写发票明细','确认')
+	))}
+	<div id="tabs" style="padding-left: 20px;">
+		<div class="tab"></div>
+		<div class="tab"></div>
+		<div class="tab"></div>
+		
+		<div class="content form" id="contact_info">
+			<div class="tt">请选择要开发票的客户:</div>
+			<div class="p5">{:W('SelectContacts', array('data'=>$data))}</div>
+			<p class="p5" style="color:gray;">请先选择需要开发票的客户，再填写发票明细。</p>
+			<div class="p5">
+				<input type="hidden" name="from_order_id" value="{$order_id}" />
+				<input type="hidden" name="delivery_id" value="{$delivery_id}" />
+				<input id="next1" class="action" type="button" value="下一步" />
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="content">
+			<div id="order_details" style="overflow:hidden;"></div>
+			<div class="p5">
+				<input id="previous1" class="action" type="button" value="上一步" />
+				<input id="next2" class="action" type="button" value="下一步" />
+			</div>
+		</div>
+		<div class="content">		
+			<div class="p5">
+				{:W("Form", array(
+					'formId'=>'form',
+					'module'=>'Invoice',
+					'type'=>'add',
+					'data'=>$contact,
+				))}
+			</div>
+			{:W("Grid", array(
+				'title'=>'发票明细',
+				'header'=>array(
+					array('display'=>'商品名称', 'name'=>'title', 'width'=>'200', 'align'=>'left'),
+					array('display'=>'商品编号', 'name'=>'catno', 'width'=>'100', 'align'=>'left'),
+					array('display'=>'数量','name'=>'qty', 'width'=>'50', 'align'=>'right'),
+					array('display'=>'价格','name'=>'price', 'width'=>'80', 'align'=>'right'),
+					array('display'=>'单位','name'=>'unit', 'width'=>'50', 'align'=>'left'),
+					array('display'=>'规格','name'=>'spec', 'width'=>'50', 'align'=>'left'),
+					array('display'=>'中文描述','name'=>'ch_description', 'width'=>'200', 'align'=>'left'),
+					array('display'=>'英文描述','name'=>'description', 'width'=>'200', 'align'=>'left'),
+				),
+				'rowCache'=>true,
+				'name'=>'details',
+			))}
+			<div class="p5">
+				<input id="previous2" class="action" type="button" value="上一步" />
+				<input id="submit_insert" class="save" type="button" value="保存" />
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	window.addEvent('domready', function(){
+		//$('contact_info').getElements('input[type=hidden]').set('value', '');
+		$('next1').addEvent('click', function(e){
+			if($('content').getElement('.contact_id').get('value') == ''){
+				noti.show({ 
+				    title: '提示', 
+				    message: '请先选择客户。'
+				}); 
+				return;
+			}
+			new Request.HTML({
+				url: APP+'/invoice/showOrderDetails',
+				format: 'page',
+				data: $('contact_info'),
+				update: $('order_details'),
+				onRequest: function(){ $('tabs').spin(); },
+				onSuccess: function(){
+					$('tabs').unspin();
+					$('next1').fireEvent('next');
+				}
+			}).send();
+			
+		});
+		$('next2').addEvent('click', function(e){
+			var qty,productname,catno,unit,spec,ch_description,description,order,pid,price,sum=0;
+			var error = false;
+			var tbody = grid_details.bDiv.getElement('tbody');
+			tbody.empty();
+			var row;
+			$('order_details').getElements('tbody tr').each(function(el){
+				if(el.getElement('input[col=qty]')){
+					qty = el.getElement('input[col=qty]').get('value');
+					qty = (qty=='' ? 0 : qty).toFloat();
+					price = el.getElement('input[col=price]').get('value');
+					price = (price=='' ? 0 : price).toFloat();
+					if(qty >0){
+						order = el.getElement('input[col=order_id]').get('value');
+						pid = el.getElement('input[col=product_id]').get('value');
+						productname = el.getElement('input[col=productname]').get('value');
+						price = el.getElement('input[col=price]').get('value');
+						catno = el.getElement('div[col=catno]').get('html');
+						unit = el.getElement('input[col=unit]').get('value');
+						spec = el.getElement('input[col=spec]').get('value');
+						ch_description = el.getElement('div[col=ch_description]').get('text');
+						description = el.getElement('div[col=description]').get('text');
+						sum += price * qty;
+						var trs = tbody.getElements('tr');
+						if(trs.length%2 == 1){
+							row.addClass('row');
+						}
+						row = grid_details.rowData.clone();
+						row.getElement('td:nth-child(1)').getElement('div').set('html',trs.length+1);
+						row.getElement('td:nth-child(2)').getElement('div').set('html',productname);
+						row.getElement('td:nth-child(3)').getElement('div').set('html',catno);
+						row.getElement('td:nth-child(4)').getElement('div').set('html',formatNumber(qty));
+						row.getElement('td:nth-child(5)').getElement('div').set('html',price);
+						row.getElement('td:nth-child(6)').getElement('div').set('html',unit);
+						row.getElement('td:nth-child(7)').getElement('div').set('html',spec);
+						row.getElement('td:nth-child(8)').getElement('div').set('html',ch_description);
+						row.getElement('td:nth-child(9)').getElement('div').set('html',description);
+						row.inject(tbody,'bottom');
+					}
+				}
+			});
+			if($('amount'))$('amount').set('value', formatNumber(sum));
+			$('next2').fireEvent('next');
+		});
+		$('contact_info').getElement('input[name=contact_id]').addEvent('selected', function(data){
+			var el = $('tabs');
+			el.getElement('input[name=postalcode]').set('value', data.postalcode);
+			el.getElement('input[name=address]').set('value', data.address);
+			el.getElement('input[name=regioncode]').set('value', data.regioncode);
+			el.getElement('input[name=phone]').set('value', data.phone);
+			el.getElement('input[name=mobilephone]').set('value', data.mobilephone);
+
+			el.getElement('input[name=bill_account]').set('value', data.bill_account);
+			el.getElement('input[name=bill_taxNo]').set('value', data.bill_taxNo);
+			el.getElement('input[name=bill_phone]').set('value', data.bill_phone);
+			el.getElement('input[name=bill_company]').set('value', data.bill_company);
+			el.getElement('input[name=bill_bank]').set('value', data.bill_bank);
+			el.getElement('input[name=bill_address]').set('value', data.bill_address);
+			
+		});
+	});
+	</script>
+
+</div>
+<include file="Public:footer" />

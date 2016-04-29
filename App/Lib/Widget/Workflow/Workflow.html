@@ -1,0 +1,55 @@
+<div class="tt">工作流操作：</div>
+<div class="left" style="padding:5px 0;">
+	<div id="win_select" class="win">
+		<div id="win_select_handle" class="win-handle big">
+			<switch name="vo['status']">
+			<case value="1">
+			<div class="left">选择审核人</div>
+			</case>
+			<case value="2">
+			<div class="left">退回意见</div>
+			</case>
+			<case value="4">
+			<div class="left">选择</div>
+			</case>
+			<default/>
+			</switch>
+			<div class="right win-close">
+				<a href="javascript:appBox.close();">
+					<img class="img-center" src="__PUBLIC__/images/close.gif" title="关闭" />
+				</a>
+			</div>
+		</div>
+		<div id="results_select_list" class="win-panel p5" style="height:340px;"></div>
+	</div>
+	<script type="text/javascript">
+	var appBox = null;
+	window.addEvent('domready', function(){
+		appBox = new DialogBox('win_select','win_select_handle', true);
+	});
+	</script>
+	<switch name="vo['status']">
+	<case value="1||4">
+		<input type="button" class="edit" value="编辑" onClick="window.location=APP+'/{$module|strtolower}/edit/id/{$vo.id}'" />
+		<input type="button" class="action" value="提交审核" onClick="window.location=APP+'/{$module|strtolower}/pend/id/{$vo.id}'" />
+		<input type="button" class="action" value="删除" onClick="del()" />
+	</case>
+	<case value="2">
+		<if condition="$allowApprove eq true">
+		<input type="button" class="save" value="通过审核" onClick="window.location=APP+'/{$module|strtolower}/approve/id/{$vo.id}'" />
+		<input type="button" class="action" value="退回审核" onClick="javascript: appBox.reload(APP+'/flow/getContent/type/{$module|strtolower}/id/{$vo.id}', 'results_select_list');" />
+		</if>
+	</case>
+	<case value="5">
+	</case>
+	<default/>
+	</switch>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+function del(){
+	if( confirm("您确定要删除吗？") ){
+		window.location=APP+'/{$module|strtolower}/delete/id/{$vo.id}';
+	}
+}
+</script>

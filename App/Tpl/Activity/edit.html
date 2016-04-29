@@ -1,0 +1,40 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;联系记录</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'联系记录', 'url'=>'__URL__'),
+			array('title'=>'新建联系记录', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'修改联系记录', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Activity',
+		'type'=>'edit',
+		'data'=>$vo
+	))}
+	<script charset="utf-8" src="__PUBLIC__/js/kindEditor/kindeditor-min.js"></script>
+	<script charset="utf-8" src="__PUBLIC__/js/kindEditor/lang/zh_CN.js"></script>
+	<script>
+		var editor;
+		KindEditor.ready(function(K) {
+			editor = K.create('textarea[id="cont"]', {
+				resizeType : 1,
+				allowPreviewEmoticons : false,
+				allowImageUpload : false,
+				items : [
+					'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+					'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+					'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+			});
+		});
+	</script>
+	<h3 class="p5">内容：</h3>
+	<textarea id="cont" name="content" style="width:100%;height:200px;visibility:hidden;">{$vo.content|safeHtml}</textarea>
+	<div class="p5">
+		<input type="hidden" name="id" value="{$vo.id}" />
+		<input id="submit_update" type="button" class="save" value="修改"/>
+	</div>
+</div>
+<include file="Public:footer" />

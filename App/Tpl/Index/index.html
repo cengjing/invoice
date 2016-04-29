@@ -1,0 +1,186 @@
+<include file="Public:header" />
+<script type="text/javascript" src="__PUBLIC__/js/slideGallery.js"></script>
+<div id="content" class="clearfix" style="padding-top:40px;">
+	<div class="gallery gallery3 fgallery left" style="padding-left:20px;">
+		<div class="holder">
+			<ul>
+				<notempty name="orders">
+				<li>
+					<div>
+						<div class="pannel-header clearfix"><span class="left">销售订单</span><span class="right"><a href="{:u('/salesorder')}">更多...</a></span></div>
+						<volist name="orders" id="vo">
+						<div class="clearfix plist glist">
+							<div class="left" style="width:320px;">
+								<p><a href="{:u('salesorder/show', array('id'=>$vo['id']))}">{$vo.abstract|String::msubstr=###,0,17,'utf-8',false}&nbsp;&nbsp;{$vo.status|getStatus}&nbsp;&nbsp;{$vo.company|String::msubstr=###,0,12,'utf-8',false}</a></p>
+								<p class="gray">{$vo.cTime|getTime}</p>
+							</div>
+							
+							<div class="right pannel-item" style="width:60px;">
+								{$vo.assignto|getUserInfoById}
+							</div>
+							<div class="right pannel-item" style="width:100px;">
+								￥{$vo.total|formatCurrency}
+							</div>
+						</div>
+						</volist>
+					</div>
+				</li>
+				</notempty>
+				<present name="orderMonthStat">
+				<li style="visibility: hidden;">
+					<div class="pannel-header clearfix">个人销售订单月度统计</div>
+					<volist name="orderMonthStat" id="vo">
+					<div class="clearfix plist glist">
+						<div class="left" style="width:320px;">
+							<p class="gray">年/月</p>
+							<p>{$vo.time}</p>
+						</div>
+						<div class="right pannel-item" style="width:100px;">
+							￥{$vo.amount|formatCurrency}
+						</div>
+					</div>
+					</volist>
+				</li>
+				</present>
+				<present name="orderMonthAllStat">
+				<li style="visibility: hidden;">
+					<div class="pannel-header clearfix">销售订单月度统计</div>
+					<volist name="orderMonthAllStat" id="vo">
+					<div class="clearfix plist glist">
+						<div class="left" style="width:320px;">
+							<p class="gray">年/月</p>
+							<p>{$vo.time}</p>
+						</div>
+						<div class="right pannel-item" style="width:100px;">
+							￥{$vo.amount|formatCurrency}
+						</div>
+					</div>
+					</volist>
+				</li>
+				</present>
+				<li style="visibility: hidden;">
+					<div class="pannel-header clearfix">统计</div>
+					<present name="orderStat">
+					<div class="clearfix plist glist">
+						<div class="left" style="width:320px;">
+							<p><a href="{:u('/salesorder')}">个人销售订单，未收款</a></p>
+							<p class="gray">销售订单数：{$orderStat.c1}</p>
+						</div>
+						<div class="right pannel-item" style="width:120px;">
+							￥{$orderStat.collection|formatCurrency}
+						</div>
+					</div>
+					<div class="clearfix plist glist">
+						<div class="left" style="width:320px;">
+							<p><a href="{:u('/salesorder')}">个人销售订单，未开票</a></p>
+							<p class="gray">销售订单数：{$orderStat.c2}</p>
+						</div>
+						<div class="right pannel-item" style="width:120px;">
+							￥{$orderStat.invoice|formatCurrency}
+						</div>
+					</div>
+					</present>
+					<present name="orderAllStat">
+					<div class="clearfix plist glist">
+						<div class="left" style="width:320px;">
+							<p><a href="{:u('/salesorder')}">全部销售订单，未收款</a></p>
+							<p class="gray">销售订单数：{$orderAllStat.c1}</p>
+						</div>
+						<div class="right pannel-item" style="width:120px;">
+							￥{$orderAllStat.collection|formatCurrency}
+						</div>
+					</div>
+					<div class="clearfix plist glist">
+						<div class="left" style="width:320px;">
+							<p><a href="{:u('/salesorder')}">全部销售订单，未开票</a></p>
+							<p class="gray">销售订单数：{$orderAllStat.c2}</p>
+						</div>
+						<div class="right pannel-item" style="width:120px;">
+							￥{$orderAllStat.invoice|formatCurrency}
+						</div>
+					</div>
+					</present>
+					<present name="purchaseAllStat">
+					<div class="clearfix plist glist">
+						<div class="left" style="width:320px;">
+							<p><a href="{:u('/salesorder')}">采购订单，未付款</a></p>
+							<p class="gray">采购订单数：{$purchaseAllStat.c1}</p>
+						</div>
+						<div class="right pannel-item" style="width:120px;">
+							￥{$purchaseAllStat.payment|formatCurrency}
+						</div>
+					</div>
+					<div class="clearfix plist glist">
+						<div class="left" style="width:320px;">
+							<p><a href="{:u('/salesorder')}">采购订单，未开票</a></p>
+							<p class="gray">采购订单数：{$purchaseAllStat.c2}</p>
+						</div>
+						<div class="right pannel-item" style="width:120px;">
+							￥{$purchaseAllStat.invoice|formatCurrency}
+						</div>
+					</div>
+					</present>
+					<present name="stockStat">
+					<div class="clearfix plist glist">
+						<div class="left" style="width:320px;">
+							<p><a href="{:u('static/wh')}">库存金额</a></p>
+							<p class="gray">可销售仓库：{$warehouseQty}个。<present name="stockSafe">有<span class="rs">{$stockSafe}</span>个商品已低于<a href="{:u('warehouse/safe')}">安全库存</a>。</present></p>
+						</div>
+						<div class="right pannel-item" style="width:120px;">
+							￥{$stockStat.amount|formatCurrency}
+						</div>
+					</div>
+					</present>
+				</li>
+			</ul>
+		</div>
+		<ul class="paging">
+			<notempty name="orders"><li><a class="page-1" href="javascript:;" title="销售订单">1</a></li></notempty>
+			<present name="orderMonthStat"><li><a class="page-2" href="javascript:;" title="个人月度订单">2</a></li></present>
+			<present name="orderMonthAllStat"><li><a class="page-3" href="javascript:;" title="月度订单">3</a></li></present>
+			<li><a class="page-4" href="javascript:;" title="综合统计">4</a></li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+	window.addEvent("domready", function() {
+		<notempty name="news">
+		new slideGallery($$(".gallery1"), {
+			speed: 1500,
+			autoplay: true,
+			duration: 2000,
+			mode: "circle",
+			direction: "vertical"
+		});
+		</notempty>
+		<notempty name="feeds">
+		new slideGallery($$(".gallery2"), {
+			speed: 1500,
+			autoplay: true,
+			duration: 2000,
+			mode: "circle",
+			direction: "vertical"
+		});
+		</notempty>
+		var thumns = $$(".paging li a");
+		var gallery3 = new fadeGallery($$(".gallery3"), {
+			speed: 800,
+			autoplay: false,
+			duration: 4000,
+			onPlay: function() {
+				this.fireEvent("start");
+			}
+		});
+		thumns.each(function(el, i) {
+			el.fade(i==0?1:0.4);
+			el.addEvent("click", function() {
+				thumns.fade(0.4);
+				this.fade(1);
+				gallery3.current = i;
+				gallery3.play(true);
+				return false;
+			});
+		});
+	});
+</script>
+<include file="Public:footer" />

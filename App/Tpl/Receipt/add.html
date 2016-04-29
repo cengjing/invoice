@@ -1,0 +1,25 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;	
+		<a href="__URL__">收款单列表</a>&nbsp;&gt;&nbsp;新建收款单
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'收款单表', 'url'=>'__URL__'),
+			array('title'=>'新建收款单', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	<form action="__URL__/insert" method="post" id="form">
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Receipt',
+		'type'=>'add',
+		'data'=>$data,
+	))}
+	<div class="p5">
+		<input id="submit_insert" class="save" type="button" value="保存" />
+	</div>
+	</form>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,24 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/customFields">自定义字段</a>
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'返回列表', 'url'=>'__URL__/show/id/'.$id),
+			array('title'=>'添加字段', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'CustomFields',
+		'type'=>'add',
+		'data'=>$data,
+	))}
+	<div class="p5">
+		<input type="hidden" name="module_id" value="{$id}" />
+		<input id="submit_insert" type="button" class="save" value="保存" />
+	</div>
+</div>
+<include file="Public:footer" />

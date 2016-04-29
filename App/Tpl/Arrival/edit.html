@@ -1,0 +1,87 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;<a href="__URL__">到货单列表</a>&nbsp;&gt;&nbsp;修改到货单</div>
+	<div class="tab-menu">
+	<ul>
+		<li><a href="__URL__">到货单列表</a></li>
+		<li><a class="on" href="javascript:;">修改到货单-{$vo.id}</a></li>
+	</ul>
+	</div>
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Arrival',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'到货明细',
+		'selectable'=> true,
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'product_id'),
+			array('display'=>'供货编号','name'=>'mfr_part_no', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'采购单号','name'=>'purchase_id', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/purchase/show/id/', 'url_id'=>'purchase_id'),
+			array('display'=>'数量','name'=>'qty', 'width'=>'40', 'align'=>'right'),
+			array('display'=>'单位','name'=>'unit', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'规格','name'=>'spec', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'中文描述','name'=>'ch_description', 'width'=>'200', 'align'=>'left'),
+			array('display'=>'英文描述','name'=>'description', 'width'=>'200', 'align'=>'left'),
+		),
+		'data'=>$details,
+	))}
+	<div class="p5">
+		<input type="button" value="删除选中项" class="action" id="del"/>&nbsp;
+		<input type="button" value="添加到货单明细" class="action" id="reload"/>
+	</div>
+	<div id="purchase_details"></div>
+	<div class="p5" id="editInfo">
+		<input type="hidden" name="vender_id" value="{$vo.vender_id}"/>
+		<input type="hidden" name="id" value="{$vo.id}"/>
+		<input id="submit_update" class="save" type="button" value="修改"/>
+	</div>
+	
+	<script type="text/javascript">
+	window.addEvent('domready', function(){
+		$('reload').addEvent('click',function(){
+			new Request.HTML({
+				url: APP+'/arrival/showArrivalDetails',
+				format: 'page',
+				data: $('editInfo'),
+				update: $('purchase_details'),
+				onRequest: function(){ $('content').spin(); },
+				onSuccess: function(){
+					$('content').unspin();
+					$('next1').fireEvent('next');
+				}
+			}).send();
+		});
+		$('del').addEvent('click', function(){
+			var ret = '';
+			$$('.grid-item').each(function(el){
+				if(el.get('checked')){
+					ret += (ret==''?'':',') + el.get('value');
+				}
+			});
+			if(ret != ''){
+				ret = 'items=' + ret;
+				new Request({
+					url: APP+'/arrival/deleteItem',
+					onRequest: function(){ $('content').spin(); },
+					onSuccess: function(txt){
+						var results = JSON.decode(txt);
+						if(results.status == 1){
+							window.location= APP+"/arrival/show/id/" + results.data.id;
+						}else{
+							noti.show({ 
+							    title: '提示', 
+							    message: results.info
+							});
+						}
+					}
+				}).send(ret);
+			}
+		});
+	});
+	</script>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$msgTitle} - SiboCRM</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv='Refresh' content='{$waitSecond};URL={$jumpUrl}'>
+<link href="__PUBLIC__/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="__PUBLIC__/js/core.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/more.js"></script>
+<script type="text/javascript">
+window.addEvent('domready',function(){
+	var el = $('tips');
+	el.fade('out').position();
+	var fn = function(){el.setStyle('display', 'block').fade('in')};
+	fn.delay(500);
+});
+</script>
+</head>
+<body id="login-bg">
+<div id="tips" class="tips">
+	<div class="p5" style="font-size:16px; font-wight:bold; text-align:center;border-bottom:1px solid #FEE2A1;">{$msgTitle}</div>
+	<div class="clearfix">
+		<div class="left" style="width:100px;padding:40px 10px 0px 60px;">
+			<present name="message">
+			<img src="__PUBLIC__/images/success.png"/>
+			</present>
+			<present name="error">
+			<img src="__PUBLIC__/images/tips.png"/>
+			</present>
+		</div>
+		
+		<div class="left" style="width:400px;">
+			<div style="padding:60px 5px 0px 5px;height:50px; font-size:16px; font-weight:bold;">
+			<present name="message">
+				<spn style="color: blue">{$message}</span>
+			</present>
+			<present name="error">
+				<span style="color: red">{$error}</span>
+			</present>
+			</div>
+		</div>
+	</div>
+	<div style="padding:20px;">
+		<present name="closeWin">
+			<div>
+				<div>系统将在 <span style="color: blue; font-weight: bold">{$waitSecond}</span>
+				秒后自动关闭，如果不想等待，直接点击 <a href="{$jumpUrl}">这里</a> 关闭</div>
+			</div>
+		</present>
+		<notpresent name="closeWin">
+			<div>
+				<div>系统将在 <span style="color: blue; font-weight: bold">{$waitSecond}</span>
+				秒后自动跳转，如果不想等待，直接点击 <a href="{$jumpUrl}">这里</a> 跳转</div>
+			</div>
+		</notpresent>	
+	</div>
+</div>
+</body>
+</html>

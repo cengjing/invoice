@@ -1,0 +1,38 @@
+<script type="text/javascript" src="__PUBLIC__/js/selectbox.js"></script>
+<div id="check-box-{$rand}" class="bd check-box left" style="z-index:101;width:140px; cursor: default; background: url('__PUBLIC__/images/select_right.gif') no-repeat scroll right center;">
+	<input type="hidden" name="{$name}" value="{$value}" id="{$name}" />
+	<div class="check-content" style="height:20px; padding-right:20px;padding-left:2px;">请选择...</div>
+	<div class="check-list" style="display:none;position:absolute;z-index:100;background: #FFF; width:{$list_width}px; border-color: #CCCCCC #999999 #999999 #CCCCCC; border-style: solid; border-width: 1px; height:100px; overflow:auto; padding-bottom:15px; white-space:nowrap;">
+		<ul style="white-space: nowrap;">
+		<li class="clearfix" style="padding:0px 2px;">
+			<div class="left row" val="0" style="color:gray;cursor:pointer;">请选择...</div>
+			<div style="color:gray;font-size:1.5em;cursor:pointer;" class="closeSelect right" title="关闭">×</div>
+			<div style="cursor:pointer;width:18px;height:18px;background: url('__PUBLIC__/images/tree.gif') -234px 0; margin-top:2px;" class="closeAll right" title="全部展开"></div>
+			<div style="cursor:pointer;width:18px;height:18px;background: url('__PUBLIC__/images/tree.gif') -216px 0; margin-top:2px;" class="openAll right" title="全部收缩"></div>
+		</li>
+		<volist name="list" id="vo">
+			<li style="padding:0px;" node="{$vo.level}" open="true">
+				<if condition="$vo['child'] eq true">
+					<div class="left node" style="margin-left:{$vo.level}em; width:18px;height:18px;background: url('__PUBLIC__/images/tree.gif') -216px 0; margin-top:2px; cursor:default;"></div>
+					<div val="{$vo.id}" style="line-height:20px;" class="row left">{$vo.title}</div>
+				<else/>
+					<div class="left" style="margin-left:{$vo.level}em; width:18px;height:18px; background: url('__PUBLIC__/images/tree.gif') -108px 0; margin-top:2px;"></div>
+					<div val="{$vo.id}" style="line-height:20px; cursor:pointer;color:blue;" class="row left">{$vo.title}</div>
+				</if>
+				<div class="clear"></div>
+			</li>
+		</volist>
+		</ul>
+		<div class="check-drag-handle resize-handle"></div>
+	</div>
+	
+</div>
+<if condition="($Think.session.administrator eq true) AND ($pick_id neq '')">
+<div class="left" style="line-height:18px;padding:2px;">&nbsp;&nbsp;<a href="__APP__/picklist/show/id/{$pick_id}">设置</a></div>
+</if>
+<div class="clear"></div>
+<script type="text/javascript">
+window.addEvent('domready', function(){
+	new selectBox('check-box-{$rand}', '{$allSelect}');
+});
+</script>

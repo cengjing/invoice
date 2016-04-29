@@ -1,0 +1,24 @@
+<notempty name="list">
+<div class="p5">
+	<volist name="list" id="vo">
+	<div class="p5 tips">
+		<p class="p5">销售订单：<a href="__APP__/salesorder/show/id/{$vo.order_id}">{$vo.order_id}</a>&nbsp;[&nbsp;{$vo.cTime}&nbsp;]，摘要：{$vo.abstract|Input::forShow}</p>
+		<p class="p5">订单金额：{$vo.total|formatCurrency}，已开发票金额：{$vo.invoice|formatCurrency}，需开发票金额：<span class="rs">{$vo.amount|formatCurrency}</span></</p>
+	</div>
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'商品编号', 'name'=>'catno', 'col'=>'catno', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'product_id'),
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'150', 'align'=>'left', 'input'=>'type="text" col="productname" name="productname[]"', 'input_value'=>'productname', 'input_show'=>true),
+			array('display'=>'数量','name'=>'qty', 'width'=>'60', 'align'=>'right', 'input'=>'type="text" col="qty" name="qty[]" style="text-align:right;"', 'input_value'=>'qty', 'input_show'=>true),
+			array('display'=>'售价','name'=>'price', 'width'=>'80', 'align'=>'right', 'input'=>'type="text" col="price" name="price[]" style="text-align:right;"', 'input_value'=>'sale_price', 'input_show'=>true),
+			array('display'=>'单位','name'=>'unit', 'width'=>'60', 'align'=>'left', 'input'=>'type="text" col="unit" name="unit[]"', 'input_value'=>'unit', 'input_show'=>true),
+			array('display'=>'规格','name'=>'spec', 'width'=>'80', 'align'=>'left', 'input'=>'type="text" col="spec" name="spec[]"', 'input_value'=>'spec', 'input_show'=>true),
+			array('display'=>'中文描述','name'=>'ch_description', 'col'=>'ch_description', 'width'=>'150', 'align'=>'left', 'input'=>'type="hidden" col="order_id" name="order_id[]"', 'input_value'=>'order_id'),
+			array('display'=>'英文描述','name'=>'description', 'col'=>'description', 'width'=>'150', 'align'=>'left', 'input'=>'type="hidden" col="product_id" name="product_id[]"', 'input_value'=>'product_id'),
+		),
+		'data'=>$vo['details'],
+	))}
+	</volist>
+</div>
+<div class="p5 tips">如果不想开发票的明细，请把数量改写成0.</div>
+</notempty>

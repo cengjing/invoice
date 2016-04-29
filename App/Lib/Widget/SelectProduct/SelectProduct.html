@@ -1,0 +1,147 @@
+<script type="text/javascript" src="__PUBLIC__/js/tabs.js"></script>
+<img class="img-center" src="__PUBLIC__/images/dataCreate.gif" title="查找商品信息" onClick="products.show();" />&nbsp;
+<img class="img-center" src="__PUBLIC__/images/dataDelete.gif" title="删除选中明细" id="clearItem"  />
+
+<div id="win_products" class="win">
+	<div id="win_products_handle" class="win-handle big">
+		<div class="left">查找商品</div>
+		<div class="right win-close">
+			<a href="javascript:products.close();"><img class="img-center" src="__PUBLIC__/images/close.gif" title="关闭" /></a>
+		</div>
+	</div>
+	<div class="tab-menu">
+		<ul>
+			<li><a href="javascript:;" class="on p_tab">筛选条件</a></li>
+			<li><a class="p_tab" href="javascript:;">结果</a></li>
+		</ul>
+	</div>
+	<div id="search_products" class="win-panel p_content">
+		{:W("Filter",array('type'=>'ajax', 'module'=>'Products', 'arr'=>$arr, 'field'=>$field, 'default'=>$default))}
+		<div class="controlPanel center">
+			<input id="products_filter_Btn" class="edit" type="button" value="搜索" />
+		</div>
+	</div>
+	<div id="results_products_list" class="win-panel p_content"></div>
+</div>
+<script type="text/javascript">
+var products = null;
+var tabProducts = null;
+window.addEvent('domready', function(){
+	tabProducts = new TabPane('win_products',{tabSelector: '.p_tab',contentSelector: '.p_content',activeClass:'on'});
+	products = new DialogBox('win_products','win_products_handle', false);
+	$("products_filter_Btn").addEvent('click', function(){
+		new Request.HTML({
+			url: APP+'/products/filter',
+			format: 'page',
+			data: $('search_products'),
+			update: $('results_products_list'),
+			onRequest: function(){ $('win_products').spin(); },
+			onSuccess: function(){
+				$('win_products').unspin();
+				tabProducts.showTab(1);
+			}
+		}).send();
+	});
+	var resultsList = $('results_products_list');
+	var pageRequest = new Request.HTML({
+		format: 'page',
+		method: 'post',
+		update: resultsList,
+		onRequest: function(){ resultsList.spin(); },
+		onSuccess: function(){ resultsList.unspin(); }
+	});
+	resultsList.addEvent('click:relay(div .page a)',function(e,target){
+		e.preventDefault();
+		pageRequest.send({
+	        url: target.get('href')
+	    });
+	});
+	
+	var resultRequest = new Request({
+		onSuccess: function(txt){
+			results = JSON.decode(txt);
+			if(results.status == 1){
+				var id = results.data.id;
+				var exist = false;
+				grid_{$gridName}.bDiv.getElements('tr').each(function(el){
+					if(el.getElement('input[col=pid]').get('value') == id){
+						exist = true;
+						alert('在您的订单中已经选入这个商品，不能再重复了。');
+					}
+				});
+				
+				var el = $('product_id');
+				if(el)el.set('value', results.data.productname);
+				var row = grid_{$gridName}.rowData.clone();
+				var tb = grid_{$gridName}.bDiv.getElement('tbody');
+				if(!exist && row){
+					var trs = tb.getElements('tr');
+					if(trs.length%2 == 1){
+						row.addClass('row');
+					}
+					el = row.getElement('td:nth-child(1)').getElement('div');
+					el.set('html',trs.length+1);
+					el = row.getElement('div[col=productname]');
+					if(el)el.set('html', results.data.productname);
+					new Element('input',{'type':'hidden','name':'pid[]','col':'pid','value':id}).inject(el);
+					el = row.getElement('div[col=catno]');
+					if(el)el.set('html', '<a href="__APP__/products/show/id/'+id+'" target="_blank">'+results.data.catno+'</a>');
+					el = row.getElement('div[col=unit_price]');
+					if(el)el.set('html', results.data.unit_price);
+					el = row.getElement('input[col=unit_price]');
+					if(el)el.set('value', results.data.unit_price);
+					el = row.getElement('input[col=discount]');
+					if(el)el.set('value', formatNumber(0));
+					el = row.getElement('input[col=sale_price]');
+					if(el){
+						el.set('value', results.data.unit_price);
+						el = row.getElement('div[col=sum_price]');
+						if(el)el.set('html', results.data.unit_price);
+					}
+					el = row.getElement('input[col=purchase_price]');
+					if(el)el.set('value', results.data.purchase_price);
+					el = row.getElement('input[col=other_price]');
+					if(el)el.set('value', formatNumber(0));
+					el = row.getElement('div[col=mfr_part_no]');
+					if(el)el.set('html', results.data.mfr_part_no);
+					el = row.getElement('div[col=description]');
+					if(el)el.set('html', results.data.description);
+					el = row.getElement('div[col=ch_description]');
+					if(el)el.set('html', results.data.ch_description);
+					el = row.getElement('input[col=qty]');
+					if(el)el.set('value', formatNumber(1));
+					el = row.getElement('.inventory-qty');
+					if(el)show_inventory_qty(el);
+					el = row.getElement('.discount');
+					if(el)getDiscount(el);
+					row.inject(tb,'bottom');
+					grid_{$gridName}.sort.addItems(row);
+					el = grid_{$gridName}.bDiv;
+					if(el)el.fireEvent('selected');
+				}
+			}
+		}
+	});
+	resultsList.addEvent('click:relay(td a)',function(e,target){
+		e.preventDefault();
+		resultRequest.send({
+	        url: target.get('href')
+	    });
+	});
+	$("clearItem").addEvent('click', function(){
+		var el = grid_{$gridName}.bDiv.getElements('.grid-item');
+		if(el.length == 0)return;
+		if(confirm('您确定要删除吗？')){
+			el.each(function(el, index){
+				if(el.get('checked')){
+					el.getParent('tr').dispose();
+				}
+			});
+			grid_{$gridName}.setOrder();
+			grid_{$gridName}.setEvenRow();
+			el = grid_{$gridName}.bDiv;
+			if(el)el.fireEvent('selected');
+		}
+	});
+});
+</script>

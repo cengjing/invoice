@@ -1,0 +1,31 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;采购单列表</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'采购单列表', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'新建采购请购单', 'url'=>'__URL__/add', 'add'=>'true'),
+		)
+	))}
+	{:W("Filter",array('module'=>'Purchase', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'采购单号', 'name'=>'id', 'width'=>'80', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'状态','name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'getStatus'),
+			array('display'=>'供货商','name'=>'company', 'width'=>'160', 'align'=>'left'),
+			array('display'=>'金额','name'=>'amount', 'width'=>'80', 'align'=>'right', 'func'=>'formatCurrency'),
+			array('display'=>'业务员','name'=>'uid_name', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'到货完成','name'=>'ship_completion_date', 'width'=>'60', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'发票完成','name'=>'invoice_completion_date', 'width'=>'60', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'付款完成','name'=>'payment_completion_date', 'width'=>'60', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'摘要','name'=>'abstract', 'width'=>'300', 'align'=>'left'),
+		),
+		'module'=>'Purchase',
+		'data'=>$list,
+		'page'=>$page,
+		'sum'=>$sum,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,13 @@
+{:W("Grid", array(
+	'title'=>'选择收件人',
+	'class'=>'details',
+	'header'=>array(
+		array('display'=>'客户姓名', 'col'=>'name', 'name'=>'name', 'width'=>'100', 'align'=>'left'),
+		array('display'=>'公司名称', 'col'=>'company', 'name'=>'company', 'width'=>'200', 'align'=>'left'),
+		array('display'=>'有效', 'name'=>'status', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+		array('display'=>'黑名单', 'name'=>'blacklist', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+		array('display'=>'Email', 'col'=>'email', 'name'=>'email', 'width'=>'200', 'align'=>'left'),
+	),
+	'data'=>$list,
+	'selectable'=>true,
+))}

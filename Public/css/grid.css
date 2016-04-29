@@ -1,0 +1,75 @@
+@CHARSET "utf-8";
+/*--------grid--------*/
+.grid div.hDiv { 
+	background: url("../images/fhbg.gif") repeat-x scroll center bottom #FAFAFA;
+	border-color:#CCCCCC #CCCCCC;
+	border-style:solid solid none;
+	border-width:1px 1px 0;
+	overflow: hidden;
+	position:relative;
+}
+.grid div.hDiv th, .grid div.bDiv td { 
+	height:26px; 
+	overflow:hidden; 
+	white-space:nowrap; 
+	border-left:1px solid #FFFFFF; 
+	border-right:1px solid #DDDDDD;
+	cursor:default;
+	font-weight:normal;
+	}
+.grid div.hDiv th div, .grid div.bDiv td div{ padding:5px; }
+.grid div.bDiv tr.row-selected { background-color:#ffffce; }
+.grid div.cDrag {
+	float:left;
+	overflow:visible;
+	position:absolute;
+	z-index:2;
+	}
+.grid div.cDrag div {
+	background:none repeat scroll 0 0 transparent;
+	cursor:col-resize;
+	display:block;
+	float:left;
+	height:24px;
+	position:absolute;
+	width:4px;
+	}
+.grid div.cDrag div:hover, .grid div.cDrag div.dragging {
+	background:url("../images/line.gif") repeat-y scroll 2px center transparent;
+}
+.grid div.bDiv { 
+	background:none repeat scroll 0 0 #FFFFFF;
+	border-color: #CCCCCC #CCCCCC;
+	border-right:1px solid #CCCCCC;
+	border-style:none solid solid;
+	border-width:0 1px 1px;
+	overflow:auto;
+	}
+.grid div.bDiv table {
+	border-bottom:1px solid #CCCCCC;
+	}
+.grid div.bDiv td {
+	border-bottom:1px solid #FFFFFF;
+	vertical-align:top;
+	white-space:nowrap;
+	}
+.grid div.bDiv tr:hover td {
+	background:none repeat scroll 0 0 #D9EBF5;
+	border-bottom:1px dotted #A8D8EB;
+	border-left:1px solid #EEF8FF;
+	}
+.grid tr.row {
+	background: none repeat scroll 0 0 #F7F7F7;
+	border-bottom: 1px solid #F7F7F7;
+	}
+.grid .input {
+	background:none;
+	border-color:#CCCCCC #999999 #999999 #CCCCCC;
+	border-style:solid;
+	border-width:0 0 1px 0;
+	color:#000000;
+	font:12px arial,sans-serif bold;
+	height:24px;width:90%;line-height:24px;
+	margin:0;
+	vertical-align:top;
+	}

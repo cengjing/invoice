@@ -1,0 +1,13 @@
+{:W("Grid", array(
+	'header'=>array(
+		array('display'=>'客户姓名', 'name'=>'name', 'width'=>'60', 'align'=>'left', 'url'=>'__APP__/contacts/getById/id/', 'url_id'=>'id'),
+		array('display'=>'公司名称', 'name'=>'company', 'width'=>'150', 'align'=>'left'),
+		array('display'=>'性别', 'name'=>'sex', 'width'=>'40', 'align'=>'center', 'func'=>'getSex'),
+		array('display'=>'有效', 'name'=>'status', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+		array('display'=>'黑名单', 'name'=>'blacklist', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+		array('display'=>'描述', 'name'=>'description', 'width'=>'200', 'align'=>'left'),
+	),
+	'data'=>$list,
+	'page'=>$page,
+	'height'=>275
+))}

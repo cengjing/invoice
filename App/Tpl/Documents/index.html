@@ -1,0 +1,23 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;文档</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'文档列表', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'新增文档', 'url'=>'__URL__/add', 'add'=>'true'),
+		)
+	))}
+	{:W("Filter",array('module'=>'Documents', 'action'=>'__URL__'))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'创建日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'标题', 'name'=>'title', 'width'=>'600', 'align'=>'left'),
+			array('display'=>'有效','name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'bool2text'),
+			array('display'=>'操作', 'name'=>'', 'width'=>'30', 'align'=>'center', 'url'=>'__URL__/show/id/', 'url_id'=>'id', 'def'=>'查看'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

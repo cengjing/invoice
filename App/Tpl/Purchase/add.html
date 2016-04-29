@@ -1,0 +1,232 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">采购单列表</a>&nbsp;&gt;&nbsp;新建采购单
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'采购单列表', 'url'=>'__URL__'),
+			array('title'=>'新建采购请购单', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W('StepProcess', array(
+		'title'=>array('选择供货商','填写采购明细','确认')
+	))}
+	<div id="tabs" style="padding-left: 20px;">
+		<div class="tab"></div>
+		<div class="tab"></div>
+		<div class="tab"></div>
+		
+		<div class="content form">
+			<h3 class="p5">请选择要采购的供货商:</h3>
+			<div class="p5" style="width:280px;" id="vender_info">{:W('SelectVender')}</div>
+			<p class="p5" style="color:gray;">请先选择需要采购的供货商，再填写采购明细。</p>
+			<div class="p5">
+				<input id="next1" class="action" type="button" value="下一步" />
+				<input class="action" type="button" value="清除缓存" onClick="javascript:window.location='__URL__/clearChache'"/>
+			</div>
+			<div class="tips p5">
+				<p>第一次打开新建采购单页面，将会缓存Mrp数据10分钟，如果销售订单数据有变化，请点击”清除缓存“重新MRP计算。</p>
+				<p>可以根据<a href="{:u('warehouse/safe')}">最小库存</a>来建立采购订单。</p>
+			</div>
+			<h3 class="p5">Mrp统计结果</h3>
+			{:W("Grid", array(
+				'header'=>array(
+					array('display'=>'供货商', 'name'=>'company', 'width'=>'200', 'align'=>'left', 'input'=>'type="hidden" col="vender"', 'input_value'=>'company'),
+					array('display'=>'操作','name'=>'', 'width'=>'50', 'align'=>'center', 'def'=>'<a class="select" href="javascript:;">选择</a>'),
+					array('display'=>'商品数量', 'name'=>'qty', 'width'=>'80', 'align'=>'right', 'input'=>'type="hidden" col="vid"', 'input_value'=>'vender_id'),
+				),
+				'data'=>$list,
+			))}
+		</div>
+		<div class="content">
+			<div id="mrp_details" style="overflow:hidden;"></div>
+			
+			{:W("Grid", array(
+				'title'=>'自定义添加采购商品',
+				'header'=>array(
+					array('display'=>'商品名称', 'name'=>'productname', 'col'=>'productname', 'width'=>'180', 'align'=>'left', 'input'=>'type="hidden" col="pid" name="pid[]" '),
+					array('display'=>'商品编号', 'name'=>'catno', 'col'=>'catno', 'width'=>'100', 'align'=>'left'),
+					array('display'=>'供货编号', 'name'=>'mfr_part_no', 'col'=>'mfr_part_no', 'width'=>'100', 'align'=>'left'),
+					array('display'=>'数量','name'=>'qty', 'width'=>'50', 'align'=>'right', 'input'=>'type="text" col="qty" name="def_qty[]" style="text-align:right;"', 'input_show'=>true),
+					array('display'=>'采购单价','name'=>'purchase_price', 'width'=>'60', 'align'=>'right', 'input'=>'type="text" col="purchase_price" name="def_purchase_price[]" style="text-align:right;"', 'input_show'=>true),
+					array('display'=>'中文描述', 'name'=>'ch_description', 'col'=>'ch_description', 'width'=>'80', 'align'=>'left'),
+					array('display'=>'英文描述', 'name'=>'description', 'col'=>'description', 'width'=>'80', 'align'=>'left'),
+				),
+				'rowCache'=>true,
+				'name'=>'details',
+				'sortable'=>true,
+				'selectable'=>true,
+				'class'=>selectProducts,
+			))}
+			{:W('SelectProduct',array('gridName'=>'details'))}
+			
+			<div class="p5 clear">
+				<input id="previous1" class="action" type="button" value="上一步" />
+				<input id="next2" class="action" type="button" value="下一步" />
+			</div>
+		</div>
+		<div class="content">		
+			<div class="p5">
+				{:W("Form", array(
+					'formId'=>'form',
+					'module'=>'Purchase',
+					'type'=>'add',
+					'data'=>$default,
+				))}
+			</div>
+			{:W("Grid", array(
+				'title'=>'采购明细',
+				'header'=>array(
+					array('display'=>'商品名称', 'name'=>'title', 'width'=>'150', 'align'=>'left'),
+					array('display'=>'商品编号', 'width'=>'80', 'align'=>'left'),
+					array('display'=>'供货编号', 'width'=>'80', 'align'=>'left'),
+					array('display'=>'数量','name'=>'qty', 'width'=>'50', 'align'=>'right'),
+					array('display'=>'采购价格','name'=>'price', 'width'=>'50', 'align'=>'right'),
+					array('display'=>'订单编号','name'=>'order', 'width'=>'70', 'align'=>'left'),
+					array('display'=>'销售价格','name'=>'price', 'width'=>'50', 'align'=>'right'),
+					array('display'=>'中文描述', 'width'=>'100', 'align'=>'left'),
+					array('display'=>'英文描述', 'width'=>'100', 'align'=>'left'),
+				),
+				'rowCache'=>true,
+				'name'=>'results',
+			))}
+			<div class="p5">
+				<input id="previous2" class="action" type="button" value="上一步" />
+				<input id="submit_insert" class="save" type="button" value="保存" />
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	window.addEvent('domready', function(){
+		$('vender_info').getElements('input[type=hidden]').set('value', '');
+		$('next1').addEvent('click', function(e){
+			var vender_id = $('content').getElement('.vender_id').get('value');
+			if(vender_id == ''){
+				noti.show({ 
+				    title: '提示', 
+				    message: '请先选择供货商。'
+				}); 
+				return;
+			}
+			
+			new Request.HTML({
+				url: APP+'/purchase/getMrpList',
+				format: 'page',
+				data: $('vender_info'),
+				update: $('mrp_details'),
+				onRequest: function(){ $('tabs').spin(); },
+				onSuccess: function(){
+					$('tabs').unspin();
+					$('next1').fireEvent('next');
+					var search = $('search_products');
+					if(search){
+						 var input = search.getElement('input[name=vender_id]');
+						 if(!input){
+							 input = new Element('input',{'type':'hidden','name':'vender_id','value':vender_id});
+							 input.inject(search);
+						 }else{
+							 if(input.get('value') != vender_id)
+							 {
+								 input.set('value', vender_id);
+								 tabProducts.showTab(0);
+								 $('results_products_list').empty(); 
+								 $('container').getElement('div .selectProducts tbody').empty();
+							 }
+						 }
+					}
+				}
+			}).send();
+		});
+		$('next2').addEvent('click', function(e){
+			var productname,catno,qty,order,price,sale_price,sum=0,description,ch_description,mfr;
+			var error = false;
+			var tbody = grid_results.bDiv.getElement('tbody');
+			tbody.empty();
+			var row;
+			$$('#mrp_details .rowItem').each(function(el){
+				productname = el.getElement('div[col=productname]').get('text');
+				order = el.getElement('input[col=order_id]').get('value');
+				qty = formatNumber(el.getElement('div[col=qty]').get('text'));
+				price = formatNumber(el.getElement('input[col=purchase_price]').get('value'));
+				sale_price = formatNumber(el.getElement('div[col=sale_price]').get('text'));
+				catno = el.getElement('div[col=catno]').get('text');
+				mfr = el.getElement('div[col=mfr_part_no]').get('text');
+				description = el.getElement('div[col=description]').get('html');
+				ch_description = el.getElement('div[col=ch_description]').get('html');
+				if(price=='')price=0;
+				sum += qty * price;
+				
+				var trs = tbody.getElements('tr');
+				if(trs.length%2 == 1){
+					row.addClass('row');
+				}
+				row = grid_results.rowData.clone();
+				row.getElement('td:nth-child(1)').getElement('div').set('html',trs.length+1);
+				row.getElement('td:nth-child(2)').getElement('div').set('html',productname);
+				row.getElement('td:nth-child(3)').getElement('div').set('html',catno);
+				row.getElement('td:nth-child(4)').getElement('div').set('html',mfr);
+				row.getElement('td:nth-child(5)').getElement('div').set('html',formatNumber(qty));
+				row.getElement('td:nth-child(6)').getElement('div').set('html',price);
+				row.getElement('td:nth-child(7)').getElement('div').set('html',order);
+				row.getElement('td:nth-child(8)').getElement('div').set('html',sale_price);
+				row.getElement('td:nth-child(9)').getElement('div').set('html',ch_description);
+				row.getElement('td:nth-child(10)').getElement('div').set('html',description);
+				row.inject(tbody,'bottom');
+				
+			});
+			grid_details.bDiv.getElements('tr').each(function(el){
+				productname = el.getElement('div[col=productname]').get('text');
+				catno = el.getElement('div[col=catno]').get('html');
+				qty = formatNumber(el.getElement('input[col=qty]').get('value'));
+				price = formatNumber(el.getElement('input[col=purchase_price]').get('value'));
+				mfr = el.getElement('div[col=mfr_part_no]').get('html');
+				description = el.getElement('div[col=description]').get('html');
+				ch_description = el.getElement('div[col=ch_description]').get('html');
+				if(price=='')price=0;
+				sum += qty * price;
+				var trs = tbody.getElements('tr');
+				if(trs.length%2 == 1){
+					row.addClass('row');
+				}
+				row = grid_results.rowData.clone();
+				row.getElement('td:nth-child(1)').getElement('div').set('html',trs.length+1);
+				row.getElement('td:nth-child(2)').getElement('div').set('html',productname);
+				row.getElement('td:nth-child(3)').getElement('div').set('html',catno);
+				row.getElement('td:nth-child(4)').getElement('div').set('html',mfr);
+				row.getElement('td:nth-child(5)').getElement('div').set('html',formatNumber(qty));
+				row.getElement('td:nth-child(6)').getElement('div').set('html',price);
+				
+				row.getElement('td:nth-child(9)').getElement('div').set('html',ch_description);
+				row.getElement('td:nth-child(10)').getElement('div').set('html',description);
+				row.inject(tbody,'bottom');
+			});
+			var ele = $('sum');
+			if(ele)ele.set('value', formatNumber(sum));
+			cal_order_sum();
+			$('next2').fireEvent('next');
+		});
+		if($('freight')){
+			$('freight').addEvent('change', function(e){cal_order_sum();});
+		}
+		if($('other_fund')){
+			$('other_fund').addEvent('change', function(e){cal_order_sum();});
+		}
+		$$('.select').addEvent('click', function(e){
+			e.stop();
+			var tr,el;
+			tr = this.getParent('tr');
+			el = tr.getElement('input[col=vender]');
+			if(el) {
+				$('vender_info').getElement('.company').set('html', el.get('value'));
+			}
+			el = tr.getElement('input[col=vid]');
+			if(el){
+				$('vender_info').getElement('input[name=vender_id]').set('value', el.get('value'));
+			}
+		});
+	});
+	</script>
+</div>
+<include file="Public:footer" />

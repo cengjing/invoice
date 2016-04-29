@@ -1,0 +1,31 @@
+@CHARSET "utf-8";
+/*--------step process--------*/
+#step-process {
+	height: 60px;
+	width: 900px;
+	}
+.step1 {
+	background: url("../images/step-process.png") no-repeat 0 0;	
+	}
+.step2 {
+	background: url("../images/step-process.png") no-repeat 0 -60px;	
+	}
+.step3 {
+	background: url("../images/step-process.png") no-repeat 0 -120px;	
+	}	
+#step-process div.step-content { padding:21px 60px 10px; height:20px; font-size:14px; line-height:20px; font-weight:bold; color:#FFF; }
+#step-process div.step-1 {
+	width:293px;
+	height:20px;
+	padding:0 5px;
+	}
+#step-process div.step-2 {
+	width:262px;
+	height:20px;
+	padding:0 5px;
+	}
+#step-process div.step-3 {
+	width:120px;
+	height:20px;
+	padding:0 5px;
+	}

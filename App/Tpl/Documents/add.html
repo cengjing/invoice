@@ -1,0 +1,43 @@
+<tagLib name="html" />
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;新增文档
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'文档列表', 'url'=>'__URL__'),
+			array('title'=>'新增文档', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	<form action="__URL__/insert" method="post" enctype="multipart/form-data">
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Documents',
+		'type'=>'add',
+		'data'=>$data,
+	))}
+	<script charset="utf-8" src="__PUBLIC__/js/kindEditor/kindeditor-min.js"></script>
+	<script charset="utf-8" src="__PUBLIC__/js/kindEditor/lang/zh_CN.js"></script>
+	<script>
+		var editor;
+		KindEditor.ready(function(K) {
+			editor = K.create('textarea[id="cont"]', {
+				resizeType : 1,
+				allowPreviewEmoticons : false,
+				allowImageUpload : false,
+				items : [
+					'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+					'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+					'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+			});
+		});
+	</script>
+	<h3 class="p5">内容：</h3>
+	<textarea id="cont" name="content" style="width:100%;height:200px;visibility:hidden;"></textarea>
+	<div class="p5">
+		<input type="submit" class="save" value="保存" />
+	</div>
+	</form>
+</div>
+<include file="Public:footer" />

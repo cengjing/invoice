@@ -1,0 +1,21 @@
+body { color: #333; font: 14px/21px 微软雅黑, 'trebuchet ms', arial, sans-serif; }
+h1, #content { margin: 15px auto; width: 600px; }
+h1 { font-weight:bold; }
+h4 { font-size:14px; font-weight:bold; margin:3px 0; }
+p, ol { margin: 10px 0; }
+ol { margin-left: 20px; }
+a { color: #000; text-decoration: none; }
+a:hover { text-decoration: underline; }
+#printbutton { float: right; }
+
+@media print {
+	body { font-family: 微软雅黑, georgia, 'times new roman', times, serif; }
+	h1, #content { width: 100%; }
+	#printbutton { display: none; }
+}
+.left {float:left;}
+.right {float:right;}
+.clear {clear:both;}
+clearfix:before,.clearfix:after{content:'\0020';display:block;overflow:hidden;visibility:hidden;width:0;height:0}.clearfix:after{clear:both}.clearfix{zoom:1}
+.p5 { padding:5px; }
+.label {text-align:right;}

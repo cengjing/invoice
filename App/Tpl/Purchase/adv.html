@@ -1,0 +1,58 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;	<a href="__URL__">订单列表</a>&nbsp;&gt;&nbsp;{$id}</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'采购单列表', 'url'=>'__URL__'),
+			array('title'=>'新建采购请购单', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'采购单-'.$id, 'url'=>'__URL__/show/id/'.$id),
+			array('title'=>'其他信息', 'url'=>'__URL__/advShow/id/'.$id, 'selected'=>'true'),
+		)
+	))}
+	<present name="arrival">
+	<div class="tt">采购到货</div>
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'到货单号', 'name'=>'id', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/arrival/show/id/', 'url_id'=>'id'),
+			array('display'=>'日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'50', 'align'=>'left', 'func'=>'getStatus'),
+			array('display'=>'仓库', 'name'=>'warehouse_id', 'width'=>'80', 'align'=>'left', 'func'=>'getWarehouseName'),
+			array('display'=>'摘要', 'name'=>'abstract', 'width'=>'120', 'align'=>'left'),
+		),
+		'data'=>$arrival,
+	))}
+	<else/>
+	<div class="tips">暂无采购到货</div>
+	</present>
+	<present name="returns">
+	<div class="tt">采购退货</div>
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'采购退货号', 'name'=>'id', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/purchasereturn/show/id/', 'url_id'=>'id'),
+			array('display'=>'日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'50', 'align'=>'left', 'func'=>'getStatus'),
+			array('display'=>'金额', 'name'=>'amount', 'width'=>'80', 'align'=>'right'),
+			array('display'=>'摘要', 'name'=>'abstract', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$returns,
+	))}
+	<else/>
+	<div class="tips">暂无采购退货</div>
+	</present>
+	<present name="invoice">
+	<div class="tt">采购发票</div>
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'采购发票号', 'name'=>'id', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/purchaseinvoice/show/id/', 'url_id'=>'id'),
+			array('display'=>'日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'50', 'align'=>'left', 'func'=>'getStatus'),
+			array('display'=>'金额', 'name'=>'amount', 'width'=>'80', 'align'=>'right'),
+			array('display'=>'摘要', 'name'=>'abstract', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$invoice,
+	))}
+	<else/>
+	<div class="tips">暂无采购发票</div>
+	</present>
+</div>
+<include file="Public:footer" />

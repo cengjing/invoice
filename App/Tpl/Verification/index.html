@@ -1,0 +1,32 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;应付核销
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'应付核销', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'新建核销', 'url'=>'__URL__/add', 'add'=>'true'),
+		)
+	))}
+	{:W("Filter",array('module'=>'Reconciliation', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'核销单号', 'name'=>'id', 'width'=>'70', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'日期', 'name'=>'cTime', 'width'=>'70', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'状态','name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'getStatus'),
+			array('display'=>'供货商','name'=>'vender', 'width'=>'120', 'align'=>'left'),
+			array('display'=>'客户名称','name'=>'company', 'width'=>'120', 'align'=>'left'),
+			array('display'=>'联系人','name'=>'contact', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'收款人','name'=>'assignto', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'核销金额','name'=>'amount', 'width'=>'80', 'align'=>'right', 'func'=>'formatCurrency'),
+			array('display'=>'业务员','name'=>'name', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'摘要','name'=>'abstract', 'width'=>'400', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'sum'=>$sum,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,36 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">盘点记录表</a>&nbsp;&gt;&nbsp;{$vo.id}
+	</div>
+	<div class="tab-menu">
+	<ul>
+		<li><a href="__URL__">盘点记录表</a></li>
+		<li><a href="__URL__/add"><div class="ico_add"></div>新建盘点</a></li>
+		<li><a class="on" href="javascript:;">盘点记录-{$vo.id}</a></li>
+	</ul>
+	</div>
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Stocktaking',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'明细',
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'product_id'),
+			array('display'=>'实际数量','name'=>'qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'现有库存','name'=>'stock_qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'盘盈','name'=>'more', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'盘亏','name'=>'less', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'中文描述','name'=>'ch_description', 'width'=>'200', 'align'=>'left'),
+			array('display'=>'英文描述','name'=>'description', 'width'=>'200', 'align'=>'left'),
+		),
+		'data'=>$details,
+	))}
+	{:W("Workflow",array('module'=>MODULE_NAME,'vo'=>$vo,'allowApprove'=>$allowApprove))}
+</div>
+<include file="Public:footer" />

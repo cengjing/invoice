@@ -1,0 +1,8 @@
+@media screen {
+	#print-extras, .footnote-reference { display:none; }
+}
+@media print {
+	.footnote-reference { display: inline; }
+	#print-extras { display:block; page-break-before:always; }
+	#print-extras .favicon { height:16px; margin-right:5px; width:16px; }
+}

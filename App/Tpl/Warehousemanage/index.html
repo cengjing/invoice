@@ -1,0 +1,31 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;仓库管理
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'仓库列表', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'新建仓库', 'url'=>'__URL__/add', 'add'=>'true'),
+		)
+	))}
+	<form action="__URL__/saveSeq" method="post">
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'字段名', 'name'=>'dbfield', 'width'=>'100', 'align'=>'left', 'input'=>'type="hidden" name="id[]"', 'input_value'=>'id'),
+			array('display'=>'仓库名称', 'name'=>'name', 'width'=>'80', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'有效','name'=>'status', 'width'=>'60', 'align'=>'center', 'func'=>'bool2text'),
+			array('display'=>'是否销售','name'=>'on_sale', 'width'=>'60', 'align'=>'center', 'func'=>'bool2text'),
+			array('display'=>'是否MRP计算','name'=>'mrp', 'width'=>'80', 'align'=>'center', 'func'=>'bool2text'),
+			array('display'=>'顺序','name'=>'seq', 'width'=>'60', 'align'=>'right', 'input'=>'type="text" name="seq[]" style="text-align:right;"', 'input_value'=>'seq','input_show'=>true),
+			array('display'=>'摘要','name'=>'abstract', 'width'=>'300', 'align'=>'left'),
+		),
+		'data'=>$lists,
+		'emptyDataTips'=>true,
+	))}
+	<div class="p5">
+		<input type="submit" class="save" value="保存排序" />
+	</div>
+	</form>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,35 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">已发邮件</a>&nbsp;&gt;&nbsp;新建政策
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'已发邮件', 'url'=>'__URL__'),
+			array('title'=>'新建邮件', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'邮件：'.$vo['subject'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	<div class="clearfix p5">
+   		<div class="p5 left" style="width:10%">主题：</div>
+   		<div class="p5 left shadow cnt" style="width:80%">{$vo.subject}</div>
+   	</div>
+   	<div class="clearfix p5">
+   		<div class="p5 left" style="width:10%">内容：</div>
+   		<div class="p5 left shadow cnt" style="width:80%">{$vo.content}</div>
+   	</div>
+   	<div class="p5">
+   		<div class="p5 left" style="width:10%">发件人：</div>
+   		<div class="p5 left" style="width:80%">{$vo.uid|getUserInfoById}&nbsp;&nbsp;{$vo.cTime|getTime}</div>
+   	</div>
+ 	{:W("Grid", array(
+		'title'=>'收件人',
+		'header'=>array(
+			array('display'=>'收件人', 'name'=>'name', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'Email','name'=>'email', 'width'=>'200', 'align'=>'left'),
+		),
+		'data'=>$details,
+	))}
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,71 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+						<a href="__URL__">采购单列表</a>&nbsp;&gt;&nbsp;新建采购单</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'采购单列表', 'url'=>'__URL__'),
+			array('title'=>'新建采购请购单', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'修改采购单-'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Purchase',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	<div class="form-header big">采购明细</div>
+	<div id="mrp_details">
+	{:W("Grid", array(
+		'title'=>'Mrp统计结果',
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'col'=>'productname', 'width'=>'180', 'align'=>'left', 'input'=>'type="hidden" col="pid" name="mrp_pid[]"', 'input_value'=>'product_id'),
+			array('display'=>'商品编号', 'name'=>'catno', 'col'=>'catno', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'供货编号', 'name'=>'mfr_part_no', 'col'=>'mfr_part_no', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'数量','name'=>'qty', 'col'=>'qty', 'width'=>'50', 'align'=>'right', 'input'=>'type="hidden" col="qty" name="qty[]"', 'input_value'=>'qty'),
+			array('display'=>'采购单价','name'=>'purchase_price', 'col'=>'purchase_price', 'width'=>'80', 'align'=>'right', 'input'=>'type="hidden" col="purchase_price" name="purchase_price[]"', 'input_value'=>'purchase_price'),
+			array('display'=>'订单编号','name'=>'order_id', 'width'=>'70', 'align'=>'right', 'input'=>'type="hidden" col="order_id" name="order_id[]"', 'input_value'=>'order_id'),
+			array('display'=>'销售单价','name'=>'sale_price', 'col'=>'sale_price', 'width'=>'60', 'align'=>'right', 'input'=>'type="hidden" col="sale_price" name="sale_price[]"', 'input_value'=>'sale_price'),
+			array('display'=>'中文描述', 'name'=>'ch_description', 'col'=>'ch_description', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'英文描述', 'name'=>'description', 'col'=>'description', 'width'=>'80', 'align'=>'left'),
+		),
+		'data'=>$orders,
+		'name'=>'mrp_details',
+		'selectable'=>true,
+	))}
+	</div>
+	<div class="p5"><img class="img-center" src="__PUBLIC__/images/dataDelete.gif" title="删除选中明细" id="deleteMrpItem"  /></div>
+	{:W("Grid", array(
+		'title'=>'自定义添加采购商品',
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'col'=>'productname', 'width'=>'180', 'align'=>'left', 'input'=>'type="hidden" col="pid" name="pid[]" ', 'input_value'=>'product_id'),
+			array('display'=>'商品编号', 'name'=>'catno', 'col'=>'catno', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'供货编号', 'name'=>'mfr_part_no', 'col'=>'mfr_part_no', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'数量','name'=>'qty', 'width'=>'50', 'align'=>'right', 'input'=>'type="text" col="qty" name="def_qty[]" style="text-align:right;"', 'input_show'=>true, 'input_value'=>'qty'),
+			array('display'=>'采购单价','name'=>'purchase_price', 'width'=>'60', 'align'=>'right', 'input'=>'type="text" col="purchase_price" name="def_purchase_price[]" style="text-align:right;"', 'input_show'=>true, 'input_value'=>'purchase_price'),
+			array('display'=>'中文描述', 'name'=>'ch_description', 'col'=>'ch_description', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'英文描述', 'name'=>'description', 'col'=>'description', 'width'=>'80', 'align'=>'left'),
+		),
+		'rowCache'=>true,
+		'name'=>'details',
+		'sortable'=>true,
+		'selectable'=>true,
+		'class'=>selectProducts,
+		'data'=>$def,
+	))}
+	{:W('SelectProduct',array('gridName'=>'details'))}
+	<div class="p5">
+		<input type="hidden" name="id" value="{$vo.id}" />
+		<input type="hidden" name="vender_id" value="{$vo.vender_id}" />
+		<input id="submit_update" class="save" type="button"  value="修改" />
+	</div>
+</div>
+<script type="text/javascript">
+window.addEvent('domready', function(){
+	vender_id = '{$vo.vender_id}';
+	input = new Element('input',{ 'type':'hidden','name':'vender_id','value':vender_id });
+	input.inject($('search_products'));
+});
+</script>
+<include file="Public:footer" />

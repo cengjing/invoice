@@ -1,0 +1,104 @@
+<div id="pannel_{$id}">
+	<script type="text/javascript" src="__PUBLIC__/js/tabs.js"></script>
+	<div class="clearfix">
+		<div class="bd left company" style="width:162px;">{$data.company}</div>
+		<div class="left" style="height:20px;line-height:20px;">&nbsp;~&nbsp;</div>
+		<neq name="filter" value="true">
+		<input type="hidden" name="company_id" class="company_id" value="{$data.company_id}" />
+		</neq>
+		<div class="bd left contact" style="width:60px;">{$data.contact}</div>&nbsp;
+		<input type="hidden" name="contact_id" class="contact_id" value="{$data.contact_id}" />
+		<div class="left">&nbsp;</div>
+			<img class="img-center left" src="__PUBLIC__/images/select.gif" title="查找客户" onClick="contacts_{$id}.show();" />
+			<img class="img-center left" src="__PUBLIC__/images/clear_field.gif" title="清空选择" id="clear_{$id}" />
+	</div>
+	
+	<div id="win_{$id}" class="win">
+		<div id="win_handle_{$id}" class="win-handle big">
+			<div class="left">查找联系人...</div>
+			<div class="right win-close">
+				<a href="javascript:contacts_{$id}.close();"><img class="img-center" src="__PUBLIC__/images/close.gif" title="关闭" /></a>
+			</div>
+		</div>
+		<div class="tab-menu">
+			<ul>
+				<li><a href="javascript:;" class="on tab">筛选条件</a></li>
+				<li><a class="tab" href="javascript:;">结果</a></li>
+			</ul>
+		</div>
+		<div id="filter_contacts_{$id}" class="win-panel content">
+			{:W("Filter", array('type'=>'ajax', 'module'=>'Contacts', 'arr'=>$arr, 'default'=>$default))}
+			<div class="controlPanel center">
+				<input id="contacts_filter_Btn_{$id}" class="edit" type="button" value="搜索" />
+			</div>
+		</div>
+		<div id="results_contacts_list_{$id}" class="win-panel content p5"></div>
+	</div>
+
+	<script type="text/javascript">
+	var contacts_{$id} = null;
+	var result_{$id} = 'results_contacts_list_{$id}';
+	var pannel_{$id} = $('pannel_{$id}');
+	
+	window.addEvent('domready', function(){
+		var winID = "win_{$id}";
+		var tabContacts_{$id} = new TabPane(winID, {activeClass:'on'});
+		contacts_{$id} = new DialogBox(winID, 'win_handle_{$id}',true);
+		$("contacts_filter_Btn_{$id}").addEvent('click', function(){
+			new Request.HTML({
+				url: APP+'/contacts/filter',
+				format: 'page',
+				data: $('filter_contacts_{$id}'),
+				update: $(result_{$id}),
+				onRequest: function(){ $(winID).spin(); },
+				onSuccess: function(){
+					$(winID).unspin();
+					tabContacts_{$id}.showTab(1);
+				}
+			}).send();
+		});
+		var resultsList = $(result_{$id});
+		var pageRequest = new Request.HTML({
+			format: 'page',
+			method: 'post',
+			update: resultsList,
+			onRequest: function(){ resultsList.spin(); },
+			onSuccess: function(){ resultsList.unspin(); }
+		});
+		resultsList.addEvent('click:relay(div .page a)',function(e,target){
+			e.preventDefault();
+			pageRequest.send({
+		        url: target.get('href')
+		    });
+		});
+		var resultRequest = new Request({
+			onSuccess: function(txt){
+				results = JSON.decode(txt);
+				if(results.status == 1){
+					this.getElement('.contact').set('html', results.data.name);
+					this.getElement('.contact_id').set('value', results.data.id).fireEvent('selected', results.data);
+					this.getElement('.company').set('html', results.data.company);
+					<neq name="filter" value="true">
+					this.getElement('.company_id').set('value', results.data.company_id);
+					</neq>
+					contacts_{$id}.close();
+				}
+			}.bind(pannel_{$id})
+		});
+		resultsList.addEvent('click:relay(td a)',function(e,target){
+			e.preventDefault();
+			resultRequest.send({
+		        url: target.get('href')
+		    });
+		});
+		$("clear_{$id}").addEvent('click', function(){
+			this.getElement('.company').set('html', '');
+			<neq name="filter" value="true">
+			this.getElement('.company_id').set('value', '');
+			</neq>
+			this.getElement('.contact').set('html', '');
+			this.getElement('.contact_id').set('value', '');	
+		}.bind(pannel_{$id}));
+	});
+	</script>
+</div>

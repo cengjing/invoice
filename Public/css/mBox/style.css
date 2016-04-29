@@ -1,0 +1,211 @@
+.mBox.Core {
+	font-size:12px;
+	line-height:normal;
+}
+.mBox.Core .mBoxContainer {
+	background:#fff;
+	border:1px solid #d6d6d6;
+	-webkit-box-shadow:0 0 4px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow:0 0 4px rgba(0, 0, 0, 0.25);
+	box-shadow:0 0 4px rgba(0, 0, 0, 0.25);
+}
+.mBox.Core .mBoxContent,
+.mBox.Core .mBoxTitle,
+.mBox.Core .mBoxFooter {
+	padding:15px;
+	word-break:break-word;
+}
+.mBox.Core.mBoxLoading .mBoxContent {
+	min-height:11px;
+	background:url('images/mBox-Loader.gif') center center no-repeat;
+}
+.mBox.Notice {
+	font-size:16px;
+	line-height:normal;
+}
+.mBox.Notice .mBoxContainer {
+	color:#fff;
+	text-shadow:0 -1px 1px #000;
+	padding:20px 30px;
+	cursor:pointer;
+	background-color:#000;
+	background:rgba(0, 0, 0, 0.85);
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	border-radius:6px;
+}
+.mBox.Notice .mBoxContent {
+	word-break:break-word;
+}
+
+
+/*** notice theme: default ***/
+
+.mBox.Notice {
+	font-size:16px;
+	line-height:normal;
+}
+.mBox.Notice .mBoxContainer {
+	color:#fff;
+	text-shadow:0 -1px 1px #000;
+	padding:20px 30px;
+	cursor:pointer;
+	background-color:#000;
+	background:rgba(0, 0, 0, 0.85);
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	border-radius:6px;
+}
+.mBox.Notice .mBoxContent {
+	word-break:break-word;
+}
+
+/*** notice icons ***/
+
+.mBox.Notice .mBoxNoticeOk,
+.mBox.Notice .mBoxNoticeSuccess,
+.mBox.Notice .mBoxNoticeError,
+.mBox.Notice .mBoxNoticeCancel,
+.mBox.Notice .mBoxNoticeInfo,
+.mBox.Notice .mBoxNoticeNotice,
+.mBox.Notice .mBoxNoticeAttention {
+	padding-left:70px;
+	background-image:url('images/mBox-Sprites.png');
+	background-repeat:no-repeat;
+}
+
+/*** notice: ok ***/
+
+.mBox.Notice .mBoxNoticeOk,
+.mBox.Notice .mBoxNoticeSuccess {
+	background-position:20px -187px;
+}
+
+/*** notice: error ***/
+
+.mBox.Notice .mBoxNoticeError,
+.mBox.Notice .mBoxNoticeCancel {
+	background-position:20px -487px;
+}
+
+/*** notice: info ***/
+
+.mBox.Notice .mBoxNoticeInfo {
+	background-position:20px -787px;
+}
+
+/*** notice: notice, attention ***/
+
+.mBox.Notice .mBoxNoticeNotice,
+.mBox.Notice .mBoxNoticeAttention {
+	background-position:20px -1087px;
+}
+
+/*** tooltip theme: default ***/
+
+.mBox.Tooltip {
+	font-size:12px;
+	line-height:normal;
+}
+.mBox.Tooltip .mBoxContainer {
+	background:#fff;
+	border:1px solid #d6d6d6;
+	-webkit-box-shadow:0 0 4px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow:0 0 4px rgba(0, 0, 0, 0.25);
+	box-shadow:0 0 4px rgba(0, 0, 0, 0.25);
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+}
+.mBox.Tooltip .mBoxContent {
+	background:#fff;
+	color:#353535;
+	padding:5px 8px;
+	word-break:break-word;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	overflow:auto;
+}
+.mBox.Tooltip.hasTitle .mBoxContent {
+	-webkit-border-top-left-radius:0;
+	-moz-border-radius-topleft:0;
+	border-top-left-radius:0;
+	-webkit-border-top-right-radius:0;
+	-moz-border-radius-topright:0;
+	border-top-right-radius:0;
+}
+.mBox.Tooltip.mBoxLoading .mBoxContent {
+	min-height:11px;
+	background:url('images/mBox-Loader.gif') center center no-repeat;
+}
+.mBox.Tooltip .mBoxTitle {
+	color:#505050;
+	text-shadow:0 1px 0 #fff;
+	padding:5px 8px;
+	font-weight:bold;
+	border-bottom:1px solid #d6d6d6;
+	background-color:#f8f8f8;
+	background-image:-webkit-linear-gradient(top,#fdfdfd,#f4f4f4);
+	background-image:-moz-linear-gradient(top,#fdfdfd,#f4f4f4);
+	background-image:-ms-linear-gradient(top,#fdfdfd,#f4f4f4);
+	background-image:-o-linear-gradient(top,#fdfdfd,#f4f4f4);
+	background-image:linear-gradient(top,#fdfdfd,#f4f4f4);
+	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#fdfdfd,EndColorStr=#f4f4f4);
+	-webkit-box-shadow:inset 0 -1px 1px rgba(255, 255, 255, 0.8);
+	-moz-box-shadow:inset 0 -1px 1px rgba(255, 255, 255, 0.8);
+	box-shadow:inset 0 -1px 1px rgba(255, 255, 255, 0.8);
+	-webkit-border-top-left-radius:5px;
+	-moz-border-radius-topleft:5px;
+	border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+	-moz-border-radius-topright:5px;
+	border-top-right-radius:5px;
+}
+.mBox.Tooltip .mBoxClose {
+	display:block;
+	width:13px;
+	height:13px;
+	padding:0px 0px 0px 0px;
+	position:absolute;
+	top:15px;
+	right:15px;
+}
+.mBox.Tooltip .mBoxClose div {
+	opacity:0.65;
+	width:7px; 
+	height:7px;
+	position:absolute;
+	top:3px;
+	left:3px;
+	background:url('images/mBox-Sprites.png') 0px 0px no-repeat;
+}
+.mBox.Tooltip .mBoxClose:hover {
+	background-position:-17px -52px;
+}
+.mBox.Tooltip .mBoxClose:hover div {
+	opacity:1;
+}
+.mBox.Tooltip .mBoxPointer {
+	background:url('images/mBoxTooltip-Sprites.png') no-repeat;
+}
+.mBox.Tooltip .mBoxPointerTop {
+	width:17px;
+	height:9px;
+	background-position:0px -18px;
+}
+.mBox.Tooltip .mBoxPointerBottom {
+	width:17px;
+	height:9px;
+	background-position:0px -28px;
+}
+.mBox.Tooltip .mBoxPointerRight {
+	width:9px;
+	height:17px;
+	background-position:-10px 0px;
+}
+.mBox.Tooltip .mBoxPointerLeft {
+	width:9px;
+	height:17px;
+	background-position:0px 0px;
+}

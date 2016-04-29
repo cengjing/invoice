@@ -1,0 +1,162 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/config">公司设置</a>
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'设置', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	<form action="__URL__/save" method="post" enctype="multipart/form-data">
+	<div class="clearfix">
+		<ul class="tabs">
+			<li class="selected"><a href="javascript:;">常规</a></li>
+			<li><a href="javascript:;">通用设置</a></li>
+		    <li><a href="javascript:;">运行环境</a></li>
+		    <li><a href="javascript:;">公司信息</a></li>
+		</ul>
+		
+		<div class="tab_container">
+			<div id="tab1" class="tab_content selected">
+				<div class="tt">常规设置：</div>
+				<dl class="lineD">
+		    		<dt>默认分页行数：</dt>
+		    		<dd>
+				    	<input id="list_rows" name="list_rows" type="text" value="{$list_rows}" />
+				    	<p>表格展示的分页数</p>
+				    </dd>
+		    	</dl>
+				<dl class="lineD">
+		    		<dt>最大分页行数：</dt>
+		    		<dd>
+				    	<input id="max_list_rows" name="max_list_rows" type="text" value="{$max_list_rows}" />
+				    	<p>表格展示的最大分页数</p>
+				    </dd>
+		    	</dl>
+				<dl class="lineD">
+		    		<dt>上传文件：</dt>
+		    		<dd>
+				    	<input id="allow_upload_file" name="allow_upload_file" value="1" type="checkbox" <eq name="allow_upload_file" value="1"> checked </eq>/><label for="allow_upload_file">允许</label>
+				    	<p>在短消息，反馈，新闻，销售订单，客户信息中上传文件。</p>
+				    </dd>
+		    	</dl>
+				<dl class="lineD">
+		    		<dt>上传文件最大尺寸：</dt>
+		    		<dd>
+				    	<input id="max_upload_file" name="max_upload_file" type="text" value="{$max_upload_file}" />&nbsp;(MB)
+				    	<p>上传文件的最大尺寸单位MB，但是不能大于服务器允许的上传文件大小{$serverInfo.最大上传许可}。</p>
+				    </dd>
+		    	</dl>
+			</div>
+			
+			<div id="tab2" class="tab_content">
+			    <dl class="lineD">
+		    		<dt>在线统计规则：</dt>
+		    		<dd>
+		    			<input id="online1" type="radio" name="online_status" value="1" <eq name="online_status" value="1"> checked </eq> /><label for="online1">运行程序就统计现在状态</label>
+		    			<br/>
+		    			<input id="online2" type="radio" name="online_status" value="2" <eq name="online_status" value="2"> checked </eq> /><label for="online2">执行业务操作就统计现在状态</label>
+				    </dd>
+		    	</dl>
+			    <dl class="lineD">
+		    		<dt>客户公司名称重复：</dt>
+		    		<dd>
+				    	<input id="company_name_repeat" name="company_name_repeat" value="1" type="checkbox" <eq name="company_name_repeat" value="1"> checked </eq>/><label for="company_name_repeat">允许</label>
+				    	<p>在新建客户，填写公司名称时，选中后允许有相同的公司名称。默认为不允许重复，公司名称是唯一。</p>
+				    </dd>
+		    	</dl>
+		    	<dl class="lineD">
+		    		<dt>客户信用控制：</dt>
+		    		<dd>
+				    	<input id="company_credit" name="company_credit" value="1" type="checkbox" <eq name="company_credit" value="1"> checked </eq>/><label for="company_credit">有效</label>
+				    	<p>客户超过信用额度的订单，将不允许发货，开发票。</p>
+				    </dd>
+		    	</dl>
+				<dl class="lineD">
+		    		<dt>客户信用额度：</dt>
+		    		<dd>
+				    	<input id="company_credit_value" name="company_credit_value" type="text" value="{$company_credit_value}" style="text-align:right;"/>&nbsp;元
+				    	<p>客户信用额度的默认值，当”客户信用控制“选择有效时启用，当额度未空时，没有限制。具体客户的信用额度请在<a href="__APP__/credit">信用管理</a>里设定。</p>
+				    </dd>
+		    	</dl>
+		    	<dl class="lineD">
+		    		<dt>业务员信用控制：</dt>
+		    		<dd>
+				    	<input id="user_credit" name="user_credit" value="1" type="checkbox" <eq name="user_credit" value="1"> checked </eq>/><label for="user_credit">有效</label>
+				    	<p>客户超过信用额度的订单，将不允许发货，开发票。</p>
+				    </dd>
+		    	</dl>
+		    	<dl class="lineD">
+		    		<dt>业务员信用额度：</dt>
+		    		<dd>
+				    	<input id="user_credit_value" name="user_credit_value" type="text" value="{$user_credit_value}" style="text-align:right;"/>&nbsp;元
+				    	<p>业务员信用额度的默认值，当”业务员信用控制“选择有效时启用，当额度未空时，没有限制。</p>
+				    </dd>
+		    	</dl>
+		    	<dl class="lineD">
+		    		<dt>销售助理通知模块：</dt>
+		    		<dd>
+				    	{:W("MultiSelectBox", $assistantModule)}
+				    	<p>当业务员的以上单据，获得任何通知时，销售助理也会获得相同的通知。</p>
+				    </dd>
+		    	</dl>
+			</div>
+			<div id="tab3" class="tab_content">
+				<div class="tt">服务器信息：</div>
+				<div>
+					<volist name="serverInfo" id="v">
+					<dl class="lineD">
+						<dt><strong>{$key}：</strong></dt>
+						<dd>{$v}</dd>
+					</dl>
+					</volist>
+				</div>
+				<input type="button" class="action" value="清除缓存" onClick="javascript:window.location='__URL__/clearCache';"/>
+			</div>
+			<div id="tab4" class="tab_content">
+				<dl class="lineD">
+		    		<dt>公司名称：</dt>
+		    		<dd>
+				    	<input id="site_company" name="site_company" type="text" value="{$site_company}"/>
+				    	<p>用于页面显示，快递单中发件人单位，报表单据的标题。</p>
+				    </dd>
+		    	</dl>
+		    	<dl class="lineD">
+		    		<dt>公司地址：</dt>
+		    		<dd>
+				    	<input id="site_address" name="site_address" type="text" value="{$site_address}"/>
+				    	<p>用于页面显示，报表单据中的地址。</p>
+				    </dd>
+		    	</dl>
+		   		<dl class="lineD">
+		    		<dt>公司Logo：</dt>
+		    		<dd>
+		    			<input type="file" name="site_logo" />
+		    			<p>用于页面显示，报表单据的Logo。建议高度图像50px。</p>
+		    			<p><img src="{$site_logo}" alt="logo" /></p>
+				    </dd>
+		    	</dl>
+			</div>
+		</div>
+	</div>
+	<div class="p5">
+		<input type="submit" class="save" value="保存"/>
+	</div>
+	</form>
+	<script type="text/javascript">
+	window.addEvent('domready', function(){
+		var tabs = $$('ul.tabs li'),content = $$('.tab_content');
+		tabs.each(function(tab, index){
+			tab.addEvent('click', function(){
+				tabs.removeClass('selected');
+				content.removeClass('selected');
+				tabs[index].addClass('selected');
+				content[index].addClass('selected');
+			});
+		});
+	});
+	</script>
+</div>
+<include file="Public:footer" />

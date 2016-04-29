@@ -1,0 +1,13 @@
+<div class="p5">
+	<p class="p5">订单总额：{$order_amount}</p>
+	<p class="p5">最近订单：{$last_order|getTime}</p>
+	<p class="p5">客户欠款：{$arrears}</p>
+	<p class="p5">未开发票：{$invoice}</p>
+	<p class="p5">完成订单：{$order_quant}&nbsp;个</p>
+	<p class="p5">未完订单：{$unfinished_order_quant}&nbsp;个</p>
+	
+	<p class="p5">联系人数：<a href="__APP__/accounts/showContacts/id/{$id}">{$contacts_quant}</a>&nbsp;位</p>
+	
+	<p class="p5">拜访次数：{$activiry_quant}&nbsp;次</p>
+	<p class="p5">最近拜访：{$last_activity|getTime}</p>
+</div>

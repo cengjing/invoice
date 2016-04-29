@@ -1,0 +1,13 @@
+{:W("Grid", array(
+	'title'=>'',
+	'header'=>array(
+		array('display'=>'ID', 'name'=>'id', 'width'=>'60', 'align'=>'left'),
+		array('display'=>'客户名称', 'name'=>'company', 'width'=>'200', 'align'=>'left', 'url'=>'__APP__/accounts/getById/id/', 'url_id'=>'id'),
+		array('display'=>'有效', 'name'=>'status', 'width'=>'40', 'align'=>'left', 'func'=>'bool2text'),
+		array('display'=>'负责人', 'name'=>'assignto', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+		array('display'=>'摘要', 'name'=>'abstract', 'width'=>'150', 'align'=>'left'),
+	),
+	'data'=>$list,
+	'page'=>$page,
+	'height'=>275
+))}

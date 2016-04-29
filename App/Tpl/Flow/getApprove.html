@@ -1,0 +1,55 @@
+<div style="height:300px;padding:5px 10px;">
+	<div id="select_approve" style="height:310px;scroll-y:auto;">
+		<volist name="users" id="u">
+			<div class="user plist" style="padding:10px 15px;cursor:pointer;" uid="{$u.uid}"><span style="font-weight:bold;">{$u.name}</span>
+				<notempty name="u['description']">
+				<span style="color:gray;">&nbsp;[{$u.department_id|getUserDepartmentById}]&nbsp;（{$u.description|Input::forShow}）</span>
+				</notempty>
+			</div>
+		</volist>
+	</div>
+	<div class="center">
+		<input type="button" class="save" value="确定" onClick="select_confirm()">
+		<input type="button" class="print" value="取消" onClick="appBox.close()">
+	</div>
+</div>
+<script type="text/javascript">
+window.addEvent('domready', function(){
+	$('select_approve').getElements('.user').removeClass('selected');
+	$('select_approve').getElements('.user').addEvent('click', function(){
+		$('select_approve').getElements('.user').removeClass('tips');
+		this.addClass('tips');
+	});
+});
+function select_confirm(){
+	var selected = false;
+	var uid;
+	$('select_approve').getElements('.tips').each(function(el){
+		selected = true;
+		uid = el.getProperty('uid');
+	});
+	if(!selected){
+		noti.show({ 
+		    title: '提示', 
+		    message: '请选择审核人。'
+		}); 
+		return;
+	}else{
+		new Request({
+			url: APP+'/{$module}/pend',
+			format: 'json',
+			onSuccess: function(txt){
+				results = JSON.decode(txt);
+				if(results.status == 1){
+					window.location = APP+'/{$module}/show/id/{$id}';
+				}else{
+					noti.show({ 
+					    title: '提示', 
+					    message: results.info 
+					}); 
+				}
+			}
+		}).send('id='+{$id}+'&uid='+uid);
+	}
+}
+</script>

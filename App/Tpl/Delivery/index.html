@@ -1,0 +1,29 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;销售发货</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'销售发货', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'新建发货单', 'url'=>'__URL__/add', 'add'=>'true'),
+		)
+	))}
+	{:W("Filter", array('module'=>'Delivery', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum, 'default'=>$default))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'发货单号', 'name'=>'id', 'width'=>'80', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'申请日期', 'name'=>'cTime', 'width'=>'70', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'状态','name'=>'status', 'width'=>'50', 'align'=>'left', 'func'=>'getDeliveryStatus'),
+			array('display'=>'发货仓库','name'=>'warehouse_id', 'width'=>'60', 'align'=>'left', 'func'=>'getWarehouseName'),
+			array('display'=>'客户名称','name'=>'company', 'width'=>'150', 'align'=>'left'),
+			array('display'=>'联系人','name'=>'name', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'申请人','name'=>'uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'发货人','name'=>'act_uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'发货日期','name'=>'act_time', 'width'=>'70', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'摘要','name'=>'abstract', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

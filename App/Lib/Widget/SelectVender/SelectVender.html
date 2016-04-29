@@ -1,0 +1,88 @@
+<div id="pannel_{$id}">
+	<script type="text/javascript" src="__PUBLIC__/js/tabs.js"></script>
+	<div class="bd left company" style="width:200px;">{$data.vender}</div>&nbsp;
+	<input type="hidden" name="vender_id" class="vender_id" value="{$data.vender_id}">
+	<img class="img-center" src="__PUBLIC__/images/select.gif" title="查找" onClick="vender_{$id}.show();" />
+	<img class="img-center" src="__PUBLIC__/images/clear_field.gif" title="清空选择" id="clear_{$id}"  />
+	<div class="clear"></div>
+	
+	<div id="win_{$id}" class="win">
+		<div id="win_handle_{$id}" class="win-handle big">
+			<div class="left">查找供货商</div>
+			<div class="right win-close">
+				<a href="javascript:vender_{$id}.close();"><img class="img-center" src="__PUBLIC__/images/close.gif" title="关闭" /></a>
+			</div>
+		</div>
+		<div class="tab-menu">
+			<ul>
+				<li><a href="javascript:;" class="on tab">筛选条件</a></li>
+				<li><a class="tab" href="javascript:;">结果</a></li>
+			</ul>
+		</div>
+		<div id="filter_{$id}" class="win-panel content">
+			{:W("Filter", array('type'=>'ajax', 'module'=>'Vender', 'arr'=>$arr, 'field'=>$field, 'default'=>$default))}
+			<div class="controlPanel center">
+				<input id="filter_Btn_{$id}" class="edit" type="button" value="搜索" />
+			</div>
+		</div>
+		<div id="results_list_{$id}" class="win-panel content p5"></div>
+	</div>
+	<script type="text/javascript">
+	var vender_{$id} = null;
+	var result_{$id} = 'results_list_{$id}';
+	var pannel_{$id} = $('pannel_{$id}');
+	
+	window.addEvent('domready', function(){
+		var winID = "win_{$id}";
+		var tabVender_{$id} = new TabPane(winID, {activeClass:'on'});
+		vender_{$id} = new DialogBox(winID, 'win_handle_{$id}', true);
+		$("filter_Btn_{$id}").addEvent('click', function(){
+			new Request.HTML({
+				url: APP+'/vender/filter',
+				format: 'page',
+				data: $('filter_{$id}'),
+				update: $(result_{$id}),
+				onRequest: function(){ $(winID).spin(); },
+				onSuccess: function(){
+					$(winID).unspin();
+					tabVender_{$id}.showTab(1);
+				}
+			}).send();
+		});
+		var resultsList = $(result_{$id});
+		var pageRequest = new Request.HTML({
+			format: 'page',
+			method: 'post',
+			update: resultsList,
+			onRequest: function(){ resultsList.spin(); },
+			onSuccess: function(){ resultsList.unspin(); }
+		});
+		resultsList.addEvent('click:relay(div .page a)',function(e,target){
+			e.preventDefault();
+			pageRequest.send({
+		        url: target.get('href')
+		    });
+		});
+		var resultRequest = new Request({
+			onSuccess: function(txt){
+				results = JSON.decode(txt);
+				if(results.status == 1){
+					this.getElement('.company').set('html', results.data.company);
+					this.getElement('.vender_id').set('value', results.data.id).fireEvent('selected', results.data);;
+					vender_{$id}.close();
+				}
+			}.bind(pannel_{$id})
+		});
+		resultsList.addEvent('click:relay(td a)',function(e,target){
+			e.preventDefault();
+			resultRequest.send({
+		        url: target.get('href')
+		    });
+		});
+		$("clear_{$id}").addEvent('click', function(){
+			this.getElement('.company').set('html', '');
+			this.getElement('.vender_id').set('value', '');
+		}.bind(pannel_{$id}));
+	});
+	</script>
+</div>

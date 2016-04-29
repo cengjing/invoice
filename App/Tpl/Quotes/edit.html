@@ -1,0 +1,46 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+						<a href="__URL__">报价单列表</a>&nbsp;&gt;&nbsp;新建报价单</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'报价单列表', 'url'=>'__URL__'),
+			array('title'=>'新建报价单', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'修改报价单-'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Quotes',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'报价明细',
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'col'=>'productname', 'width'=>'180', 'align'=>'left', 'input'=>'type="hidden" col="pid" name="pid[]" ', 'input_value'=>'product_id'),
+			array('display'=>'商品编号', 'name'=>'catno', 'col'=>'catno', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'数量','name'=>'qty', 'width'=>'30', 'align'=>'right', 'input'=>'type="text" col="qty" name="qty[]" onChange="javascript:calSum(this);" style="text-align:right;"', 'input_show'=>true, 'input_value'=>'qty'),
+			array('display'=>'库存', 'name'=>'', 'width'=>'25', 'align'=>'center','def'=>'<a class="inventory-qty" href="javascript:;">查看</a>'),
+			array('display'=>'单价','name'=>'unit_price', 'width'=>'60', 'align'=>'right', 'input'=>'type="text" col="unit_price" name="unit_price[]" style="text-align:right;border:none;" readonly', 'input_show'=>true, 'input_value'=>'unit_price'),
+			array('display'=>'折扣','name'=>'', 'width'=>'25', 'align'=>'center', 'def'=>'<a class="discount" href="javascript:;">计算</a>'),
+			array('display'=>'折扣(%)','name'=>'discount', 'width'=>'40', 'align'=>'right', 'input'=>'type="text" col="discount" name="discount[]" style="text-align:right;border:none;" readonly', 'input_show'=>true, 'input_value'=>'discount'),
+			array('display'=>'售价','name'=>'sale_price', 'width'=>'60', 'align'=>'right', 'input'=>'type="text" col="sale_price" name="sale_price[]" onChange="javascript:calSum(this);" style="text-align:right;"', 'input_show'=>true, 'input_value'=>'sale_price'),
+			array('display'=>'其他费用','name'=>'other_price', 'width'=>'60', 'align'=>'right', 'input'=>'type="text" col="other_price" name="other_price[]" onChange="javascript:calSum(this);" style="text-align:right;"', 'input_show'=>true, 'input_value'=>'other_price'),
+			array('display'=>'合计','name'=>'sum_price', 'col'=>'sum_price', 'width'=>'80', 'align'=>'right'),
+			array('display'=>'中文描述', 'name'=>'ch_description', 'col'=>'ch_description', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'英文描述', 'name'=>'description', 'col'=>'description', 'width'=>'80', 'align'=>'left'),
+		),
+		'data'=>$details,
+		'rowCache'=>true,
+		'name'=>'details',
+		'sortable'=>true,
+		'selectable'=>true,
+	))}
+	{:W('SelectProduct',array('gridName'=>'details'))}
+	<div class="p5">
+		<input type="hidden" name="id" value="{$vo.id}" id="quotes_id"/>
+		<input id="submit_update" class="save" type="button" value="修改" />
+	</div>
+</div>
+<include file="Public:footer" />

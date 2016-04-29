@@ -1,0 +1,28 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;商品目录</div>
+	{:W("Tabs", array(
+		'module'=>'Products',
+		'tabs'=>array(
+			array('title'=>'商品目录', 'url'=>'__URL__'),
+			array('title'=>'新增商品', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'存货帐 - '.$productName, 'url'=>'__URL__/record', 'selected'=>'true'),
+		)
+	))}
+	{:W("Filter", array('module'=>'ProductsRecords', 'action'=>'__URL__/record/id/'.$id, 'arr'=>$arr, 'sum'=>$sum))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'单据编号', 'name'=>'url_id', 'width'=>'80', 'align'=>'left', 'forShow'=>'true'),
+			array('display'=>'类型', 'name'=>'account_type', 'width'=>'50', 'align'=>'center'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'业务类型', 'name'=>'type', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'单据来源', 'name'=>'from_id', 'width'=>'80', 'align'=>'left', 'forShow'=>'true'),
+			array('display'=>'执行日期', 'name'=>'act_time', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'仓库', 'name'=>'warehouse_id', 'width'=>'60', 'align'=>'left', 'func'=>'getWarehouseName'),
+			array('display'=>'数量', 'name'=>'qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'操作后数量', 'name'=>'stock_qty', 'width'=>'80', 'align'=>'right'),
+		),
+		'data'=>$list,
+	))}
+</div>
+<include file="Public:footer" />

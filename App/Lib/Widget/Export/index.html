@@ -1,0 +1,27 @@
+<div style="margin:20px 0;border-bottom: 1px solid #000;">
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+	<thead>
+		<tr>
+			<td style="border-top: 1px solid #000;border-bottom: 1px solid #000; line-height:28px; font-weight:bold;">#</td>
+			<volist name="th" id="t">
+				<td style="border-top: 1px solid #000;border-bottom: 1px solid #000; line-height:28px; font-weight:bold; text-align:{$t.align};padding-left:5px;">{$t.display}</td>
+			</volist>
+		</tr>
+	</thead>
+	<tbody>
+	<volist name="data" id="d" key="k">
+		<tr>
+			<td style="line-height:24px;">{$k}</td>
+			<volist name="th" id="t">
+				<td style="line-height:24px;text-align:{$t.align};padding-left:5px;">
+				<notempty name="t.func">
+					{$d[$t['name']]|$t['func']}
+				<else/>
+					{$d[$t['name']]}
+				</notempty></td>
+			</volist>
+		</tr>
+	</volist>
+	</tbody>
+</table>
+</div>

@@ -1,0 +1,18 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;库存</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'库存', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'最小库存', 'url'=>'__URL__/safe', 'showControl'=>true, 'show'=>$access['WAREHOUSE']['SAFE']),
+		)
+	))}
+	{:W("Filter", array('module'=>'Warehouse', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum, 'default'=>$default))}
+	{:W("Grid", array(
+		'header'=>$header,
+		'data'=>$list,
+		'page'=>$page,
+		'sum'=>$sum
+	))}
+</div>
+<include file="Public:footer" />

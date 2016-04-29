@@ -1,0 +1,69 @@
+<script type="text/javascript" src="__PUBLIC__/js/su.js"></script>
+<div id="su-{$rand}">
+	<div class="clearfix">
+	<div class="su_show_input left openBtn" onClick="selectUser_{$rand}.show();"></div>
+	<input type="hidden" class="su_all"  name="all" value="" />
+	<input type="hidden" class="su_department" name="department" value="" />
+	<input type="hidden" class="su_others" name="others"" value="" />
+	<img class="img-center left openBtn" src="__PUBLIC__/images/select.gif" onClick="selectUser_{$rand}.show();"/>
+	<img class="img-center left closeBtn" class="left" src="__PUBLIC__/images/clear_field.gif" onClick="selectUser_{$rand}.clear();"/>
+	</div>
+	<div id="win_select_users_{$rand}" class="win">
+		<div id="win_select_users_handle_{$rand}" class="win-handle big ">
+			<div class="left">选择...<if condition="$single eq true">(只能单选)</if></div>
+			<div class="right win-close">
+				<a href="javascript:selectUser_{$rand}.close();"><img class="img-close" src="__PUBLIC__/images/close.gif" title="关闭" /></a>
+			</div>
+		</div>
+		<div class="win-panel">
+			<div style="padding:0 0 4px;border-bottom:1px solid #e5e5e5;">
+				<input id="su_button_all_{$rand}" type="checkbox" onClick="selectUser_{$rand}.checkAll(this);" name="select_all" />&nbsp;
+				<label for="su_button_all_{$rand}" style="color:red;">全选&nbsp;/&nbsp;不选</label>
+				<label for="search_field_{$rand}" style="margin-left:50px;color:black;">查找：</label>
+				<input type="text" id="search_field_{$rand}" style="width:80px;"/>
+				<input type="button" id="search_btn_{$rand}" value="搜索"/>
+			</div>
+			<php>
+			foreach($dpts as $dpt){
+				$left = $dpt['level'] * 15;
+				echo "<div class='plist' style='padding:4px 0px; border-bottom: 1px dashed #E5E5E5'>";
+				echo "<div class='left' style='width:20%;'>";
+				printf( "<div style='margin-left:%spx;'>", $left);
+				printf( "<input id='dpt_%s_%s' type='checkbox' value='%s' class='d' />&nbsp;<label for='dpt_%s_%s'>%s</label>", $dpt['id'], $rand, $dpt['id'], $dpt['id'], $rand, $dpt['title']);
+				echo "</div></div><div class='right' style='width:80%'>";
+				foreach($users as $user){
+					if($user['department_id'] == $dpt['id']){
+						$lableStyle = ($user['status'] != 1)?" style='color:gray;text-decoration:line-through;' title='离职' ":'';
+						echo "<div style='display:block;width:80px;float:left;'>";
+						printf ("<input id='user_%s_%s' 
+										type='checkbox' value='%s' 
+										class='p d_%s u_%s' />&nbsp;&nbsp;
+								 <label for='user_%s_%s' %s>%s</label></div>", 
+								 $user['id'], 
+								 $rand, $user['id'], 
+								 $dpt['id'], 
+								 $user['id'], 
+								 $user['id'], 
+								 $rand, 
+								 $lableStyle,
+								 $user['name']);
+					}
+				}
+				echo "</div><div class='clear'></div></div>";
+			}
+			</php>
+		</div>
+		<div class="controlPanel center">
+			<input type="button" class="save" value="确定" onClick="selectUser_{$rand}.submit();" />
+			<input type="button" class="action" value="取消" onClick="selectUser_{$rand}.close();" />
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+var selectUser_{$rand} = null;
+window.addEvent('domready',function(){
+	selectUser_{$rand} = new Select({$rand}, 'win_select_users_{$rand}', true,'win_select_users_handle_{$rand}', '{$single}', '{$singleId}');
+	selectUser_{$rand}.load('{$toUserId}');
+	selectUser_{$rand}.submit();
+});
+</script>

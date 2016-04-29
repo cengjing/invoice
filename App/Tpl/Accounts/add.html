@@ -1,0 +1,22 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;客户信息
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'客户列表', 'url'=>'__URL__'),
+			array('title'=>'添加客户', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Accounts',
+		'type'=>'add',
+		'data'=>$data,
+	))}
+	<div class="p5">
+		<input id="submit_insert" type="button" class="save" value="保存">
+	</div>
+</div>
+<include file="Public:footer" />

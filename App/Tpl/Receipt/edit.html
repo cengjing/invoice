@@ -1,0 +1,27 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">收款单列表</a>&nbsp;&gt;&nbsp;修改收款单
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'收款单表', 'url'=>'__URL__'),
+			array('title'=>'新建收款单', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'修改收款单', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	<form action="__URL__/update" method="post" id="form">
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Receipt',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	<div class="p5">
+		<input type="hidden" name="id" value="{$vo.id}" />
+		<input id="submit_update" class="save" type="button" value="修改" />
+	</div>
+	</form>
+</div>
+<include file="Public:footer" />

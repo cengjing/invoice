@@ -1,0 +1,22 @@
+body { color: #333; font: 14px/21px 'trebuchet ms', arial, sans-serif; }
+#express_bg {position: relative;background-repeat: no-repeat;background-position: top left;}
+.resize-box {
+	background: white;
+	border: 1px solid #888;
+	position: absolute;
+	white-space: nowrap;
+	z-index: 1;
+	border-image: initial;
+	}
+@media print {
+	body { font-family: georgia, 'times new roman', times, serif; }
+	#express_bg {background: none;}
+	#printbutton { display: none; }
+	.resize-box {
+		background: white;
+		position: absolute;
+		white-space: nowrap;
+		z-index: 1;
+		border: none;
+		}
+}

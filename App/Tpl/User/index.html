@@ -1,0 +1,32 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+						<a href="__APP__/user">用户</a>&nbsp;&gt;&nbsp;用户列表</div>
+	{:W("Tabs", array(
+		'module'=>'User',
+		'tabs'=>array(
+			array('title'=>'用户列表', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Filter",array('module'=>'User', 'action'=>'__URL__', 'arr'=>$arr))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'操作', 'name'=>'', 'width'=>'40', 'align'=>'left', 'def'=>'编辑', 'url'=>'__URL__/edit/id/', 'url_id'=>'id'),
+			array('display'=>'用户名', 'name'=>'username', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'姓名', 'name'=>'name', 'width'=>'80', 'align'=>'left', 'url'=>'__URL__/edit/id/', 'url_id'=>'id'),
+			array('display'=>'性别','name'=>'sex', 'width'=>'40', 'align'=>'center', 'func'=>'getSex'),
+			array('display'=>'部门','name'=>'department', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'有效','name'=>'status', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+			array('display'=>'手机','name'=>'mobilephone', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'邮箱','name'=>'email', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'创建日期','name'=>'cTime', 'width'=>'70', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'最后登录','name'=>'last_login_time', 'width'=>'70', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'登陆IP','name'=>'login_IP', 'width'=>'70', 'align'=>'left'),
+			array('display'=>'备注','name'=>'notes', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

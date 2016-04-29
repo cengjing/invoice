@@ -1,0 +1,21 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;新闻
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'新闻', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'发布时间', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'标题', 'name'=>'title', 'width'=>'600', 'align'=>'left', 'url'=>'__URL__/news/id/', 'url_id'=>'id'),
+			array('display'=>'阅读时间','name'=>'readTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+	))}
+</div>
+<include file="Public:footer" />

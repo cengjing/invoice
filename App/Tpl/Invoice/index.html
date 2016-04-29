@@ -1,0 +1,29 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;销售发票</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'销售发票', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'新建销售发票', 'url'=>'__URL__/add', 'add'=>'true'),
+		)
+	))}
+	{:W("Filter",array('module'=>'Invoice', 'action'=>'__URL__', 'arr'=>$arr))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'发票单号', 'name'=>'id', 'width'=>'100', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'状态','name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'getInvoiceStatus'),
+			array('display'=>'客户名称','name'=>'company', 'width'=>'160', 'align'=>'left'),
+			array('display'=>'联系人','name'=>'contact', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'发票金额','name'=>'amount', 'width'=>'80', 'align'=>'right', 'func'=>'formatCurrency'),
+			array('display'=>'申请人','name'=>'apply_uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'办理人','name'=>'act_uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'备注','name'=>'notes', 'width'=>'200', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'sum'=>$sum,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

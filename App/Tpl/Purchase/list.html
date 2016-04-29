@@ -1,0 +1,39 @@
+<notempty name="list">
+<div class="tt">Mrp统计结果</div>
+{:W("Grid", array(
+	'title'=>'供货商：'.$venderName,
+	'header'=>array(
+		array('display'=>'商品名称', 'name'=>'productname', 'col'=>'productname', 'width'=>'160', 'align'=>'left', 'input'=>'type="hidden" col="pid" name="mrp_pid[]"', 'input_value'=>'product_id'),
+		array('display'=>'商品编号', 'name'=>'catno', 'col'=>'catno', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'product_id'),
+		array('display'=>'供货编号', 'name'=>'mfr_part_no', 'col'=>'mfr_part_no', 'width'=>'100', 'align'=>'left'),
+		array('display'=>'数量','name'=>'pur_qty', 'col'=>'qty', 'width'=>'50', 'align'=>'right', 'input'=>'type="hidden" col="qty" name="qty[]"', 'input_value'=>'pur_qty'),
+		array('display'=>'采购单价','name'=>'purchase_price', 'col'=>'purchase_price', 'width'=>'80', 'align'=>'right', 'input'=>'type="text" col="purchase_price" name="purchase_price[]" style="text-align:right;"', 'input_value'=>'purchase_price', 'input_show'=>true),
+		array('display'=>'订单编号','name'=>'order_id', 'width'=>'70', 'align'=>'right', 'input'=>'type="hidden" col="order_id" name="order_id[]"', 'input_value'=>'order_id'),
+		array('display'=>'销售单价','name'=>'sale_price', 'col'=>'sale_price', 'width'=>'60', 'align'=>'right', 'input'=>'type="hidden" col="sale_price" name="sale_price[]"', 'input_value'=>'sale_price'),
+		array('display'=>'中文描述', 'name'=>'ch_description', 'col'=>'ch_description', 'width'=>'80', 'align'=>'left'),
+		array('display'=>'英文描述', 'name'=>'description', 'col'=>'description', 'width'=>'80', 'align'=>'left'),
+	),
+	'data'=>$list,
+	'name'=>'mrp_details',
+	'selectable'=>true,
+))}
+<div class="p5">
+	<img class="img-center" src="__PUBLIC__/images/dataDelete.gif" title="删除选中明细" id="deleteMrpItem" />
+</div>
+<script type="text/javascript">
+$('deleteMrpItem').addEvent('click', function(){
+	if(confirm('您确定要删除选中的Mrp明细吗？'))
+	{
+		var el = $('mrp_details').getElements('.grid-item');
+		if(el.length == 0)return;
+		el.each(function(el, index){
+			if(el.get('checked')){
+				el.getParent('tr').dispose();
+			}
+		});
+		grid_mrp_details.setOrder();
+		grid_mrp_details.setEvenRow();
+	}
+});
+</script>
+</notempty>

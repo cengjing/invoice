@@ -1,0 +1,170 @@
+<div id="treePanel">
+	<div style="padding:3px">
+		<input type="button" class="edit" value="添加根项目" onClick="spTree.addChild();" />
+	</div>
+	<table cellspacing="0" cellpadding="5" border="0" width="100%"
+		class="listTable">
+		<tr>
+			<td class="colHeader" width="300px">名称</td>
+			<td class="colHeader" width="60px">操作</td>
+			<td class="colHeader">描述</td>
+		</tr>
+		<volist name="tree" id="vo">
+		<tr>
+			<td id="td_{$vo['id']}" class="listTableRow editable"
+				tid="{$vo['id']}" pid="{$vo['pid']}" seq="{$vo['seq']}" col="title"
+				level="{$vo['level']}">{$vo['title']}</td>
+			<td class="listTableRow"><a
+				href="javascript:spTree.up({$vo['id']});" title="上移"><img
+				src="__PUBLIC__/images/up.gif" /></a> <a
+				href="javascript:spTree.down({$vo['id']});" title="下移"><img
+				src="__PUBLIC__/images/down.gif" /></a> 
+				<if condition="$child eq true">
+				<a href="javascript:spTree.addChild({$vo['id']});" title="添加子项目"><img
+				src="__PUBLIC__/images/add.gif" /></a>
+				</if>
+				<a href="javascript:spTree.remove({$vo['id']});" title="删除"><img
+				src="__PUBLIC__/images/delete.gif" /></a></td>
+			<td class="listTableRow editable" tid="{$vo['id']}" col="description"
+				level="-1">{$vo['description']}</td>
+		</tr>
+		</volist>
+	</table>
+</div>
+<script type="text/javascript">
+spTree = {
+	module: '{$name}',
+	up: function(id){
+		var el = $('td_'+id);
+		new Request({
+			url: APP + '/{$name|strtolower}/up/id/' + el.getProperty('tid'),
+			onSuccess: function(txt){
+				var results = JSON.decode(txt);
+				if(results.s == 1){
+					Cookie.write('scrollId', id);
+					window.location=APP+'/{$name}';
+				}
+			}
+		}).send();
+	},
+	down: function(id){
+		var el = $('td_'+id);
+		new Request({
+			url: APP + "/{$name|strtolower}/down/id/" + el.getProperty('tid'),
+			onSuccess: function(txt){
+				var results = JSON.decode(txt);
+				if(results.s == 1){
+					Cookie.write('scrollId', id);
+					window.location=APP+'/{$name}';			
+				}
+			}
+		}).send();
+	},
+	addChild: function(id){
+		if(id == null){
+			var ele = $('treePanel').getElement('tr:last-child');
+			id=0;
+		}else{
+			var td = $('td_'+id);
+			var tr = $('td_'+id).getParent('tr');
+			var ele,seq=0;
+			$$('#treePanel tr').each(function(el){
+				el = el.getElement('td:first-child');
+				if(el){
+					if(el.getProperty('pid') == id){
+						if(el.getProperty('seq')>seq){
+							seq = el.getProperty('seq');
+							ele = el.getParent('tr');
+						}
+					}
+				}
+			});
+			if(!ele)ele = tr;
+		}
+		var td1 = new Element('td',{'class':'listTableRow'});
+		var input = new Element('input',{'class':'input'});
+		var tr1 = new Element('tr');
+		input.inject(td1);
+		td1.inject(tr1);
+		tr1.inject(ele,'after');
+		input.select();
+		input.addEvent('blur',function(){
+			val = input.get('value').trim();
+			if(val=='')tr1.dispose();
+			else{
+				new Request({
+					url:APP+"/{$name|strtolower}/add",
+					onSuccess: function(txt){
+						if(txt == 1){
+							Cookie.write('scrollId', id);
+							window.location=APP+'/{$name}';
+						}
+					}					
+				}).send("pid="+id+"&title="+val);
+			}
+		});
+		input.addEvent('keydown', function(e) { if(e.key == 'enter') { this.fireEvent('blur'); } });
+		new Fx.Scroll(window).toElement(input);
+	},
+	remove: function(id){
+		if(!confirm('您确定要删除?'))return;
+		var el = $('td_'+id);
+		new Request({
+			url: APP + "/{$name|strtolower}/remove/id/" + el.getProperty('tid'),
+			onSuccess: function(txt){
+				if(txt == 1){
+					el.getParent('tr').dispose();
+				}else if(txt == -1){
+					alert('这个项目有子项目,不能删除,请先删除子项目.');
+				}else {
+					alert('这个项目已被应用到其它数据表中,不能删除.');
+				}
+			}
+		}).send();
+	},
+	inlineEdit: function(el){
+		var editing;
+		var id = el.getProperty('tid');
+		var col = el.getProperty('col');
+		el.addEvent('dblclick',function(){
+			if(editing) return;
+			editing = true;
+			var prefix ='';
+			var level = el.getProperty('level');
+			if(level != -1){
+				var prefix ='&nbsp;';
+				(level.toInt()*4).times(function(){ prefix +='&nbsp;'});
+			}
+			var val='';
+			var before = el.get('text').trim();
+			el.set('html','');
+			var input = new Element('input', { 'value':before });
+			input.setStyle('width','200px');
+			input.addEvent('keydown', function(e) { if(e.key == 'enter') { this.fireEvent('blur'); } });
+			input.inject(el).select();
+			input.addEvent('blur', function() {
+				val = input.get('value').trim();
+				if(before != val){
+					new Request({
+						url:APP+'/{$name|strtolower}/update',
+						onSuccess: function(txt){
+							if(txt==1){el.set('html',prefix+val);
+							}else {
+								el.set('html',prefix+before);alert('修改失败!');
+							}
+						}
+					}).send("id="+id+"&value="+val+"&colname="+col);
+				}else{el.set('html',prefix+val);}
+				editing = false;
+			});
+		});
+	}
+};
+window.addEvent('domready', function(){
+	$$('.editable').each(function(el){
+		spTree.inlineEdit(el);
+	});
+	var id = Cookie.read('scrollId');
+	if($('td_'+id))new Fx.Scroll(window).toElement('td_'+id);
+});
+</script>

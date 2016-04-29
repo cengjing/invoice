@@ -1,0 +1,172 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;<a href="__URL__">已发邮件</a>&nbsp;&gt;&nbsp;新建邮件
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'已发邮件', 'url'=>'__URL__'),
+			array('title'=>'新建邮件', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	
+	{:W('StepProcess', array(
+		'title'=>array('收件人筛选','填写邮件内容','确认')
+	))}
+	<script charset="utf-8" src="__PUBLIC__/js/kindEditor/kindeditor-min.js"></script>
+	<script charset="utf-8" src="__PUBLIC__/js/kindEditor/lang/zh_CN.js"></script>
+	<script>
+		var editor;
+		KindEditor.ready(function(K) {
+			editor = K.create('textarea[id="cont"]', {
+				resizeType : 1,
+				allowPreviewEmoticons : false,
+				allowImageUpload : false,
+				items : [
+					'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+					'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+					'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+			});
+		});
+	</script>
+	<div id="tabs" style="padding-left: 20px;">
+		<div class="tab"></div>
+		<div class="tab"></div>
+		<div class="tab"></div>
+		
+		<div class="content">
+			<present name="emailError">
+			<div class="tips p5">{$emailError}</div>
+			<else/>
+			{:W("Filter",array('module'=>'Contacts', 'action'=>'__URL__', 'type'=>'page'))}
+			</present>
+			<div class="p5 clear">
+				<input id="next1" class="action" type="button" value="下一步" />
+			</div>
+		</div>
+		<form action="__URL__/send" method="post">
+		<div class="content">
+			<dl class="lineD">
+	    		<dt>主题：</dt>
+	    		<dd>
+			    	<input id="subject" name="subject" type="text" style="width:500px;" maxlength="255" />
+			    </dd>
+	    	</dl>
+	    	<dl class="lineD">
+	    		<dt>内容：</dt>
+	    		<dd>
+			    	<textarea id="cont" name="content" style="width:500px;height:200px;visibility:hidden;"></textarea>
+			    </dd>
+	    	</dl>
+	    	<div id="contacts"></div>
+			
+			<div class="p5 clear">
+				<input id="previous1" class="action" type="button" value="上一步" />
+				<input id="next2" class="action" type="button" value="下一步" />
+			</div>
+		</div>
+		<div class="content">
+	    	<div class="clearfix p5">
+	    		<div class="p5 left" style="width:10%">主题：</div>
+	    		<div class="p5 left shadow" style="width:80%" id="sbj"></div>
+	    	</div>
+	    	<div class="clearfix p5">
+	    		<div class="p5 left" style="width:10%">内容：</div>
+	    		<div class="p5 left shadow" style="width:80%" id="cnt"></div>
+	    	</div>
+			<div class="p5">
+			{:W("Grid", array(
+				'title'=>'收件人',
+				'header'=>array(
+					array('display'=>'收件人', 'name'=>'title', 'width'=>'100', 'align'=>'left'),
+					array('display'=>'公司名称', 'name'=>'company', 'width'=>'200', 'align'=>'left'),
+					array('display'=>'Email','name'=>'email', 'width'=>'200', 'align'=>'left'),
+				),
+				'rowCache'=>true,
+				'name'=>'contacts',
+			))}
+			</div>
+			<div class="p5">
+				<input id="previous2" class="action" type="button" value="上一步" />
+				<input type="submit" class="save" value="发送" />
+			</div>
+		</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+	window.addEvent('domready', function(){
+		if($('next1')){
+			$('next1').addEvent('click', function(e){
+				new Request.HTML({
+					url: APP+'/mail/contactsFilter',
+					format: 'page',
+					data: $('filter'),
+					update: $('contacts'),
+					onRequest: function(){ $('tabs').spin(); },
+					onSuccess: function(){
+						$('tabs').unspin();
+						$('next1').fireEvent('next');
+					}
+				}).send();
+			});
+		}
+		
+		$('next2').addEvent('click', function(e){
+			if($('subject').get('value') == '')
+			{
+				noti.show({ 
+				    title: '提示', 
+				    message: '请填写邮件主题。'
+				}); 
+				return;
+			}
+			if(editor.html() == '')
+			{
+				noti.show({ 
+				    title: '提示', 
+				    message: '请填写邮件内容。'
+				}); 
+				return;
+			}
+			$('sbj').set('html', $('subject').get('value'));
+			$('cnt').set('html', editor.html());
+			var val,name,company,email;
+			var error = true;
+			var tbody = grid_contacts.bDiv.getElement('tbody');
+			tbody.empty();
+			var row;
+			$('tabs').getElement('.details').getElements('tr').each(function(el){
+				val = el.getElement('.grid-item').get('checked');
+				if(val)
+				{
+					name = el.getElement('div[col=name]').get('text');
+					company = el.getElement('div[col=company]').get('text');
+					email = el.getElement('div[col=email]').get('text');
+					
+					var trs = tbody.getElements('tr');
+					if(trs.length%2 == 1){
+						row.addClass('row');
+					}
+					row = grid_contacts.rowData.clone();
+					row.getElement('td:nth-child(1)').getElement('div').set('html',trs.length+1);
+					row.getElement('td:nth-child(2)').getElement('div').set('html',name);
+					row.getElement('td:nth-child(3)').getElement('div').set('html',company);
+					row.getElement('td:nth-child(4)').getElement('div').set('html',email);
+					row.inject(tbody,'bottom');
+					error = false;
+				}
+				
+			});
+			if(error){
+				noti.show({ 
+				    title: '提示', 
+				    message: '请至少选择一个收件人。'
+				}); 
+			}else{
+				$('next2').fireEvent('next');
+			}
+		});
+	});
+	</script>
+</div>
+<include file="Public:footer" />

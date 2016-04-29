@@ -1,0 +1,32 @@
+<h2>应收款</h2>
+{:W("Grid", array(
+	'header'=>array(
+		array('display'=>'单据编号', 'name'=>'from_url', 'width'=>'80', 'align'=>'left', 'forShow'=>true),
+		array('display'=>'单据类型', 'name'=>'type', 'col'=>'type', 'width'=>'80', 'align'=>'left'),
+		array('display'=>'日期', 'name'=>'cTime', 'col'=>'date', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+		array('display'=>'可核销金额','name'=>'loan_total', 'col'=>'amount', 'width'=>'100', 'align'=>'right', 'input'=>'type="hidden" name="amount"', 'input_value'=>'amount'),
+		array('display'=>'制单人', 'name'=>'uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+		array('display'=>'备注','name'=>'notes', 'width'=>'300', 'align'=>'left'),
+	),
+	'data'=>$receivable,
+	'sum'=>$receivable_sum,
+	'selectable'=>true,
+	'name'=>'re',
+))}
+<div class="p5">选择应收款项核销</div>
+<h2>收款</h2>
+{:W("Grid", array(
+	'header'=>array(
+		array('display'=>'单据编号', 'name'=>'from_url', 'width'=>'80', 'align'=>'left', 'forShow'=>true),
+		array('display'=>'单据类型', 'name'=>'type', 'col'=>'type', 'width'=>'80', 'align'=>'left'),
+		array('display'=>'日期', 'name'=>'cTime', 'col'=>'date', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+		array('display'=>'可核销金额','name'=>'loan_total', 'col'=>'amount', 'width'=>'100', 'align'=>'right', 'input'=>'type="hidden" name="amount"', 'input_value'=>'amount'),
+		array('display'=>'制单人', 'name'=>'uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+		array('display'=>'备注','name'=>'notes', 'width'=>'300', 'align'=>'left'),
+	),
+	'data'=>$receipt,
+	'sum'=>$receipt_sum,
+	'selectable'=>true,
+	'name'=>'receipt',
+))}
+<div class="p5">选择收款项核销</div>

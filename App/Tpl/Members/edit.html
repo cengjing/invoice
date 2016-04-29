@@ -1,0 +1,120 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;个人档案
+	</div>
+	<div class="clearfix">
+		<div class="left" style="width:340px;margin-right:20px;">
+		<form action="__URL__/update" method="post" enctype="multipart/form-data">
+			<img src="{:getUserFace($vo['id'],'large',$vo['sex'])}" alt="头像" />
+			<input type="file" name="profile"  accept="image/gif, image/jpeg, image/jpg" />
+			
+			<h3>个人信息：</h3>
+			<dl class="lineD">
+	    		<dt>姓名：</dt>
+	    		<dd>
+			    	<p>{$vo.name}</p>
+			    </dd>
+	    	</dl>
+			<dl class="lineD">
+	    		<dt>性别：</dt>
+	    		<dd>
+			    	<p>{$vo.sex|getSex}</p>
+			    </dd>
+	    	</dl>
+			<dl class="lineD">
+	    		<dt>部门：</dt>
+	    		<dd>
+			    	<p>{$vo.department|Input::forShow}</p>
+			    </dd>
+	    	</dl>
+	    	
+			<h3>常规设置：</h3>
+			<dl class="lineD">
+	    		<dt>手机：</dt>
+	    		<dd>
+			    	<input name="mobilephone" type="text" value="{$vo.mobilephone|Input::forShow}" />
+			    </dd>
+	    	</dl>
+			<dl class="lineD">
+	    		<dt>电子邮件：</dt>
+	    		<dd>
+			    	<input name="email" type="text" value="{$vo.email|Input::forShow}" />
+			    </dd>
+	    	</dl>
+	    	
+	    	<dl class="lineD">
+	    		<dt>登录时间：</dt>
+	    		<dd>
+			    	<p>{$vo.last_login_time|getTime}</p>
+			    </dd>
+	    	</dl>
+	    	<dl class="lineD">
+	    		<dt>登录IP：</dt>
+	    		<dd>
+			    	<p>{$vo.login_IP}</p>
+			    </dd>
+	    	</dl>			
+	    	<dl class="lineD">
+	    		<dt>介绍：</dt>
+	    		<dd>
+			    	<p>{$vo.abstract|Input::forShow}&nbsp;</p>
+			    </dd>
+	    	</dl>
+	    	
+	    			
+			<h3>SMTP邮箱设置：</h3>
+			<dl class="lineD">
+	    		<dt>电子邮件：</dt>
+	    		<dd>
+			    	<input name="smtp_email" type="text" value="{$email.smtp_email|Input::forShow}" maxlength="255" />
+			    	<p>发邮件的邮箱地址，比如：youmail@gmail.com</p>
+			    </dd>
+	    	</dl>
+	    	<dl class="lineD">
+	    		<dt>SMTP服务器：</dt>
+	    		<dd>
+			    	<input name="smtp_host" type="text" value="{$email.smtp_host|Input::forShow}" maxlength="255" />
+			    	<p>比如：smtp.gmail.com，需要服务器ssl支持</p>
+			    </dd>
+	    	</dl>
+	    	<dl class="lineD">
+	    		<dt>SMTP Port：</dt>
+	    		<dd>
+			    	<input name="smtp_port" type="text" value="{$email.smtp_port|Input::forShow}" maxlength="255" />
+			    	<p>比如：google smtp servers 的port是：465</p>
+			    </dd>
+	    	</dl>
+	    	<dl class="lineD">
+	    		<dt>用户名：</dt>
+	    		<dd>
+			    	<input name="smtp_name" type="text" value="{$email.smtp_name|Input::forShow}" maxlength="255" />
+			    </dd>
+	    	</dl>
+	    	<dl class="lineD">
+	    		<dt>邮箱密码：</dt>
+	    		<dd>
+			    	<input name="smtp_password" type="password" value="{$email.smtp_password}" maxlength="255" />
+			    </dd>
+	    	</dl>
+	    	<dl class="lineD">
+	    		<dt></dt>
+	    		<dd>
+			    	<a id="sendEmail" href="javascript:;">测试邮箱设置</a>
+			    	<p>SMTP服务器都会有每天发送邮件上限，使用时注意不要超过这个上限，比如gmail为每天100个地址。</p>
+			    </dd>
+	    	</dl>
+	    		    	
+			<div class="p5">
+				<input type="hidden" name="id" value="{$vo.id}" />
+				<input type="submit" class="save" value="保存" />
+				<input type="button" class="edit" value="修改密码" onClick="javascript:window.location='__URL__/changePassword/id/{$vo.id}';"/>
+			</div>
+		</form>
+		</div>
+		<div class="left">
+			<include file="Members:perm" />
+		</div>
+	</div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,25 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/warehousemanage">仓库列表</a>&nbsp;&gt;&nbsp;查看仓库
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'仓库列表', 'url'=>'__URL__'),
+			array('title'=>'新建仓库', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'修改仓库', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'WarehouseName',
+		'type'=>'show',
+		'data'=>$vo
+	))}
+	<div class="p5">
+		<input type="hidden" name="id" value="{$vo.id}"/>
+		<input type="button" class="edit" value="修改" onClick="window.location=APP+'/warehousemanage/edit/id/{$vo.id}'"/>
+	</div>
+</div>
+<include file="Public:footer" />

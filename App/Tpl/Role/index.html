@@ -1,0 +1,22 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/role">角色</a>&nbsp;&gt;&nbsp;角色列表</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'角色列表', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	<form action="__URL__/saveSeq" method="post">
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'角色', 'name'=>'name', 'width'=>'80', 'align'=>'left', 'input'=>'type="hidden" name="id[]"', 'input_value'=>'id'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'80', 'align'=>'left', 'func'=>'txtStatus'),
+			array('display'=>'描述', 'name'=>'description', 'width'=>'300', 'align'=>'left'),
+		),
+		'data'=>$list,
+	))}
+	</form>
+</div>
+<include file="Public:footer" />

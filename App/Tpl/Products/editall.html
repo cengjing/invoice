@@ -1,0 +1,44 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">商品目录</a>&nbsp;&gt;&nbsp;
+		批量修改
+	</div>
+	{:W("Tabs", array(
+		'module'=>'Products',
+		'tabs'=>array(
+			array('title'=>'商品目录', 'url'=>'__URL__'),
+			array('title'=>'添加商品', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'批量修改', 'selected'=>'true'),
+		)
+	))}
+	<div class="tt">过滤条件：</div>
+	<empty name="items">
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'ProductsOriginal',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	<else/>
+		<div class="p5">
+		<volist name="list" id="item">
+			[{$item.productname}，{$item.catno}]，
+		</volist>
+		</div>
+		<input type="hidden" name="items" value="{$items}" />
+	</empty>
+	<div class="tt">修改内容：</div>
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'ProductsCorrectional',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	<div class="tips">修改内容信息如果为空，则表示不需要被修改。</div>
+	<div class="p5">
+		<input id="allEditBtn" type="button" class="save" value="批量修改"/>
+	</div>
+</div>
+<include file="Public:footer" />

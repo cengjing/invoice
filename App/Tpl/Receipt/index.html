@@ -1,0 +1,32 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;收款单列表
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'收款单表', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'新建收款单', 'url'=>'__URL__/add', 'add'=>'true'),
+		)
+	))}
+	{:W("Filter",array('module'=>'Receipt', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'收款单号', 'name'=>'id', 'width'=>'80', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'收款日期', 'name'=>'cTime', 'width'=>'70', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'状态','name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'getStatus'),
+			array('display'=>'客户名称','name'=>'company', 'width'=>'150', 'align'=>'left'),
+			array('display'=>'联系人','name'=>'contact', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'收款类型','name'=>'category_id', 'width'=>'70', 'align'=>'left', 'func'=>'getReceiptCategory'),
+			array('display'=>'收款金额','name'=>'amount', 'width'=>'80', 'align'=>'right', 'func'=>'formatCurrency'),
+			array('display'=>'核销金额','name'=>'write_off', 'width'=>'80', 'align'=>'right', 'func'=>'formatCurrency'),
+			array('display'=>'操作人','name'=>'name', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'摘要','name'=>'abstract', 'width'=>'150', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'sum'=>$sum,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,30 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;入库操作
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'入库单列表', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Filter", array('module'=>'Stockin', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum, 'default'=>$default))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'入库单号', 'name'=>'id', 'width'=>'100', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'申请日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'getEntryStatus'),
+			array('display'=>'类型', 'name'=>'type', 'width'=>'60', 'align'=>'left', 'func'=>'getEntryType'),
+			array('display'=>'入库仓库', 'name'=>'warehouse_id', 'width'=>'60', 'align'=>'left', 'func'=>'getWarehouseName'),
+			array('display'=>'申请人', 'name'=>'uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'经办人', 'name'=>'act_uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'入库日期', 'name'=>'act_time', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'摘要','name'=>'abstract', 'width'=>'200', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'sum'=>$sum,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

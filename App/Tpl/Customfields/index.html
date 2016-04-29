@@ -1,0 +1,21 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;自定义字段
+	</div>
+	{:W("Tabs", array(
+		'module'=>'User',
+		'tabs'=>array(
+			array('title'=>'模块', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'名称', 'name'=>'title', 'width'=>'100', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'动作名称', 'name'=>'module', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'备注', 'name'=>'notes', 'width'=>'500', 'align'=>'left'),
+		),
+		'data'=>$modules,
+		'emptyDataTips'=>true,
+	))}
+<include file="Public:footer" />

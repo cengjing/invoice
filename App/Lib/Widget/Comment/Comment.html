@@ -1,0 +1,34 @@
+<script type="text/javascript" src="__PUBLIC__/js/comment.js"></script>
+<script type="text/javascript" charset="utf-8">
+var module = "{$module}";
+var recordId = "{$recordId}";
+</script>
+<div class="tt">评论：</div>
+<form id="reply" method="post" action="__APP__/comment/add">
+	<div class="p5 form">
+		<textarea rows="6" id="comment" name="comment" class="text bd" style="font-size:1em;height:auto;overflow-y:scroll;"></textarea>
+	</div>
+	<div class="p5">
+		<input type="hidden" name="module" value="{$module}">
+		<input type="hidden" name="recordId" value="{$recordId}">
+		<input type="button" value="回复" id="Btn_addComment" class="save">
+	</div>
+</form>
+<div id="comments"></div>
+<div id="subreply">
+	<div class="left" style="padding:5px;width:60px;" >
+		<span class="pic50"><img class="profile" src="{:getUserFace($uid,'small',$sex)}"></span>
+	</div>
+	<div class="right form" style="width:85%;">
+		<form id="subreplyform">
+			<textarea id="subcomment" name="comment" class="text bd" style="font-size:1em;height:auto;overflow-y:scroll;margin:5px 0;"></textarea>
+			<div class="clear">
+				<input type="hidden" name="toId" >
+				<input type="hidden" name="module" value="{$module}">
+				<input type="hidden" name="recordId" value="{$recordId}">
+				<input type="button" value="回复" class="save" onClick="replyComment();">
+				<input type="button" value="取消" class="action" onClick="deleteReply();">
+			</div>
+		</form>
+	</div>
+</div>

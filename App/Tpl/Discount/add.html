@@ -1,0 +1,28 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;<a href="__URL__">商品折扣</a>&nbsp;&gt;&nbsp;新建折扣
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'商品折扣', 'url'=>'__URL__'),
+			array('title'=>'新建折扣', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Discount',
+		'type'=>'add',
+		'data'=>$data,
+	))}
+	<div class="p5">
+		<input id="submit" class="save" type="submit" value="保存" />
+	</div>
+	<div class="tips">
+		<h3>折扣优先级：</h3>
+		<p class="p5">1. 指定客户</p>
+		<p class="p5">2. 商品货号</p>
+		<p class="p5">3. 商品分类</p>
+	</div>
+</div>
+<include file="Public:footer" />

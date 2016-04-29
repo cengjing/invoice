@@ -1,0 +1,62 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">采购单列表</a>&nbsp;&gt;&nbsp;{$vo.id}
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'采购单列表', 'url'=>'__URL__'),
+			array('title'=>'新建采购请购单', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'采购单-'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'其他信息', 'url'=>'__URL__/advShow/id/'.$vo['id']),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Purchase',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	<div class="tt">采购明细</div>
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'product_id'),
+			array('display'=>'供货编号','name'=>'mfr_part_no', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'采购数量','name'=>'qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'到货数量','name'=>'arr_qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'入库数量','name'=>'entry_qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'单位','name'=>'unit', 'width'=>'40', 'align'=>'left'),
+			array('display'=>'规格','name'=>'spec', 'width'=>'40', 'align'=>'left'),
+			array('display'=>'中文描述','name'=>'ch_description', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'英文描述','name'=>'description', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$group,
+	))}
+	<div class="tt">订单明细</div>
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'product_id'),
+			array('display'=>'供货编号','name'=>'mfr_part_no', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'采购数量','name'=>'qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'采购价格','name'=>'purchase_price', 'width'=>'80', 'align'=>'right', 'func'=>'formatCurrency'),
+			array('display'=>'销售价格','name'=>'sale_price', 'width'=>'80', 'align'=>'right', 'func'=>'formatCurrency'),
+			array('display'=>'订单编号','name'=>'order_id', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/salesorder/show/id/', 'url_id'=>'order_id'),
+		),
+		'data'=>$details,
+	))}
+	{:W("Workflow",array('module'=>MODULE_NAME,'vo'=>$vo,'allowApprove'=>$allowApprove))}
+	<div class="tt">操作</div>
+	<div class="p5">
+		<eq name="vo.status" value="3">
+			<input type="button" class="action" value="采购退货" onClick="window.location='__APP__/purchasereturn/add/id/{$vo.id}'"/>
+			<input type="button" class="action" value="采购到货" onClick="window.location='__APP__/arrival/add/id/{$vo.id}'"/>
+			<input type="button" class="action" value="采购发票" onClick="window.location='__APP__/purchaseinvoice/add/id/{$vo.id}'"/>
+		</eq>
+		{:W("EditButton",array('module'=>MODULE_NAME,'id'=>$vo['id']))}
+	</div>
+	{:W("Record",array('module'=>MODULE_NAME,'recordId'=>$vo['id']))}
+</div>
+<include file="Public:footer" />

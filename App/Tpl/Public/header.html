@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title><if condition="$title neq ''">{$title}&nbsp;-&nbsp;</if>CRM</title>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8"/>
+<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
+<link href="__PUBLIC__/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/css/mBox/style.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/css/page.css" type="text/css" rel="stylesheet" />
+<link href="__PUBLIC__/css/dropdown.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="__PUBLIC__/js/core.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/more.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/mBox.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/noti.js"></script>
+<script type="text/javascript">
+	var APP = '__APP__';
+	var URL = '__URL__';
+	var PUBLIC = '__PUBLIC__';
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/site.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/Model/{$Think.MODULE_NAME}.js"></script>
+</head>
+<body id="body">
+<div id="container">
+	<div id="header" class="clearfix">
+		<div id="logo" class="left"><img src="{$site_logo}" alt="logo" /></div>
+		<div id="header-middle" class="left">{$site_company}</div>
+		<div id="user_info" class="right">
+			欢迎您，<span style="font-weight:bold;">{$Think.session.name}</span>!&nbsp;
+			今天是{$year}年{$month}月{$day}日，{$week}&nbsp;
+			<a href="{:u('public/logOut')}">退出</a>
+		</div>
+		<div id="fDiv" class="right">
+			<input id="fIpt" type="text" name="s" placeholder='查找客户, 联系人...'/>
+		</div>
+	</div>
+	<ul class="dropdown">
+		<li class="subnav"><div class="dir first">我的应用</div>
+			<ul>
+				<li><a href="__APP__/">桌面</a></li>
+				<li><a href="__APP__/documents">文档管理</a></li>
+			</ul>
+		</li>
+		{$menu}
+	</ul>

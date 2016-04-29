@@ -1,0 +1,26 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;联系人列表</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'联系人列表', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'添加联系人', 'url'=>'__URL__/add', 'add'=>'true', 'showControl'=>true, 'show'=>$access['CONTACTS']['ADD']),
+		)
+	))}
+	{:W("Filter",array('module'=>'Contacts', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'ID', 'name'=>'id', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'公司名称','name'=>'company', 'width'=>'200', 'align'=>'left'),
+			array('display'=>'姓名', 'name'=>'name', 'width'=>'80', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'性别','name'=>'sex', 'width'=>'50', 'align'=>'left', 'func'=>'getSex'),
+			array('display'=>'有效','name'=>'status', 'width'=>'50', 'align'=>'left', 'func'=>'bool2text'),
+			array('display'=>'职务','name'=>'duty', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'摘要', 'name'=>'description', 'width'=>'400', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

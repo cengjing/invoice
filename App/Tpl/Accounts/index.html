@@ -1,0 +1,35 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;客户信息
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'客户列表', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'添加客户', 'url'=>'__URL__/add', 'add'=>'true', 'showControl'=>true, 'show'=>$access['ACCOUNTS']['ADD']),
+			array('title'=>'批量修改', 'url'=>'__URL__/editAll', 'showControl'=>true, 'show'=>$access['ACCOUNTS']['EDITALL']),
+		)
+	))}
+	{:W("Filter",array('module'=>'Accounts', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'ID', 'name'=>'id', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'客户姓名', 'name'=>'company', 'width'=>'250', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'有效', 'name'=>'status', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+			array('display'=>'行业分类', 'name'=>'industry_id', 'width'=>'80', 'align'=>'left', 'func'=>'getPicklistValue'),
+			array('display'=>'负责人','name'=>'assignto', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'地址', 'name'=>'address', 'width'=>'200', 'align'=>'left'),
+			array('display'=>'摘要', 'name'=>'abstract', 'width'=>'200', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'selectable'=>true,
+		'emptyDataTips'=>true,
+	))}
+	<present name="access.ACCOUNTS.EDITALL">
+	<div class="p5">
+		<input type="button" id="transfer" class="action" value="批量修改"/>
+	</div>
+	</present>
+</div>
+<include file="Public:footer" />

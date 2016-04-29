@@ -1,0 +1,31 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">分组</a>&nbsp;&gt;&nbsp;分组模块</div>
+	{:W("Tabs", array(
+		'module'=>'User',
+		'tabs'=>array(
+			array('title'=>'分组模块', 'url'=>'__URL__'),
+			array('title'=>'分组详情', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	<div class="tips">下级模块优先级高于上级模块</div>
+	<div class="clearfix">
+		<div class="left">
+			<volist name="groups" id="g">
+			<div class="p5" <eq name="g['sub']" value="true"> style="margin-left:40px;" </eq>>
+				<div class="pannel-subtitle">{$g.title}：</div>
+				<div class="p5">
+					{$g.perm}&nbsp;&nbsp;<a style="color:red;" href="__URL__/edit/uid/{$uid}/group_id/{$g.group_id}/module_id/{$g.module_id}">修改</a>
+				</div>
+			</div>
+			</volist>
+		</div>
+		<div class="right">
+			<div class="tt">分组绑定用户：<a href="__APP__/user/edit/id/{$userInfo.id}">{$userInfo.name}</a></div>
+			<img src="{:getUserFace($userInfo['id'],'small',$userInfo['sex'])}"  alt="头像" />
+		</div>
+	</div>
+</div>
+<include file="Public:footer" />

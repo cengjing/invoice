@@ -1,0 +1,29 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;系统升级</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'数据备份', 'url'=>'__APP__/backup'),
+			array('title'=>'系统升级', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	<div class="p5 tips">
+		<p>当前版本：{$version.server_version}</p>
+		<p>发布日期：{$version.server_release}</p>
+		<eq name="needUpgrade" value="true">
+		<p style="font-weight:bold;">最新版本：{$latestVersion}</p>
+		<p style="font-weight:bold;">发布日期：{$latestRelease}</p>
+		<else/>
+		<p style="font-weight:bold;">当前已经是最新版本。</p>
+		</eq>
+	</div>
+	<eq name="needUpgrade" value="true">
+	<form action="__URL__/execute" method="get">
+	<div class="p5">
+		<input id="submit" class="save" type="submit" value="升级" />
+	</div>
+	</form>
+	<div class="tips">升级前请备份系统文件和数据库。</div>
+	</eq>
+</div>
+<include file="Public:footer" />

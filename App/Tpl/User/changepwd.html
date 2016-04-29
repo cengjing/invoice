@@ -1,0 +1,26 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/user">用户</a>&nbsp;&gt;&nbsp;修改用户
+	</div>
+	{:W("Tabs", array(
+		'module'=>'User',
+		'tabs'=>array(
+			array('title'=>'用户列表', 'url'=>'__URL__'),
+			array('title'=>'修改用户-'.$vo['name'], 'url'=>'__URL__/edit/id/'.$vo['id']),
+			array('title'=>'修改密码', 'selected'=>'true'),
+		)
+	))}
+	<form method="post" action="__URL__/doResetPassword">
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'ChangePwd',
+		'type'=>'add',
+	))}
+	<div class="p5">
+		<input type="hidden" name="id" value="{$vo.id}">
+		<input type="submit" class="save" value="修改" />
+	</div>
+	</form>
+<include file="Public:footer" />

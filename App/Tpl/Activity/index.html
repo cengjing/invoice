@@ -1,0 +1,26 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;联系记录</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'联系记录', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'新建联系记录', 'url'=>'__URL__/add', 'add'=>'true', 'showControl'=>true, 'show'=>$access['ACTIVITY']['ADD']),
+		)
+	))}
+	{:W("Filter",array('module'=>'Activity', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'ID', 'name'=>'id', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'操作', 'name'=>'', 'width'=>'30', 'align'=>'center', 'url'=>'__URL__/show/id/', 'url_id'=>'id', 'def'=>'查看'),
+			array('display'=>'公司名称','name'=>'company', 'width'=>'200', 'align'=>'left'),
+			array('display'=>'日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'记录日期', 'name'=>'activity_time', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'制单人','name'=>'uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'主题', 'name'=>'abstract', 'width'=>'400', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

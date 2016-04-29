@@ -1,0 +1,83 @@
+<div class="clearfix" style="width:800px;">
+	<div class="left" style="margin-right:20px;width:480px;">
+	<notempty name="roleList">
+	<div class="tt">角色：</div>
+		<div class="clearfix"style="padding-left:30px;">
+		<volist name="roleList" id="v">
+			<div class="p5 left" style="color:blue;">{$v.title}&nbsp;&nbsp;<eq name="Think.session.administrator" value="true"><a class="gray" href="__APP__/role/edit/id/{$v.id}">修改</a></eq></div>
+		</volist>
+		</div>
+	<else/>
+	<div class="tips p5">没有分配角色</div>
+	</notempty>
+	<notempty name="ss">
+		<notempty name="ss.sales">
+			<div class="tt">助理的销售：</div>
+				<div class="clearfix" style="padding-left:30px;">
+				<volist name="ss.sales" id="v">
+					<div class="p5 left" style="color:blue;"><a href="__APP__/members/show/id/{$v.id}">{$v.name}</a></div>
+				</volist>
+				</div>
+		</notempty>
+		<notempty name="ss.assistants">
+			<div class="tt">销售的助理：</div>
+				<div class="clearfix" style="padding-left:30px;">
+				<volist name="ss.assistants" id="v">
+					<div class="p5 left" style="color:blue;"><a href="__APP__/members/show/id/{$v}">{$v|getUserInfoById}</a></div>
+				</volist>
+				</div>
+		</notempty>
+		<notempty name="ss.assistants">
+			
+		</notempty>
+	</notempty>
+	<notempty name="salesWarehouseList">
+	<div class="tt">销售订单发货仓库：</div>
+		<div class="clearfix" style="padding-left:30px;">
+		<volist name="salesWarehouseList" id="v">
+			<div class="p5 left" style="color:blue;">{$v.title}</div>
+		</volist>
+		</div>
+	<else/>
+	<div class="tips p5">没有分配销售订单发货仓库</div>
+	</notempty>
+	
+	<notempty name="stockList">
+	<div class="tt">库管操作仓库：</div>
+		<div class="clearfix" style="padding-left:30px;">
+		<volist name="stockList" id="v">
+			<div class="p5 left" style="color:blue;">{$v.title}</div>
+		</volist>
+		</div>
+	<else/>
+	<div class="tips p5">没有分配库管操作仓库</div>
+	</notempty>
+	
+	<notempty name="actionPerm">
+	<div class="tt">操作权限：</div>
+		<div style="padding-left:30px;">
+		<volist name="actionPerm" id="v">
+		<div class="pannel-subtitle">{$v.module}：</div>
+		<div class="p5" style="color:blue;">{$v.action}</div>
+		</volist>
+		</div>
+	</notempty>
+	</div>
+	
+	
+	<div class="left" style="width:300px;">
+	<notempty name="actionPerm">
+	<div class="tt">分组：<eq name="Think.session.administrator" value="true"><a class="gray" style="font-size:12px;font-weight:normal;" href="__APP__/group/show/uid/{$vo.id}">修改</a></eq></div>
+		<div style="padding-left:30px;">
+		<volist name="groups" id="g">
+		<div class="p5" <eq name="g.sub" value="true"> style="margin-left:40px;" </eq> >
+			<div class="pannel-subtitle">{$g.title}：</div>
+			<div class="p5">{$g.perm}</div>
+		</div>
+		</volist>
+		</div>
+	<else/>
+	<div class="tips p5">没有分组</div>
+	</notempty>
+	</div>
+</div>

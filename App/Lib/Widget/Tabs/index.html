@@ -1,0 +1,14 @@
+<div class="tab-menu">
+	<ul>
+		<volist name="tabs" id="t">
+			<notempty name="t['show']">
+			<li <eq name="t['selected']" value="true">class="on"</eq>>
+				<a href="{$t['url']}">
+				<eq name="t['add']" value="true"><div class="ico_add"></div></eq>
+				{$t['title']}
+				</a>
+			</li>
+			</notempty>
+		</volist>
+	</ul>
+</div>

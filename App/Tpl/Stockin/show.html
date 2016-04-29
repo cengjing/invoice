@@ -1,0 +1,41 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">入库单列表</a>&nbsp;&gt;&nbsp;入库操作</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'入库单列表', 'url'=>'__URL__'),
+			array('title'=>'入库单-'.$vo['id'], 'url'=>'__URL__/add', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Stockin',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'入库清单',
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'120', 'align'=>'left', 'input'=>'type="hidden" col="pid"', 'input_value'=>'product_id'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'product_id'),
+			array('display'=>'数量', 'name'=>'qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'单位','name'=>'unit', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'规格','name'=>'spec', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'中文描述', 'name'=>'ch_description', 'width'=>'200', 'align'=>'left'),
+			array('display'=>'英文描述', 'name'=>'description', 'width'=>'200', 'align'=>'left'),
+		),
+		'data'=>$details,
+	))}
+	<div class="p5">
+	<eq name="vo.status" value="1">
+		<input type="hidden" name="id" value="{$vo.id}" />
+		<input id="submit" class="save" type="button" value="完成入库" />
+		<eq name="vo.type" value="1">
+		<input class="action" type="button" value="退回采购到货" onClick="javascript:window.location='__URL__/back/id/{$vo.id}';" />
+		</eq>
+	</eq>
+	</div>
+</div>
+<include file="Public:footer" />

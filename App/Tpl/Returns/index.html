@@ -1,0 +1,28 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;退货单列表</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'退货单列表', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'新建退货单', 'url'=>'__URL__/add', 'add'=>'true'),
+		)
+	))}
+	{:W("Filter",array('module'=>'Returns', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'退货单号', 'name'=>'id', 'width'=>'100', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'状态','name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'getStatus'),
+			array('display'=>'销售订单','name'=>'order_id', 'width'=>'80', 'align'=>'left', 'url'=>'salesorder/show/id/', 'url_id'=>'order_id'),	
+			array('display'=>'退回仓库','name'=>'warehouse_id', 'width'=>'80', 'align'=>'left', 'func'=>'getWarehouseName'),
+			array('display'=>'退货金额','name'=>'sum', 'width'=>'80', 'align'=>'right', 'func'=>'formatCurrency'),
+			array('display'=>'制单人','name'=>'uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'摘要','name'=>'abstract', 'width'=>'300', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'sum'=>$sum,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+     <title>
+       {$chart_title}
+     </title>
+     <eq name="noResult" value="0">
+     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+     <script type="text/javascript">
+       google.load('visualization', '1', {packages: ['corechart']});
+     </script>
+     <script type="text/javascript">
+       function drawVisualization() {
+         // Some raw data (not necessarily accurate)
+         var data = google.visualization.arrayToDataTable([{$data}]);
+
+         var options = {
+           title : "{$chart_title}",
+           vAxis: { title: "{$vAxis}"},
+           hAxis: { title: "{$hAxis}"},
+           seriesType: "bars"
+         };
+
+         var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+         chart.draw(data, options);
+       }
+       google.setOnLoadCallback(drawVisualization);
+     </script>
+     </eq>
+   </head>
+   <body style="font-family: Arial;border: 0 none;">
+     <eq name="noResult" value="1">
+     	<div class="tips p5">没有找到相关的数据</div>
+     </eq>
+     <div id="chart_div" style="width: 800px; height: 400px;"></div>
+   </body>
+ </html>

@@ -1,0 +1,35 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;统计表
+	</div>
+	{:W("Tabs", array(
+		'module'=>'User',
+		'tabs'=>array(
+			array('title'=>'统计条件', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Filter", array('module'=>$module, 'action'=>'__URL__', 'arr'=>$arr, 'type'=>'page', 'static'=>true))}
+	<div class="p5 clearfix">
+		<fieldset class="left" style="padding:10px; width:300px;">
+			<legend class="p5">分组统计</legend>
+			<div class="p5">
+			<input type="radio" name="group" id="group-1" value="1" /><label class="p5" for="group-1">商品分类</label>
+			</div>
+			<div class="p5">
+			<input type="radio" name="group" id="group-2" value="2" checked /><label class="p5" for="group-2">无分组</label>
+			</div>
+		</fieldset>
+	</div>
+	<div class="p5">
+		<input type="hidden" name="module" value="{$module}"/>
+		<input id="submit" class="edit" type="submit" value="统计" />
+	</div>
+	<div class="p5 tips">
+		<p>1. 库存金额统计规则为商品库中每项产品“最新成本”*“库存数量”之和，请确保统计的商品“最新成本”不为零。</p>
+		<p>2. 商品库中“最新成本”为每次采购入库后加权平均计算后的金额。</p>
+	</div>
+	<div id="chart_div"></div>
+	<iframe id="chart" width="100%" height="500px" frameborder="0"></iframe>
+</div>
+<include file="Public:footer" />

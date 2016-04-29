@@ -1,0 +1,42 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;<a href="__URL__">采购退货</a>&nbsp;&gt;&nbsp;修改采购退货</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'采购退货', 'url'=>'__URL__'),
+			array('title'=>'新建采购退货', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'修改采购退货-'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Purchasereturn',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'退货明细',
+		'class'=>'form details',
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'150', 'align'=>'left'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'product_id'),
+			array('display'=>'供货编号', 'name'=>'mfr_part_no', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'退货数量','name'=>'', 'width'=>'60', 'align'=>'right', 'inputs'=>array(
+				'1'=>array('type'=>'hidden', 'col'=>'product_id', 'name'=>'product_id[]', 'value'=>'product_id'),
+				'2'=>array('type'=>'text', 'col'=>'qty', 'name'=>'qty[]', 'width'=>'50', 'value'=>'return_qty'),
+			)),
+			array('display'=>'采购数量','name'=>'qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'到货数量','name'=>'arr_qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'单位','name'=>'unit', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'规格','name'=>'spec', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'描述','name'=>'description', 'width'=>'150', 'align'=>'left'),
+		),
+		'data'=>$list,
+	))}
+	<div class="p5">
+		<input type="hidden" name="purchase_id" value="{$vo.purchase_id}"/>
+		<input type="hidden" name="id" value="{$vo.id}"/>
+		<input id="submit_update" class="save" type="button" value="修改">
+	</div>
+</div>
+<include file="Public:footer" />

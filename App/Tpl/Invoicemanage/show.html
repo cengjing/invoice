@@ -1,0 +1,47 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/invoicemanage">销售发票管理</a>&nbsp;&gt;&nbsp;发票信息</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'销售发票管理', 'url'=>'__URL__'),
+			array('title'=>'发票信息-'.$vo['id'], 'url'=>'__URL__/add', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Invoicemanage',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	<div class="p5">
+		<input type="hidden" id="invoice_id" name="id" value="{$vo.id}" />
+		<eq name="vo.status" value="1">
+		<input id="submit" class="save" type="button" value="完成" />
+		</eq>
+		<neq name="vo.status" value="3">
+		<input id="delete" class="action" type="button" value="删除" />
+		</neq>
+	</div>
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Invoice',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'发票明细',
+		'header'=>array(
+			array('display'=>'订单编号', 'name'=>'order_id', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/salesorder/show/id/', 'url_id'=>'order_id'),
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'开票数量', 'name'=>'qty', 'width'=>'50', 'align'=>'right'),
+			array('display'=>'售价', 'name'=>'sale_price', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'合计', 'name'=>'sum_price', 'width'=>'80', 'align'=>'right'),
+			array('display'=>'单位', 'name'=>'unit', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'规格', 'name'=>'spec', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$details,
+	))}
+</div>
+<include file="Public:footer" />

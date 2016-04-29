@@ -1,0 +1,64 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;<a href="__APP__/setting">设置</a></div>
+	<div class="clear pannel-header">用户及权限</div>
+	<div class="left settingsIconDisplay"><a
+		href="__APP__/user"><img class="left" border="0"
+		src="__PUBLIC__/images/ico-users.gif" /></a>
+	<div class="settingsTitle"><a href="__APP__/user">用户</a></div>
+	<div class="settingsTitle">管理用户和给用户分配权限。</div>
+	</div>
+	<if condition="Think.session.administrator eq true">
+	<div class="left settingsIconDisplay"><a
+		href="__APP__/role"><img class="left" border="0"
+		src="__PUBLIC__/images/ico-roles.gif" /></a>
+	<div class="settingsTitle"><a href="__APP__/role">角色</a></div>
+	<div class="settingsTitle">建立角色，给不同角色分配字段权限和操作权限。</div>
+	</div>
+	</if>
+	<div class="left settingsIconDisplay"><a
+		href="__APP__/department"><img class="left" border="0"
+		src="__PUBLIC__/images/ico-department.gif" /></a>
+	<div class="settingsTitle"><a href="__APP__/department">部门</a></div>
+	<div class="settingsTitle">管理公司的组织结构，部门名称。</div>
+	</div>
+	<div class="left settingsIconDisplay">
+		<a href="__APP__/warehousemanage"><img class="left" border="0" src="__PUBLIC__/images/inventory.gif" /></a>
+		<div class="settingsTitle"><a href="__APP__/warehousemanage">仓库管理</a></div>
+		<div class="settingsTitle">新建仓库和对仓库的设置。</div>
+	</div>
+	<div class="clear pannel-header">自定义设置</div>
+	<div class="left settingsIconDisplay">
+		<a href="__APP__/customfields"><img class="left" border="0"	src="__PUBLIC__/images/ico-department.gif" /></a>
+		<div class="settingsTitle"><a href="__APP__/customfields">自定义字段</a></div>
+		<div class="settingsTitle">管理数据表格的自定义字段。</div>
+	</div>
+	<div class="left settingsIconDisplay"><a
+		href="__APP__/packlist"><img class="left" border="0" src="__PUBLIC__/images/ico-picklist.gif" /></a>
+	<div class="settingsTitle"><a href="__APP__/picklist">自定义下拉选择框</a></div>
+	<div class="settingsTitle">管理数据表格的自定义字段。</div>
+	</div>
+	<div class="left settingsIconDisplay"><a
+		href="__APP__/reportsetting"><img class="left" border="0" src="__PUBLIC__/images/report.gif" /></a>
+	<div class="settingsTitle"><a href="__APP__/reportsetting">单据打印设置</a></div>
+	<div class="settingsTitle">报价单，销售订单打印内容的设计。</div>
+	</div>
+	<div class="left settingsIconDisplay"><a
+		href="__APP__/printer"><img class="left" border="0" src="__PUBLIC__/images/print.gif" /></a>
+	<div class="settingsTitle"><a href="__APP__/printer">打印模板设置</a></div>
+	<div class="settingsTitle">快递单据打印模板的设计。</div>
+	</div>
+	
+	<div class="clear pannel-header">公司管理</div>
+	<div class="left settingsIconDisplay"><a
+		href="__APP__/backup"><img class="left" border="0" src="__PUBLIC__/images/backupserver.gif" /></a>
+	<div class="settingsTitle"><a href="__APP__/backup">数据备份</a>和<a href="__APP__/upgrade">系统升级</a></div>
+	<div class="settingsTitle">数据库的备份和恢复，以及系统升级。</div>
+	</div>
+	<div class="left settingsIconDisplay"><a
+		href="__APP__/config"><img class="left" border="0" src="__PUBLIC__/images/migrate.gif" /></a>
+	<div class="settingsTitle"><a href="__APP__/config">公司设置</a></div>
+	<div class="settingsTitle">公司信息和常规设置。</div>
+	</div>
+</div>
+<include file="Public:footer" />

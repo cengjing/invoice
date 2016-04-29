@@ -1,0 +1,14 @@
+{:W("Grid", array(
+	'header'=>array(
+		array('display'=>'商品名称', 'name'=>'productname', 'width'=>'120', 'align'=>'left', 'url'=>'__APP__/Products/getById/id/', 'url_id'=>'id'),
+		array('display'=>'商品编号', 'name'=>'catno', 'width'=>'120', 'align'=>'left'),
+		array('display'=>'销售', 'name'=>'on_sale', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+		array('display'=>'单位', 'name'=>'unit', 'width'=>'50', 'align'=>'left'),
+		array('display'=>'规格', 'name'=>'spec', 'width'=>'50', 'align'=>'left'),
+		array('display'=>'中文描述', 'name'=>'ch_description', 'width'=>'100', 'align'=>'left'),
+		array('display'=>'英文描述', 'name'=>'description', 'width'=>'100', 'align'=>'left'),
+	),
+	'data'=>$list,
+	'page'=>$page,
+	'height'=>275
+))}

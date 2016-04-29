@@ -1,0 +1,39 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;<a href="__URL__">采购发票列表</a>&nbsp;&gt;&nbsp;{$vo.id}</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'采购发票列表', 'url'=>'__URL__'),
+			array('title'=>'新建采购发票', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'采购发票-'.$vo['id'], 'url'=>'__URL__/add', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Purchaseinvoice',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'product_id'),
+			array('display'=>'供货编号','name'=>'mfr_part_no', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'采购单号', 'name'=>'purchase_id', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/purchase/show/id/', 'url_id'=>'purchase_id'),
+			array('display'=>'数量','name'=>'qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'价格','name'=>'price', 'width'=>'80', 'align'=>'right', 'func'=>'formatCurrency'),
+			array('display'=>'单位','name'=>'details_unit', 'width'=>'40', 'align'=>'left'),
+			array('display'=>'规格','name'=>'details_spec', 'width'=>'40', 'align'=>'left'),
+			array('display'=>'中文描述','name'=>'ch_description', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'英文描述','name'=>'description', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$details,
+	))}
+	<div class="p5">
+	<eq name="vo.status" value="3">
+		<input type="button" class="action" onClick="javascript:window.location='__URL__/delete/id/{$vo.id}'" value="删除" />
+	</eq>
+	</div>
+	{:W("Record",array('module'=>MODULE_NAME,'recordId'=>$vo['id']))}
+</div>
+<include file="Public:footer" />

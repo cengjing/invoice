@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>登录 - CRM</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="__PUBLIC__/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="__PUBLIC__/js/core.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/more.js"></script>
+<script type="text/javascript">
+	var be = '';
+	if (Browser.ie && ((Browser.ie6 || Browser.ie7))){ be='IE浏览器请使用IE8或以上版本。';}
+	window.addEvent('domready',function(){
+		var el = $('login-pannel');
+		el.fade('out').position();
+		var fn = function(){el.setStyle('display', 'block').fade('in')};
+		fn.delay(500);
+		$('verify_tip').addEvent('click',function(e){
+			e.stop();
+			$('verify-img').set('src', '__APP__/Public/verify/?random='+Math.random());
+		});
+	});
+</script>
+</head>
+<body id="login-bg">
+<div id="login-pannel">
+	<div style="padding:5px; font-size:18px;font-weight:bold;">{$site_company}</div>
+	<div id="login-form" class="clearfix">
+		<form method="post" action="__URL__/doLogIn">
+			<ul class="left" style="width:330px;height:270px;">
+				<li>
+					<div style="padding:80px 0 0 94px;"><input id="username" class="login_input" type="text" maxlength="128" size="32" name="username" value="" /></div>
+				</li>
+				<li>
+					<div style="padding:20px 0 0 94px;"><input id="password" class="login_input" type="password" maxlength="32" size="32" name="password" value="" /></div>
+				</li>
+				<li>
+					<div style="padding:21px 0 0 94px;">
+					<input id="verify" class="verify_input" type="text" maxlength="4" size="4" name="verify"  />
+					<a id="verify_tip" title="看不清楚? 换一张!" href="javascript:;"><img id="verify-img" src="__APP__/public/verify" style="padding-top:2px;height:25px;vertical-align:middle;"/></a>
+					</div>
+				</li>
+				<li>
+					<div style="padding:24px 0 0 209px;"><input class="loginBtn" type="submit" value="" /></div>
+				</li>		
+			</ul>
+			<div class="left">
+				<div style="font-size:16px;padding:20px 0 0 20px;"><a href="##">中小企业CRM</a></div>
+				<div style="font-size:12px;padding:30px 0 0 20px;height:160px;width:200px;line-height:30px;">
+					<p>中小企业信息化解决方案</p>
+					<p>高效易用，协同合作</p>
+					<p><a href="##">帮助文档</a></p>
+					<p><a href="##">联系我们</a></p>
+				</div>
+				<div style="font-size:11px;padding:5px 0 0 20px;">{$versionType}&nbsp;&nbsp;版本：{$version.server_version}</div>
+			</div>
+		</form>
+	</div>
+	<div class="clearfix"><script type="text/javascript">document.write(be);</script>当前浏览器是<script type="text/javascript">document.write(Browser.name);</script>，（版本：<script type="text/javascript">document.write(Browser.version);</script>）。推荐使用chrome浏览器。</div>
+</div>
+</body>
+</html>

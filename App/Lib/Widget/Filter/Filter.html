@@ -1,0 +1,59 @@
+<script type="text/javascript" src="__PUBLIC__/js/datepicker/datepicker.js"></script>
+<link href="__PUBLIC__/js/datepicker/datepicker_vista/style.css" rel="stylesheet" type="text/css"/>
+<div id="filter-pannel" class="clearfix">
+	<div class="left filter-item">
+		<a href="javascript: myFilter.show();">
+			<img src="__PUBLIC__/images/icon/search.png" title="筛选条件"/>
+		</a>
+	</div>
+	<eq name="export" value="true">
+	<div class="left filter-item"">
+		<a href="__URL__/export/?{$_SERVER.QUERY_STRING}">
+			<img src="__PUBLIC__/images/icon/download.png" title="导出"/>
+		</a>
+	</div>
+	</eq>
+</div>
+<div id="win_filter" class="win">
+	<div id="win_filter_handle" class="win-handle big">
+		<div class="left">筛选条件</div>
+		<div class="right win-close"><a href="javascript:myFilter.close();"><img class="img-close" src="__PUBLIC__/images/close.gif" title="关闭" /></a></div>
+	</div>
+	<form method="get" action="{$action}" id="filter_form">
+	<div class="win-panel">
+		{:W("Filter",array(
+			'allFields'=>'true', 
+			'module'=>$module, 
+			'arr'=>$arr, 
+			'field'=>$field, 
+			'default'=>$default, 
+			'listRows'=>$listRows, 
+			'static'=>$static,
+			))}
+	</div>
+	<div class="controlPanel center">
+		<input id="filterBtn" class="edit" type="submit" value="搜索" />
+		<input id="resetBtn" class="action" type="button" value="重置" />
+	</div>
+	</form>
+	<script type="text/javascript">
+	var myFilter = {};
+	window.addEvent('domready', function(){
+		myFilter = new DialogBox('win_filter', 'win_filter_handle',true);
+		if($('container').getElement('.demo_vista')){
+			new DatePicker($$('.demo_vista'), {
+				pickerClass: 'datepicker_vista',
+				format: '%Y-%m-%d'
+			});
+		}
+		$('resetBtn').addEvent('click', function(e){
+			$('win_filter').getElements('input[type=text]').each(function(el, index){
+				el.set('value', '');
+			});
+			$('win_filter').getElements('select').each(function(el, index){
+				el.set('value', '0');
+			});
+		});
+	});
+	</script>
+</div>

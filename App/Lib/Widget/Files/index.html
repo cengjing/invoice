@@ -1,0 +1,46 @@
+<eq name="allow_upload_file" value="true">
+<div class="tt">
+	<span style="margin-right:50px;">附件：</span>
+</div>
+<eq name="upload" value="true">
+<form action="{:u('common/upload')}" method="post" target="file_upload_target" enctype="multipart/form-data" onsubmit="startFileUpload();">
+<div class="clearfix p5">
+	<span id="file_upload_form">
+		<input type="hidden" name="upload_module" value="{$module}" />
+		<input type="hidden" name="upload_record_id" value="{$recordId}" />
+		<input type="submit" name="submitBtn" value="上传" class="action" />
+		<input id="file_upload_btn" name="myfile" type="file" />
+	</span>
+	<span id="file_upload_process" style="visibility:hidden;">上传中...</span>
+</div>
+<iframe id="file_upload_target" name="file_upload_target" src="javascript:;" style="width:0;height:0;border:0px solid #fff;"></iframe>
+</form>
+</eq>
+<div id="file_list">
+	<present name="files">
+	<div style="width:600px;color:#888;border-bottom:1px solid #888;">
+		<div class="clearfix p5" style="font-weight:bold; border-top:1px solid #888;border-bottom:1px solid #888;">
+			<div class="left" style="padding:0 10px;width:300px;">文件名</div>
+			<div class="left" style="padding:0 10px;width:80px;">上传日期</div>
+			<div class="left" style="padding:0 10px;width:80px;">文件大小</div>
+		</div>
+		<volist name="files" id="f">
+		<div id="attach_{$f.id}" class="clearfix p5 plist">
+			<div class="left" style="padding:0 10px;width:300px;overflow: hidden;">
+				<a href="{:u('common/download', array('id'=>$f['id']))}" title="{$f.name}">{$f.name}</a>
+			</div>
+			<div class="left" style="padding:0 10px;width:80px;">{$f.uploadTime|getTime}</div>
+			<div class="left" style="padding:0 10px;width:80px;">{$f.size|byte_format}</div>
+			<div class="left" style="padding:0 10px;width:20px;">
+				<eq name="delete" value="true">
+					<if condition="$uid eq $f['userId']">
+						<a href="javascript:deleteAttach({$f.id});" >&nbsp;<img src="__PUBLIC__/images/del.gif" title="删除"/></a>
+					</if>
+				</eq>
+			</div>
+		</div>
+		</volist>
+	</div>
+	</present>
+</div>
+</eq>

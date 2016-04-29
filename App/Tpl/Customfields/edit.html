@@ -1,0 +1,26 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/customFields">自定义字段</a>
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'返回列表', 'url'=>'__URL__/show/id/'.$vo['module_id']),
+			array('title'=>'修改定义项', 'url'=>'__URL__/add',  'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'CustomFields',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	<div class="p5">
+		<input type="hidden" name="id" value="{$vo.id}" />
+		<input type="hidden" name="module_id" value="{$vo.module_id}" />
+		<input type="hidden" name="dbfield" value="{$vo.dbfield}" />
+		<input id="submit_insert" type="button" class="edit" value="修改" />
+	</div>
+</div>
+<include file="Public:footer" />

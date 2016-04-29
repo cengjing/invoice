@@ -1,0 +1,98 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/printer">快递单打印模板</a>&nbsp;&gt;&nbsp;
+		新建模板
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'快递单', 'url'=>'__URL__'),
+		)
+	))}
+	<div class="form-header big">上传模板背景图</div>
+	<form action="__URL__/upload" method="post" target="upload_target" enctype="multipart/form-data" onsubmit="startUpload();">
+	<table class="user-form clear" cellspacing="0" cellpadding="0" border="0" width="100%">
+		<tr>
+			<td class="field" width="20%">上传背景图：</td>
+			<td class="info" width="80%"><span id="upload_form">
+				<input id="myfile" name="myfile" type="file" size="30" />
+				<input type="submit" name="submitBtn" value="上传" class="save" />
+				</span><span id="upload_process" style="visibility:hidden;" >上传中...<br/></span>
+			</td>
+		</tr>
+	</table>
+	<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
+	</form>
+	<div class="form-header big">基本信息</div>
+	<form id="form" action="__URL__/update" method="post">
+	<table class="user-form clear" cellspacing="0" cellpadding="0" border="0" width="100%">
+		<tr>
+			<td class="field" width="20%"><span style="color:red;">&nbsp;*&nbsp;</span>单据名称：</td>
+			<td class="info" width="30%"><input type="text" name="title" /></td>
+			<td class="field" width="20%">描述：</td>
+			<td class="info" width="30%"><input type="text" name="description" /></td>
+		</tr>
+		<tr>
+			<td class="field" width="20%">顺序：</td>
+			<td class="info" width="30%"><input type="text" name="seq" /></td>
+		</tr>
+	</table>
+	<div class="form-header big">快递单模板</div>
+	<style type="text/css">
+	.item { padding: 10px 0; }
+	</style>
+	<div class="left" style="width:200px;line-height:22px">
+		<div class="item">
+			<h4>单据尺寸</h4>
+			<div>宽&nbsp;<input id="bg_width" name="width" type="text" style="width:30px" />&nbsp;mm&nbsp;*&nbsp;高<input id="bg_height" name="height" type="text" style="width:30px" />&nbsp;mm</div>
+		</div>
+		<div class="item">
+			<span>项目：</span>
+			<select id="fields" style="width:105px;">
+				<option value="">请选择...</option>
+				<option value="from">寄件人</option>
+				<option value="to">收件人</option>
+				<option value="from_tel">寄件人电话</option>
+				<option value="to_tel">收件人电话</option>				
+				<option value="from_comp">寄件单位</option>
+				<option value="to_comp">收件单位</option>
+				<option value="from_addr">寄件地址</option>
+				<option value="to_addr">收件地址</option>
+				<option value="from_postal">寄件邮编</option>
+				<option value="to_postal">收件邮编</option>
+				<option value="from_date">寄件日期</option>
+			</select>
+		</div>
+		<div class="item">
+			<input id="font_weight" checked="true" type="checkbox" style="margin:1px;" /><span style="line-height:16px">粗体</span>&nbsp;
+			<span>字体：</span>
+			<select id="font_size" style="width:65px;">
+				<option value="0"></option>
+				<option value="8px">8px</option>
+				<option value="9px">9px</option>
+				<option value="10px">10px</option>
+				<option value="11px">11px</option>
+				<option value="12px">12px</option>
+				<option value="13px">13px</option>
+				<option value="14px">14px</option>
+				<option value="15px">15px</option>
+				<option value="16px">16px</option>
+				<option value="17px">17px</option>
+				<option value="18px">18px</option>
+			</select>
+		</div>
+		<div class="item">
+			<a href="javascript:deleteLabel();">删除</a>
+		</div>
+	</div>
+	<div id="express_bg" style="height:150mm; width:250mm;">
+	</div>
+	<div class="p5">
+		<input id="templ" type="hidden" name="templ" />
+		<input id="attach_id" type="hidden" name="attach_id" />
+		<input id="submit" type="button" class="save" value="保存"/>
+	</div>
+	</form>
+</div>
+<include file="Public:footer" />

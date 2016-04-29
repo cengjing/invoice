@@ -1,0 +1,26 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/customFields">自定义字段</a>
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'自定义字段', 'url'=>'__APP__/customFields'),
+			array('title'=>'新建项目', 'url'=>'__URL__/add/module_id/'.$pid, 'add'=>'true'),
+		)
+	))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'名称', 'name'=>'title', 'width'=>'200', 'align'=>'left'),
+			array('display'=>'数据库名称', 'name'=>'dbfield', 'width'=>'150', 'align'=>'left'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'30', 'align'=>'center'),
+			array('display'=>'顺序', 'name'=>'seq', 'width'=>'30', 'align'=>'right'),
+			array('display'=>'字段长度', 'name'=>'len', 'width'=>'50', 'align'=>'right'),
+			array('display'=>'创建日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'操作', 'name'=>'', 'width'=>'30', 'align'=>'center', 'url'=>'__URL__/edit/id/', 'url_id'=>'id', 'def'=>'编辑'),
+		),
+		'data'=>$list,
+	))}
+</div>
+<include file="Public:footer" />

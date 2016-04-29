@@ -1,0 +1,27 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;文档</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'文档列表', 'url'=>'__URL__'),
+			array('title'=>'新增文档', 'url'=>'__URL__/add', 'add'=>'true', 'showControl'=>true, 'show'=>$access['ACTIVITY']['ADD']),
+			array('title'=>'查看 - '.$title, 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Documents',
+		'type'=>'show',
+		'data'=>$vo
+	))}
+	<div class="tt">内容：</div>
+	<div class="shadow" style="padding:20px;">
+		{$vo.content|safeHtml}
+	</div>
+	<div class="p5">
+		<present name="access.ACTIVITY.EDIT">
+		<input class="edit" type="button" value="编辑" onClick="window.location='__URL__/edit/id/{$vo.id}'"/>
+		</present>
+	</div>
+</div>
+<include file="Public:footer" />

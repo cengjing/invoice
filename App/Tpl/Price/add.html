@@ -1,0 +1,24 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;<a href="__URL__">价格管理</a>&nbsp;&gt;&nbsp;新建政策
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'价格策略', 'url'=>'__URL__'),
+			array('title'=>'新建政策', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Price',
+		'type'=>'add',
+	))}
+	<div class="tips">
+		<p>1. 公式：最终价格 = 初始价格 * ( 1 + 调价率% ) + 调整额</p>
+		<p>2. 当价格策略被审核后才会生效。</p>
+	</div>
+	<div class="p5">
+		<input id="submit_insert" type="button" class="save" value="保存"/>
+	</div>
+<include file="Public:footer" />

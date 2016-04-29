@@ -1,0 +1,48 @@
+<div class="p5">
+	<div class="tt">默认字段</div>
+	<div class="p5 clearfix">
+		<volist name="defaultFields" id="v">
+		<div class="left" style="width:150px;">
+			<input id="field_{$v.id}" type="checkBox" name="fields[]" value="{$v.id}" <eq name="v['check']" value="true"> checked </eq> />&nbsp;
+			<label for="field_{$v.id}">{$v.title}</label>
+		</div>
+		</volist>
+	</div>
+	<notempty name="customFields">
+	<div class="tt">自定义字段</div>
+	<div class="p5 clearfix">
+		<volist name="customFields" id="v">
+		<div class="left" style="width:150px;">
+			<input id="custom_field_{$v.id}" type="checkBox" name="costomFields[]" value="{$v.id}" <eq name="v['check']" value="true"> checked </eq> />&nbsp;
+			<label for="custom_field_{$v.id}">{$v.title}</label>
+		</div>
+		</volist>
+	</div>
+	</notempty>
+	<div class="p5">
+		<input type="hidden" name="module_id" value="{$module_id}" />
+		<input type="button" id="saveFields" class="save" value="保存修改" />
+	</div>
+	<div class="tips">如果全部都不选择，表示可以查看任何字段。</div>
+</div>
+<script type="text/javascript">
+$('saveFields').addEvent('click',function(){
+	var form = $('content');
+	new Request({
+		url: APP+"/role/saveFields",
+		data: form,
+		userSpinner: true,
+		onRequest: function(){
+			form.spin();
+		},
+		onSuccess: function(txt){
+			form.unspin();
+			results = JSON.decode(txt);
+			noti.show({ 
+			    title: '提示', 
+			    message: results.info 
+			}); 
+		}
+	}).send();
+});
+</script>

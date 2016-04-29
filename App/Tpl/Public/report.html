@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<title>{$title}</title>
+<link href="__PUBLIC__/css/print.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="__PUBLIC__/js/core.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/more.js"></script>
+</head>
+<body>
+<div id="content">
+<div class="p5 clearfix" style="border-bottom:1px dotted #666;">
+	<div class="left" style="padding-right:20px;"><img src="{$site_logo}" alt="logo" /></div>
+	<div class="left">
+		<div><h4>{$site_company}</h4></div>
+		<div>{$site_address}</div>
+	</div>
+</div>
+<h1 style="padding:5px; text-align:center;">{$moduleName}</h1>
+{:W("Form", array(
+		'formId'=>'form',
+		'module'=>$module,
+		'type'=>'print',
+		'data'=>$vo,
+	))}
+{:W("FormDetails",array(
+	'module'=>$detailsModule,
+	'data'=>$details,
+))}
+<p style="align:center; margin:0px auto;"><input type="button" value="打印" id="printbutton" /></p>
+</div>
+<script>
+window.addEvent('domready', function() {
+	$('printbutton').addEvent('click', function() {
+		window.print();
+	});
+});
+</script>
+</body>
+</html>

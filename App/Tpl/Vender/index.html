@@ -1,0 +1,26 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;供货商</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'供货商', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'添加供货商', 'url'=>'__URL__/add', 'add'=>'true'),
+		)
+	))}
+	{:W("Filter",array('module'=>'Vender', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'供货单位', 'name'=>'company', 'width'=>'250', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'代码', 'name'=>'code', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'联系人', 'name'=>'contact', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'在使用', 'name'=>'status', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+			array('display'=>'电话', 'name'=>'phone', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'手机', 'name'=>'mobilephone', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'备注', 'name'=>'notes', 'width'=>'300', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

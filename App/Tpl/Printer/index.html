@@ -1,0 +1,24 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/printer">快递单打印模板</a>
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'快递方式', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'快递方式', 'name'=>'title', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'80', 'align'=>'left', 'func'=>'txtStatus'),
+			array('display'=>'操作', 'name'=>'', 'width'=>'60', 'align'=>'center', 'def'=>'修改模板', 'url'=>'__URL__/edit/id/', 'url_id'=>'id'),
+			array('display'=>'修改日期', 'name'=>'modify_time', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+		),
+		'data'=>$list,
+		'emptyDataTips'=>true,
+	))}
+	<div class="tips">快递方式请在自定义菜单中添加<a href="__APP__/picklist/show/id/4">点击这里</a></div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,15 @@
+<neq name="searchResult" value="true">
+<div class="p5 rs">没有搜索到结果。</div>
+</neq>
+<notempty name="accountsList">
+<div class="p5 rs">客户单位</div>
+</notempty>
+<volist name="accountsList" id="v">
+<div class="p5 plist"><a href="{:u('accounts/show',array('id'=>$v['id']))}" title="{$v.abstract}" target="_blank">{$v.company}</a></div>
+</volist>
+<notempty name="contactsList">
+<div class="p5 rs">联系人</div>
+</notempty>
+<volist name="contactsList" id="v">
+<div class="p5 plist"><a href="{:u('contacts/show',array('id'=>$v['id']))}" title="{$v.description}" target="_blank">{$v.name}-{$v.company}</a></div>
+</volist>

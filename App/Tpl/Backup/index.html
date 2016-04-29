@@ -1,0 +1,26 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;数据备份</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'数据备份', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'系统升级', 'url'=>'__APP__/upgrade'),
+		)
+	))}
+	<form action="__URL__/add" method="get">
+	<div class="p5">
+		<input id="submit" class="save" type="submit" value="开始备份" />
+	</div>
+	</form>
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'操作', 'name'=>'', 'width'=>'80', 'align'=>'left', 'input'=>'type="hidden" col="filename"', 'input_value'=>'filename', 'def'=>'<a class="import" href="javascript:;">导入</a>&nbsp;|&nbsp;<a class="delete" href="javascript:;">删除</a>'),
+			array('display'=>'文件名(data/database/...)', 'name'=>'filename', 'width'=>'200', 'align'=>'left', 'url'=>'__APP__/data/database/', 'url_id'=>'filename'),
+			array('display'=>'备份时间', 'name'=>'addtime', 'width'=>'150', 'align'=>'left'),
+			array('display'=>'文件大小', 'name'=>'filesize', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$log,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,21 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;库存</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'库存', 'url'=>'__URL__'),
+			array('title'=>'最小库存', 'url'=>'__URL__', 'selected'=>'true', 'showControl'=>true, 'show'=>$access['WAREHOUSE']['SAFE']),
+		)
+	))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'160', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'id'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'120', 'align'=>'left'),
+			array('display'=>'实际库存', 'name'=>'qty', 'width'=>'120', 'align'=>'right'),
+			array('display'=>'最小库存', 'name'=>'min_stock_qty', 'width'=>'120', 'align'=>'right'),
+			array('display'=>'商品分类', 'name'=>'category', 'width'=>'160', 'align'=>'left'),
+		),
+		'data'=>$list,
+	))}
+</div>
+<include file="Public:footer" />

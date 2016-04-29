@@ -1,0 +1,20 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;	<a href="__APP__/vender">供货商列表</a>&nbsp;&gt;&nbsp;新建供货单位</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'供货商', 'url'=>'__URL__'),
+			array('title'=>'添加供货商', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Vender',
+		'type'=>'add',
+		'data'=>$data,
+	))}
+	<div class="p5">
+		<input id="submit_insert" type="button" class="save" value="保存"/>
+	</div>
+</div>
+<include file="Public:footer" />

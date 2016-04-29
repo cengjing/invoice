@@ -1,0 +1,42 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">调拨单列表</a>&nbsp;&gt;&nbsp;新建调拨单
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'调拨单列表', 'url'=>'__URL__'),
+			array('title'=>'新建调拨单', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	<form action="__URL__/insert" method="post" id="form">
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Allot',
+		'type'=>'add',
+		'data'=>$data,
+	))}
+	{:W("Grid", array(
+		'title'=>'调拨明细',
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'col'=>'productname', 'width'=>'180', 'align'=>'left'),
+			array('display'=>'商品编号', 'name'=>'catno', 'col'=>'catno', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'数量','name'=>'qty', 'width'=>'60', 'align'=>'right', 'input'=>'type="text" col="qty" name="qty[]" style="text-align:right;"', 'input_show'=>true),
+			array('display'=>'库存', 'name'=>'', 'width'=>'30', 'align'=>'center','def'=>'<a class="inventory-qty" href="javascript:;">查看</a>'),
+			array('display'=>'中文描述', 'name'=>'ch_description', 'col'=>'ch_description', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'英文描述', 'name'=>'description', 'col'=>'description', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$details,
+		'rowCache'=>true,
+		'name'=>'details',
+		'sortable'=>true,
+		'selectable'=>true,
+	))}
+	{:W('SelectProduct',array('gridName'=>'details'))}
+	<div class="p5">
+		<input id="submit_insert" class="save" type="button" value="保存">
+	</div>
+	</form>
+</div>
+<include file="Public:footer" />

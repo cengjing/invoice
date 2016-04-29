@@ -1,0 +1,73 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/role">角色</a>&nbsp;&gt;&nbsp;修改操作权限
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'角色列表', 'url'=>'__URL__'),
+			array('title'=>'新建角色', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'修改字段权限', 'url'=>'__URL__/editAccessFields/role_id/'.$vo['id']),
+			array('title'=>'修改操作权限', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Role',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	<div class="p5">
+		<input type="button" class="action" value="返回" onclick="javascript:window.location='{:U('role/edit', array('id'=>$vo['id']))}';"/>
+	</div>
+	<volist name="tree" id="v">
+	<div class="pannel-subtitle">
+		<input type="checkbox" name="item[]" value="{$v.id}" id="item-{$v.id}" <notempty name="v['role_id']"> checked </notempty> />
+		<label class="form-tip" for="item-{$v.id}" rel="模块：{$v.name}&nbsp;&nbsp;{$v.description}">{$v.title}</label></div>
+		<div class="p5 clearfix">
+		<volist name="v['_child']" id="sub">
+		<div class="left p5"><input type="checkbox" name="item[]" value="{$sub.id}" id="item-{$sub.id}" <notempty name="sub['role_id']"> checked </notempty>/>
+		<label class="form-tip" for="item-{$sub.id}" rel="操作：{$sub.name}&nbsp;&nbsp;{$sub.description}">{$sub.title}</label></div>
+		</volist>
+		</div>
+	</volist>
+	<div class="p5">
+		<input type="hidden" name="id" value="{$vo.id}" />
+		<input id="saveActionBtn" type="button" class="save" value="修改" />
+		<input type="button" class="action" value="返回" onclick="javascript:window.location='{:U('role/edit', array('id'=>$vo['id']))}';"/>
+	</div>
+</div>
+<script type="text/javascript">
+$('saveActionBtn').addEvent('click',function(){
+	var form = $('content');
+	new Request({
+		url: APP+"/role/saveAction",
+		data: form,
+		userSpinner: true,
+		onRequest: function(){
+			form.spin();
+		},
+		onSuccess: function(txt){
+			form.unspin();
+			results = JSON.decode(txt);
+			noti.show({ 
+			    title: '提示', 
+			    message: results.info 
+			}); 
+		}
+	}).send();
+});
+window.addEvent('domready',function(){
+	$$('.form-tip').each(function(el){
+		var content = el.getProperty('rel');
+		new mBox.Tooltip({
+			content: content,
+			pointer: ['left', 40],
+			attach: el,
+			target: 'mouse'
+		});
+	});
+});
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,27 @@
+<include file="Public:header" />
+<script type="text/javascript" src="__PUBLIC__/js/PasswordStrength.js"></script>
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;	
+		<a href="__URL__/show/id/{$vo.id}">个人信息</a>&nbsp;&gt;&nbsp;
+		修改密码
+	</div>
+	<form action="__URL__/doChangePassword" method="post" class="form">
+		<div class="tt">{$vo.name}</div>
+		<h5 class="p5">新密码:</h5>
+		<div class="p5"><input id="password" type="password" class="bd" name="password" style="width:160px;" maxlength="50" /></div>
+		<div class="p5">
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<input type="submit" class="edit" value="修改" />
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+new Form.PasswordStrength('password', {
+    primer: 'Gr8Pass!',
+    height: 3,
+    bgcolor: '#666',
+    opacity: 1,
+});
+</script>
+<include file="Public:footer" />

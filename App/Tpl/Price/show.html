@@ -1,0 +1,25 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">价格管理</a>&nbsp;&gt;&nbsp;新建政策
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'价格策略', 'url'=>'__URL__'),
+			array('title'=>'新建政策', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'政策-'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Price',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	<div class="tips">
+		<p>满足条件的商品共：{$count}个。</p>
+	</div>
+	{:W("Workflow",array('module'=>MODULE_NAME,'vo'=>$vo,'allowApprove'=>$allowApprove))}
+</div>
+<include file="Public:footer" />

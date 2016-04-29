@@ -1,0 +1,39 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/Setting">设置</a>&nbsp;&gt;&nbsp;<a href="__APP__/Picklist">自定义选项</a></div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'选项分类', 'url'=>'__URL__'),
+			array('title'=>'新建选项', 'url'=>'__URL__/add/pick_id/'.$pick_id, 'add'=>'true'),
+			array('title'=>'返回列表', 'url'=>'__URL__/show/id/'.$pick_id),
+			array('title'=>'修改选项', 'url'=>'__URL__/add/pick_id/'.$pid, 'selected'=>'true'),
+		)
+	))}
+	<form action="__URL__/update" method="post" id="form">
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Picklist',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	<if condition="$multi eq 2">
+	<table class="form clear" cellspacing="0" cellpadding="0" border="0" width="100%">
+		<tbody>
+			<td class="info" style="width:20%"><div class="label">所属类别</div></td>
+			<td style="width:80%">
+				<div style="text-align:left; padding:3px 10px;">
+				{:W('SelectBox', array( 'pick_id'=>$pick_id, 'name'=>'pid', 'value'=>$vo['pid'] ))}
+				</div>
+			</td>
+		</tbody>
+	</table>
+	</if>
+	<div class="btnPannel">
+		<input type="hidden" name="id" value="{$vo.id}" />
+		<input type="hidden" name="pick_id" value="{$pick_id}" />
+		<button type="submit" class="save">修改</button>
+	</div>
+	</form>
+	{:W("EditHistory", array('module'=>MODULE_NAME,'record_id'=>$vo['id']))}
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,23 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;商品目录</div>
+	{:W("Tabs", array(
+		'module'=>'Products',
+		'tabs'=>array(
+			array('title'=>'商品目录', 'url'=>'__URL__'),
+			array('title'=>'添加商品', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'修改'.$vo['productname'], 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Products',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	<div class="p5">
+		<input type="hidden" name="id" value="{$vo.id}" />
+		<input id="submit_update" type="button" class="save" value="修改"/>
+	</div>
+</div>
+<include file="Public:footer" />

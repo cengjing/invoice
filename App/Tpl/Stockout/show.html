@@ -1,0 +1,62 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">发货单列表</a>&nbsp;&gt;&nbsp;发货操作</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'发货单列表', 'url'=>'__URL__'),
+			array('title'=>'发货单'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Stockout',
+		'type'=>'edit',
+		'data'=>$vo,
+	))}
+	<div class="p5">
+		<eq name="vo.status" value="1">
+		<input id="submit" class="save" type="button" value="完成发货" />
+		</eq>
+		<eq name="vo.status" value="2">
+		<input id="submit" class="save" type="button" value="修改快递信息" />
+		</eq>
+		<input type="hidden" name="id" value="{$vo.id}" />
+		<input class="print" type="button" value="打印发货单" onClick="javscript:window.location='__URL__/report/id/{$vo.id}';"/>
+		<input id="prt_exp" class="print" type="button" value="打印快递单" onClick="javscript:window.location='__URL__/express/id/{$vo.id}';"/>
+		<eq name="vo.status" value="4">
+			<input class="action" type="button" value="退回" onClick="javscript:window.location='__URL__/doBack/id/{$vo.id}';"/>
+		</eq>
+	</div>
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Stockout',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'发货清单',
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'120', 'align'=>'left', 'input'=>'type="hidden" col="pid"', 'input_value'=>'product_id'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/products/show/id/', 'url_id'=>'product_id'),
+			array('display'=>'数量', 'name'=>'qty', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'单位','name'=>'unit', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'规格','name'=>'spec', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'中文描述', 'name'=>'ch_description', 'width'=>'200', 'align'=>'left'),
+			array('display'=>'英文描述', 'name'=>'description', 'width'=>'200', 'align'=>'left'),
+		),
+		'data'=>$details,
+	))}
+</div>
+<script type="text/javascript">
+$('prt_exp').addEvent('click', function(){
+	var eid = $('delivery_way').get('value');
+	if(eid != ''){
+		window.location='__URL__/express/id/{$vo.id}/delivery_way/'+eid;
+	}else{
+		window.location='__URL__/express/id/{$vo.id}';
+	}
+});
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,164 @@
+div.default , div.baidu { margin:10px; font-size:12px; }
+div.baidu a { margin:0px 2px; text-decoration:none; }
+div.default a:hover , div.baidu a:hover { text-decoration:underline; }
+div.default span , div.baidu span { color:#990000;font-weight:bold; }
+/*----------------   2   -------------------*/
+div.yahoo {
+	padding:3px 3px; margin:3px;
+	text-align: center;
+}
+div.yahoo a {
+	padding:2px 5px; margin:2px;
+	border-right: #fff 1px solid; border-top: #fff 1px solid; border-left: #fff 1px solid; color: #000099; border-bottom: #fff 1px solid; text-decoration: underline
+}
+div.yahoo a:hover {
+	border-right: #000099 1px solid; border-top: #000099 1px solid; border-left: #000099 1px solid; color: #000; border-bottom: #000099 1px solid
+}
+div.yahoo a:active , div.yahoo a:link , div.yahoo a:visited {
+	border-right: #000099 1px solid; border-top: #000099 1px solid; border-left: #000099 1px solid; color: #f00; border-bottom: #000099 1px solid
+}
+div.yahoo span.current {
+	padding:2px 5px; margin:2px; font-weight: bold;
+	border-right: #fff 1px solid; border-top: #fff 1px solid; border-left: #fff 1px solid; color: #000; border-bottom: #fff 1px solid; background-color: #fff
+}
+div.yahoo span.disabled {
+	padding:2px 5px; margin:2px;
+	border-right: #eee 1px solid; border-top: #eee 1px solid; border-left: #eee 1px solid; color: #ddd; border-bottom: #eee 1px solid
+}
+/*----------------   3   -------------------*/
+div.digg {
+	padding: 3px; margin: 3px;
+	text-align: center;
+}
+div.digg a {
+	padding:3px 3px; margin:0px;
+	border-right: #aaaadd 1px solid; border-top: #aaaadd 1px solid; border-left: #aaaadd 1px solid; color: #000099; border-bottom: #aaaadd 1px solid; text-decoration: none
+}
+div.digg a:hover {
+	border-right: #000099 1px solid; border-top: #000099 1px solid; border-left: #000099 1px solid; color: #000; border-bottom: #000099 1px solid
+}
+div.digg a:active,div.digg a:link,div.digg a:visited {
+	border-right: #000099 1px solid; border-top: #000099 1px solid; border-left: #000099 1px solid; color: #000; border-bottom: #000099 1px solid
+}
+div.digg span.current {
+	padding: 3px 7px; margin:0px; font-weight: bold; background-color: #000099;
+	border-right: #000099 1px solid; border-top: #000099 1px solid; border-left: #000099 1px solid; color: #fff; border-bottom: #000099 1px solid;
+}
+div.digg span.disabled {
+	padding: 3px 3px; margin:0px;
+	border-right: #eee    1px solid; border-top: #eee    1px solid; border-left: #eee    1px solid; color: #ddd; border-bottom: #eee 1px solid
+}
+/*----------------   4   -------------------*/
+div.orange {
+	padding: 3px; margin: 3px;
+	color: #ff6500; text-align: center;
+}
+div.orange a {
+	padding:3px 3px; margin:0px;
+	border-right: #ff9600 1px solid; border-top: #ff9600 1px solid; border-left: #ff9600 1px solid; color: #ff6500; border-bottom: #ff9600 1px solid; text-decoration: none
+}
+div.orange a:hover {
+	border-right: #ff9600 1px solid; border-top: #ff9600 1px solid; background-image: none; border-left: #ff9600 1px solid; color: #ff6500; border-bottom: #ff9600 1px solid; background-color: #ffc794;
+}
+div.orange a:active,div.orange a:link,div.orange a:visited {
+	border-right: #ff9600 1px solid; border-top: #ff9600 1px solid; background-image: none; border-left: #ff9600 1px solid; color: #ff6500; border-bottom: #ff9600 1px solid; background-color: #ffc794
+}
+div.orange span.current {
+	padding: 3px 7px; margin:0px; font-weight: bold; background-color: #ffbe94;
+	border-right: #ff6500 1px solid; border-top: #ff6500 1px solid; border-left: #ff6500 1px solid; color: #ff6500; border-bottom: #ff6500 1px solid;
+}
+div.orange span.disabled {
+	padding: 3px 3px; margin:0px;
+	border-right: #ffe3c6 1px solid; border-top: #ffe3c6 1px solid; border-left: #ffe3c6 1px solid; color: #ffe3c6; border-bottom: #ffe3c6 1px solid
+}
+/*----------------   5   -------------------*/
+div.sabrosus {
+	padding: 3px; margin: 3px;
+	text-align: center;
+}
+div.sabrosus a {
+	padding:3px 3px; margin:0px;
+	border-right: #9aafe5 1px solid; border-top: #9aafe5 1px solid; border-left: #9aafe5 1px solid; color: #2e6ab1; border-bottom: #9aafe5 1px solid; text-decoration: none
+}
+div.sabrosus a:hover {
+	border-right: #2b66a5 1px solid; border-top: #2b66a5 1px solid; border-left: #2b66a5 1px solid; color: #000; border-bottom: #2b66a5 1px solid; background-color: lightyellow
+}
+div.pagination a:active,div.pagination a:link,div.pagination a:visited {
+	border-right: #2b66a5 1px solid; border-top: #2b66a5 1px solid; border-left: #2b66a5 1px solid; color: #000; border-bottom: #2b66a5 1px solid; background-color: lightyellow
+}
+div.sabrosus span.current {
+	padding: 3px 7px; margin:0px; font-weight: bold; background-color: #2e6ab1;
+	border-right: navy 1px solid; border-top: navy 1px solid; border-left: navy 1px solid; color: #fff; border-bottom: navy 1px solid; 
+}
+div.sabrosus span.disabled {
+	padding: 3px 3px; margin:0px;
+	border-right: #929292 1px solid; border-top: #929292 1px solid; border-left: #929292 1px solid; color: #929292; border-bottom: #929292 1px solid
+}
+/*----------------   6   -------------------*/
+div.scott {
+	padding: 3px; margin: 3px;
+	text-align: center;
+}
+div.scott a {
+	padding:3px 3px; margin:0px;
+	border-right: #ddd 1px solid; border-top: #ddd 1px solid; border-left: #ddd 1px solid; color: #88af3f; border-bottom: #ddd 1px solid; text-decoration: none
+}
+div.scott a:hover {
+	border-right: #85bd1e 1px solid; border-top: #85bd1e 1px solid; border-left: #85bd1e 1px solid; color: #638425; border-bottom: #85bd1e 1px solid; background-color: #f1ffd6
+}
+div.scott a:active ,div.scott a:link,div.scott a:visited{
+	border-right: #85bd1e 1px solid; border-top: #85bd1e 1px solid; border-left: #85bd1e 1px solid; color: #638425; border-bottom: #85bd1e 1px solid; background-color: #f1ffd6
+}
+div.scott span.current {
+	padding: 3px 7px; margin:0px; font-weight: bold; background-color: #b2e05d;
+	border-right: #b2e05d 1px solid; border-top: #b2e05d 1px solid; border-left: #b2e05d 1px solid; color: #fff; border-bottom: #b2e05d 1px solid;
+}
+div.scott span.disabled {
+	padding: 3px 3px; margin:0px;
+	border-right: #f3f3f3 1px solid; border-top: #f3f3f3 1px solid; border-left: #f3f3f3 1px solid; color: #ccc; border-bottom: #f3f3f3 1px solid
+}
+/*----------------   7   -------------------*/
+div.quotes {
+	padding: 3px; margin: 3px;
+	text-align: center;
+}
+div.quotes a {
+	padding:3px 3px; margin:0px;
+	border-right: #ddd 1px solid; border-top: #ddd 1px solid; border-left: #ddd 1px solid; color: #aaa; border-bottom: #ddd 1px solid; text-decoration: none
+}
+div.quotes a:hover {
+	border-right: #a0a0a0 1px solid; padding-right: 5px; border-top: #a0a0a0 1px solid; padding-left: 5px; padding-bottom: 2px; border-left: #a0a0a0 1px solid; margin-right: 2px; padding-top: 2px; border-bottom: #a0a0a0 1px solid
+}
+div.quotes a:active ,div.quotes a:link,div.quotes a:visited{
+	border-right: #a0a0a0 1px solid; padding-right: 5px; border-top: #a0a0a0 1px solid; padding-left: 5px; padding-bottom: 2px; border-left: #a0a0a0 1px solid; margin-right: 2px; padding-top: 2px; border-bottom: #a0a0a0 1px solid
+}
+div.quotes span.current {
+	padding: 3px 7px; margin:0px; font-weight: bold; background-color: #f0f0f0;
+	border-right: #e0e0e0 1px solid; border-top: #e0e0e0 1px solid; border-left: #e0e0e0 1px solid; color: #aaa; border-bottom: #e0e0e0 1px solid;
+}
+div.quotes span.disabled {
+	padding: 3px 3px; margin:0px;
+	border-right: #f3f3f3 1px solid; border-top: #f3f3f3 1px solid; border-left: #f3f3f3 1px solid; color: #ccc; border-bottom: #f3f3f3 1px solid
+}
+/*----------------   8   -------------------*/
+div.yellow {
+	padding: 3px; margin: 3px;
+	text-align: center;
+}
+div.yellow a {
+	padding:3px 3px; margin:0px;
+	border-right: #ccc 1px solid; border-top: #ccc 1px solid; border-left: #ccc 1px solid; color: #000; border-bottom: #ccc 1px solid; text-decoration: none
+}
+div.yellow a:hover {
+	border-right: #f0f0f0 1px solid; border-top: #f0f0f0 1px solid; border-left: #f0f0f0 1px solid; color: #000; border-bottom: #f0f0f0 1px solid
+}
+div.yellow a:active,div.yellow a:link,div.yellow a:visited {
+	border-right: #f0f0f0 1px solid; border-top: #f0f0f0 1px solid; border-left: #f0f0f0 1px solid; color: #000; border-bottom: #f0f0f0 1px solid
+}
+div.yellow span.current {
+	padding: 3px 7px; margin:0px; font-weight: bold; background-color: #d9d300;
+	border-right: #d9d300 1px solid; border-top: #d9d300 1px solid; border-left: #d9d300 1px solid; color: #fff; border-bottom: #d9d300 1px solid;
+}
+div.yellow span.disabled {
+	padding: 3px 3px; margin:0px;
+	border-right: #eee 1px solid; border-top: #eee 1px solid; border-left: #eee 1px solid; color: #ddd; border-bottom: #eee 1px solid;

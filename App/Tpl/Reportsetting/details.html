@@ -1,0 +1,54 @@
+<div class="p5">
+	<div class="tt">报表头</div>
+	<div class="p5 clearfix">
+		<volist name="reportHead" id="v">
+		<div class="left" style="width:150px;">
+			<input id="field_{$v.id}" type="checkBox" name="fields[]" value="{$v.id}" <eq name="v.print" value="1"> checked </eq> />&nbsp;
+			<label for="field_{$v.id}">{$v.title}</label>
+		</div>
+		</volist>
+	</div>
+	<div class="tt">自定义字段报表头</div>
+	<div class="p5 clearfix">
+		<volist name="reportDefineHead" id="v">
+		<div class="left" style="width:150px;">
+			<input id="def_{$v.id}" type="checkBox" name="def[]" value="{$v.id}" <eq name="v.print" value="1"> checked </eq> />&nbsp;
+			<label for="def_{$v.id}">{$v.title}</label>
+		</div>
+		</volist>
+	</div>
+	<div class="tt">报表明细</div>
+	<div class="p5 clearfix">
+		<volist name="reportDetails" id="v">
+		<div class="left" style="width:150px;">
+			<input id="field_{$v.id}" type="checkBox" name="fields[]" value="{$v.id}" <eq name="v.print" value="1"> checked </eq> />&nbsp;
+			<label for="field_{$v.id}">{$v.title}</label>
+		</div>
+		</volist>
+	</div>
+	<div class="p5">
+		<input type="hidden" name="module_id" value="{$module_id}" />
+		<input type="button" id="saveFields" class="save" value="保存修改" />
+	</div>
+</div>
+<script type="text/javascript">
+$('saveFields').addEvent('click',function(){
+	var form = $('content');
+	new Request({
+		url: APP+"/reportSetting/saveDetails",
+		data: form,
+		userSpinner: true,
+		onRequest: function(){
+			form.spin();
+		},
+		onSuccess: function(txt){
+			form.unspin();
+			results = JSON.decode(txt);
+			noti.show({ 
+			    title: '提示', 
+			    message: results.info 
+			}); 
+		}
+	}).send();
+});
+</script>

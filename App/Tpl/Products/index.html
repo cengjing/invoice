@@ -1,0 +1,38 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;商品目录</div>
+	{:W("Tabs", array(
+		'module'=>'Products',
+		'tabs'=>array(
+			array('title'=>'商品目录', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'新增商品', 'url'=>'__URL__/add', 'add'=>'true', 'showControl'=>true, 'show'=>$access['PRODUCTS']['ADD']),
+			array('title'=>'批量修改', 'url'=>'__URL__/editAll', 'showControl'=>true, 'show'=>$access['PRODUCTS']['EDITALL']),
+			array('title'=>'导入商品', 'url'=>'__URL__/import', 'showControl'=>true, 'show'=>$access['PRODUCTS']['IMPORT']),
+		)
+	))}
+	{:W("Filter", array('module'=>'Products', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'ID', 'name'=>'id', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'160', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'120', 'align'=>'left'),
+			array('display'=>'销售', 'name'=>'on_sale', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+			array('display'=>'MRP', 'name'=>'purchase', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+			array('display'=>'商品分类', 'name'=>'category', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'单位', 'name'=>'unit', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'规格', 'name'=>'spec', 'width'=>'50', 'align'=>'left'),
+			array('display'=>'中文描述', 'name'=>'ch_description', 'width'=>'200', 'align'=>'left'),
+			array('display'=>'英文描述', 'name'=>'description', 'width'=>'200', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'selectable'=>true,
+		'emptyDataTips'=>true,
+	))}
+	<present name="access.PRODUCTS.EDITALL"> 
+	<div class="p5">
+		<input type="button" id="transfer" class="action" value="批量修改"/>
+	</div>
+	</present>
+</div>
+<include file="Public:footer" />

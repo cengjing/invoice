@@ -1,0 +1,174 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">到货单列表</a>&nbsp;&gt;&nbsp;新建到货单
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'到货单列表', 'url'=>'__URL__'),
+			array('title'=>'新建到货单', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W('StepProcess', array(
+		'title'=>array('选择到货供货商','填写到货明细','确认')
+	))}
+	<div id="tabs" style="padding-left: 20px;">
+		<div class="tab"></div>
+		<div class="tab"></div>
+		<div class="tab"></div>
+		
+		<div id="arrival_info" class="content form">
+			<h3 class="p5">请填写采购单号:</h3>
+			<div class="p5"><input id="purchase_id" type="text" class="bd" name="pur_id" style="width:120px;" value="{$purchase_id}"/></div>
+			<p class="p5" style="color:gray;">请先填写采购单号，再填写到货明细。</p>
+			<h3 class="p5">请选择到货供货商:</h3>
+			<div class="p5" style="width:280px;" id="vender_info">{:W('SelectVender')}</div>
+			<p class="p5" style="color:gray;">请先选择供货商，再填写到货明细。</p>
+			<div class="p5 clear">
+				<input id="next1" class="action" type="button" value="下一步" />
+			</div>
+			<h3 class="p5">未到货统计</h3>
+			{:W("Grid", array(
+				'header'=>array(
+					array('display'=>'供货商', 'name'=>'company', 'width'=>'200', 'align'=>'left', 'input'=>'type="hidden" col="vender"', 'input_value'=>'company'),
+					array('display'=>'操作','name'=>'', 'width'=>'50', 'align'=>'center', 'def'=>'<a class="select" href="javascript:;">选择</a>'),
+					array('display'=>'数量', 'name'=>'sum', 'width'=>'80', 'align'=>'right', 'input'=>'type="hidden" col="vid"', 'input_value'=>'id'),
+				),
+				'data'=>$list,
+			))}
+		</div>
+		<div class="content">
+			<div id="purchase_details" style="overflow:hidden;"></div>
+			<div class="p5 clear">
+				<input id="previous1" class="action" type="button" value="上一步" />
+				<input id="next2" class="action" type="button" value="下一步" />
+			</div>
+		</div>
+		<div class="content">		
+			<div class="p5">
+				{:W("Form", array(
+					'formId'=>'form',
+					'module'=>'Arrival',
+					'type'=>'add',
+					'data'=>$contact,
+				))}
+			</div>
+			{:W("Grid", array(
+				'title'=>'到货明细',
+				'header'=>array(
+					array('display'=>'商品名称', 'name'=>'productname', 'width'=>'200', 'align'=>'left'),
+					array('display'=>'商品编号', 'name'=>'catno', 'width'=>'80', 'align'=>'left'),
+					array('display'=>'供货编号', 'name'=>'mfr_part_no', 'width'=>'80', 'align'=>'left'),
+					array('display'=>'采购单号', 'name'=>'purchase_id', 'width'=>'80', 'align'=>'left'),
+					array('display'=>'数量','name'=>'qty', 'width'=>'50', 'align'=>'right'),
+					array('display'=>'单位','name'=>'unit', 'width'=>'50', 'align'=>'left'),
+					array('display'=>'规格','name'=>'spec', 'width'=>'50', 'align'=>'left'),
+					array('display'=>'中文描述','name'=>'ch_description', 'width'=>'80', 'align'=>'left'),
+					array('display'=>'英文描述','name'=>'description', 'width'=>'80', 'align'=>'left'),
+				),
+				'rowCache'=>true,
+				'name'=>'details',
+			))}
+			<div class="p5">
+				<input id="previous2" class="action" type="button" value="上一步" />
+				<input id="submit_insert" class="save" type="button" value="保存" />
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	window.addEvent('domready', function(){
+		$('vender_info').getElements('input[type=hidden]').set('value', '');
+		$('next1').addEvent('click', function(e){
+			var purchase_id = $('purchase_id').get('value');
+			if(purchase_id == ''){
+				var vender_id = $('content').getElement('.vender_id').get('value');
+				if(vender_id == ''){
+					noti.show({ 
+					    title: '提示', 
+					    message: '请先选择供货商。'
+					});
+					return;
+				}
+			}			
+			
+			new Request.HTML({
+				url: APP+'/arrival/showArrivalDetails',
+				format: 'page',
+				data: $('arrival_info'),
+				update: $('purchase_details'),
+				onRequest: function(){ $('tabs').spin(); },
+				onSuccess: function(){
+					$('tabs').unspin();
+					$('next1').fireEvent('next');
+				}
+			}).send();
+			
+		});
+		$('next2').addEvent('click', function(e){
+			var qty,productname,catno,unit,spec,description,order_qty,ch_description,mfr_part_no,pur_qty,arr_qty,error=false;
+			var tbody = grid_details.bDiv.getElement('tbody');
+			tbody.empty();
+			var row;
+			$('tabs').getElement('.details').getElements('tr').each(function(el){
+				qty = el.getElement('input[col=qty]').get('value');
+				qty = (qty=='' ? 0 : qty).toFloat();
+				pur_qty = el.getElement('div[col=qty]').get('text').toFloat();
+				arr_qty = el.getElement('div[col=arr_qty]').get('text').toFloat();
+				if(qty > 0){
+					
+					order = el.getElement('input[col=purchase_id]').get('value');
+					
+					productname = el.getElement('div[col=productname]').get('text');
+					if(qty > pur_qty - arr_qty){
+						error = true
+						noti.show({ 
+						    title: '到货数量超出上限', 
+						    message: productname + '到货数量超出上限。'
+						});
+					}
+					catno = el.getElement('div[col=catno]').get('html');
+					mfr_part_no = el.getElement('div[col=mfr_part_no]').get('html');
+					unit = el.getElement('div[col=unit]').get('html');
+					spec = el.getElement('div[col=spec]').get('html');
+					description = el.getElement('div[col=description]').get('html');
+					ch_description = el.getElement('div[col=ch_description]').get('html');
+					var trs = tbody.getElements('tr');
+					if(trs.length%2 == 1){
+						row.addClass('row');
+					}
+					row = grid_details.rowData.clone();
+					row.getElement('td:nth-child(1)').getElement('div').set('html',trs.length+1);
+					row.getElement('td:nth-child(2)').getElement('div').set('html',productname);
+					row.getElement('td:nth-child(3)').getElement('div').set('html',catno);
+					row.getElement('td:nth-child(4)').getElement('div').set('html',mfr_part_no);
+					row.getElement('td:nth-child(5)').getElement('div').set('html',order);
+					row.getElement('td:nth-child(6)').getElement('div').set('html',formatNumber(qty));
+					row.getElement('td:nth-child(7)').getElement('div').set('html',unit);
+					row.getElement('td:nth-child(8)').getElement('div').set('html',spec);
+					row.getElement('td:nth-child(9)').getElement('div').set('html',ch_description);
+					row.getElement('td:nth-child(10)').getElement('div').set('html',description);
+					row.inject(tbody,'bottom');
+				}
+			});
+			if(error)return;
+			$('next2').fireEvent('next');
+		});
+		$$('.select').addEvent('click', function(e){
+			e.stop();
+			var tr,el;
+			tr = this.getParent('tr');
+			el = tr.getElement('input[col=vender]');
+			if(el) {
+				$('vender_info').getElement('.company').set('html', el.get('value'));
+			}
+			el = tr.getElement('input[col=vid]');
+			if(el){
+				$('vender_info').getElement('input[name=vender_id]').set('value', el.get('value'));
+			}
+		});
+	});
+	</script>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,44 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;自定义报表字段
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'自定义报表字段', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	<div class="clearfix">
+		<div class="left clearfix" style="border-right: 1px solid #e0e0e0;">
+		<ul class="tabs" style="30%">
+			<volist name="modules" id="v">
+				<li module_id="{$v.id}"><a href="javascript:;">{$v.title}</a></li>
+			</volist>
+		</ul>
+		</div>
+		<div id="fields-list" class="left" style="width:75%;padding-left:40px; height:300px; display:block;"></div>
+	</div>
+	<script type="text/javascript">
+	window.addEvent('domready', function(){
+		var tabs = $$('ul.tabs li');
+		tabs.each(function(tab, index){
+			tab.addEvent('click', function(){
+				tabs.removeClass('selected');
+				tabs[index].addClass('selected');
+
+				var el  = $('fields-list');
+				var module_id = tab.getProperty('module_id');
+				new Request.HTML({
+					url: APP+'/reportSetting/getDetails/module_id/'+module_id,
+					format: 'page',
+					onRequest: function(){ $('content').spin()},
+					onSuccess: function(){ $('content').unspin();},
+					update: el,
+				}).send();
+			});
+		});
+	});
+	</script>
+	<div class="p5" style="color:gray;">选择模块信息，查看报表字段。</div>
+</div>
+<include file="Public:footer" />

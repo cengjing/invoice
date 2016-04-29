@@ -1,0 +1,32 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;发货操作
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'发货单列表', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Filter", array('module'=>'Stockout', 'action'=>'__URL__', 'arr'=>$arr, 'sum'=>$sum, 'default'=>$default))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'发货单号', 'name'=>'id', 'width'=>'100', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'申请日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'60', 'align'=>'left', 'func'=>'getDeliveryStatus'),
+			array('display'=>'类型', 'name'=>'type', 'width'=>'60', 'align'=>'left', 'func'=>'getDeliveryType'),
+			array('display'=>'发货仓库', 'name'=>'warehouse_id', 'width'=>'60', 'align'=>'left', 'func'=>'getWarehouseName'),
+			array('display'=>'客户名称', 'name'=>'company', 'width'=>'160', 'align'=>'left'),
+			array('display'=>'联系人', 'name'=>'name', 'width'=>'60', 'align'=>'left'),
+			array('display'=>'申请人', 'name'=>'uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'发货人', 'name'=>'act_uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'发货日期', 'name'=>'act_time', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'备注','name'=>'notes', 'width'=>'200', 'align'=>'left'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'emptyDataTips'=>true,
+	))}
+	<div class="tips">默认查看未执行的发货单。</div>
+</div>
+<include file="Public:footer" />

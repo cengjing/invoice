@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<title>{$title}</title>
+<script type="text/javascript" src="__PUBLIC__/js/core.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/pinrt-express.js"></script>
+<link href="__PUBLIC__/css/express.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div id="express_bg" style="margin: 0px auto;height:{$vo.height}mm; width:{$vo.width}mm; background-image:url({$bgImage})">
+
+</div>
+<div style="margin: 15px auto;"><p><input type="button" value="打印" id="printbutton" /></p></div>
+
+<script type="text/javascript">
+var templ = {$vo.templ};
+var fields = {
+		'from'			: '{$form}',
+		'to'			: '{$to}',
+		'from_tel'		: '{$from_tel}',
+		'to_tel'		: '{$to_tel}',
+		'from_comp'		: '{$from_comp}',
+		'to_comp'		: '{$to_company}',
+		'from_addr'		: '{$from_addr}',
+		'to_addr'		: '{$to_addr}',
+		'from_postal'	: '{$from_postal}',
+		'to_postal'		: '{$to_postal}',
+		'from_date'		: '{$from_date}'
+};
+templ.each(function(label, index){
+	var name = label.id.split('col_');
+	var style = {
+			'width'			: label.width,
+			'height'		: label.height,
+			'left'			: label.left,
+			'top'			: label.top,
+			'fontSize'		: label.fontSize,
+			'fontWeight'	: label.fontWeight,
+			'white-space'	: 'normal'
+		};
+	addLabel(name[1],'',style);
+});
+$('printbutton').addEvent('click', function() {
+	window.print();
+});
+</script>
+</body>
+</html>

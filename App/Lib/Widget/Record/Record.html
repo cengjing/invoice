@@ -1,0 +1,10 @@
+<div class="tt">动态：</div>
+<div id="record" class="p5">
+	<volist name="vo" id="v">
+		<div class="p5 plist clearfix">
+			<div class="left">[{$v.cTime|getReadTime}]</div>
+			<div class="left">&nbsp;{$v.name}：&nbsp;</div>
+			<div class="left">{$v.content}</div>
+		</div>
+	</volist>
+</div>

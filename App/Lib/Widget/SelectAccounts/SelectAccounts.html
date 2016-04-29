@@ -1,0 +1,100 @@
+<div id="pannel_{$id}">
+	<script type="text/javascript" src="__PUBLIC__/js/tabs.js"></script>
+	<div class="bd left company" style="width:200px;">{$data.company}</div>&nbsp;
+	<input type="hidden" name="company_id" class="company_id" value="{$data.company_id}" />
+	<img class="img-center" src="__PUBLIC__/images/select.gif" title="查找客户" onClick="accounts_{$id}.show();" />&nbsp;
+	<img class="img-center" src="__PUBLIC__/images/clear_field.gif" title="清空选择" id="clear_{$id}" />
+	
+	<div id="win_{$id}" class="win">
+		<div id="win_handle_{$id}" class="win-handle big">
+			<div class="left">查找客户...</div>
+			<div class="right win-close"><a href="javascript:accounts_{$id}.close();"><img class="img-center" src="__PUBLIC__/images/close.gif" title="关闭" /></a></div>
+		</div>
+		<div class="tab-menu">
+			<ul>
+				<li><a href="javascript:;" class="on tab">筛选条件</a></li>
+				<li><a class="tab" href="javascript:;">结果</a></li>
+			</ul>
+		</div>
+		<div id="pannel_accounts_{$id}" class="win-panel content">
+			{:W("Filter",array('type'=>'ajax', 'module'=>'Accounts', 'arr'=>$arr, 'field'=>$field, 'default'=>$default))}
+			<div class="controlPanel center">
+				<input id="account_filter_Btn_{$id}" class="edit" type="button" value="搜索" />
+			</div>
+		</div>
+		<div id="results_accounts_list_{$id}" class="win-panel content"></div>
+	</div>
+
+	<script type="text/javascript">
+	var accounts_{$id} = null;
+	var pannel_{$id} = $('pannel_{$id}');
+	function clearAccounts(){
+		$('company').set('value', '');
+		$('company_id').set('value', '');
+	}
+	window.addEvent('domready', function(){
+		var winID = "win_{$id}";
+		var tabAccounts_{$id} = new TabPane(winID, {activeClass:'on'});
+		accounts_{$id} = new DialogBox(winID,'win_handle_{$id}',true);
+		
+		$("account_filter_Btn_{$id}").addEvent('click', function(){
+			new Request.HTML({
+				url: APP+'/accounts/filter',
+				format: 'page',
+				data: $('pannel_accounts_{$id}'),
+				update: $('results_accounts_list_{$id}'),
+				onRequest: function(){ $(winID).spin(); },
+				onSuccess: function(){
+					$(winID).unspin();
+					tabAccounts_{$id}.showTab(1);
+				}
+			}).send();
+		});
+		var resultsList = $('results_accounts_list_{$id}');
+		var pageRequest = new Request.HTML({
+			format: 'page',
+			method: 'post',
+			update: resultsList,
+			onRequest: function(){ resultsList.spin(); },
+			onSuccess: function(){ resultsList.unspin(); }
+		});
+		resultsList.addEvent('click:relay(div .page a)',function(e,target){
+			e.preventDefault();
+			pageRequest.send({
+		        url: target.get('href')
+		    });
+		});
+		var resultRequest = new Request({
+			onSuccess: function(txt){
+				results = JSON.decode(txt);
+				if(results.status == 1){
+					this.getElement('.company_id').set('value', results.data.id);
+					this.getElement('.company').set('html', results.data.company);
+					if($('bill_company'))$('bill_company').set('value', results.data.bill_company);
+					if($('bill_address'))$('bill_address').set('value', results.data.bill_address);
+					if($('bill_phone'))$('bill_phone').set('value', results.data.bill_phone);
+					if($('bill_bank'))$('bill_bank').set('value', results.data.bill_bank);
+					if($('bill_taxNo'))$('bill_taxNo').set('value', results.data.bill_taxNo);
+					if($('bill_account'))$('bill_account').set('value', results.data.bill_account);
+					if($('postalcode'))$('postalcode').set('value', results.data.postalcode);
+					if($('address'))$('address').set('value', results.data.address);
+					if($('regioncode'))$('regioncode').set('value', results.data.regioncode);
+					accounts_{$id}.close();
+				}else{
+					alert(results.info);
+				}
+			}.bind(pannel_{$id})
+		});
+		resultsList.addEvent('click:relay(td a)',function(e,target){
+			e.preventDefault();
+			resultRequest.send({
+		        url: target.get('href')
+		    });
+		});
+		$("clear_{$id}").addEvent('click', function(){
+			this.getElement('.company').set('value', '');
+			this.getElement('.company_id').set('value', '');
+		}.bind(pannel_{$id}));
+	});
+	</script>
+</div>

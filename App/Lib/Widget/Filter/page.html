@@ -1,0 +1,13 @@
+<script type="text/javascript" src="__PUBLIC__/js/datepicker/datepicker.js"></script>
+<link href="__PUBLIC__/js/datepicker/datepicker_vista/style.css" rel="stylesheet" type="text/css"/>
+{:W("Filter",array('allFields'=>'true', 'module'=>$module, 'arr'=>$arr, 'field'=>$field, 'default'=>$default))}
+<script type="text/javascript">
+	window.addEvent('domready', function(){
+		if($('container').getElement('.demo_vista')){
+			new DatePicker($$('.demo_vista'), {
+				pickerClass: 'datepicker_vista',
+				format: '%Y-%m-%d'
+			});
+		}
+	});
+</script>

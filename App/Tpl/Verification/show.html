@@ -1,0 +1,32 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">应付核销</a>
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'应付核销', 'url'=>'__URL__'),
+			array('title'=>'新建核销', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'核销单-'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Verification',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'核销明细',
+		'header'=>array(
+			array('display'=>'类型', 'name'=>'type', 'width'=>'120', 'align'=>'left'),
+			array('display'=>'金额', 'name'=>'amount', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'借贷方向', 'name'=>'loan', 'width'=>'50', 'align'=>'center'),
+			array('display'=>'单据','name'=>'document_id', 'width'=>'100', 'align'=>'left', 'forShow'=>'true'),
+		),
+		'data'=>$details,
+	))}
+	{:W("Record",array('module'=>MODULE_NAME,'recordId'=>$vo['id']))}
+</div>
+<include file="Public:footer" />

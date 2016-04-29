@@ -1,0 +1,24 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;应付单列表</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'应付款', 'url'=>'__URL__'),
+			array('title'=>'新建应付款', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'AccountPayable',
+		'type'=>'add',
+		'data'=>$data,
+	))}
+	<div class="p5">
+		<input id="submit_insert" type="button" class="save" value="保存" />
+	</div>
+	<div class="tips">
+		<p>选择类型为”采购发票“，请填写要付款的采购发票单号。</p>
+		<p>选择类型为”订单退款“，请填写要退款的订单编号。</p>
+	</div>
+</div>
+<include file="Public:footer" />

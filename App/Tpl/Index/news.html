@@ -1,0 +1,14 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/index/newsList">新闻</a>&nbsp;&gt;&nbsp;{$vo.title}
+	</div>
+	<div style="width:65%">
+		<div class="center p5" style="border-bottom: 1px dashed #EEE; margin-bottom:10px; font-size:16px; font-weight: bold;">{$vo.title}</div>
+		<div class="right" style="color:gray;">发布人：{$vo.uid|getUserInfoById}&nbsp;&nbsp;发布日期：{$vo.cTime|getTime}</div>
+		<div class="clear p5" style="line-height:18px;">{$vo.content}</div>
+		{:W("Files",array('module'=>'news','recordId'=>$vo['id'],'upload'=>false,'delete'=>false))}
+		{:W("Comment",array('module'=>'News','recordId'=>$vo['id']))}
+	</div>
+</div>
+<include file="Public:footer" />

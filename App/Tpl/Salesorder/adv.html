@@ -1,0 +1,81 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">销售订单</a>&nbsp;&gt;&nbsp;{$id}
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'订单列表', 'url'=>'__URL__'),
+			array('title'=>'新建销售订单', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'销售订单-'.$id, 'url'=>'__URL__/show/id/'.$id),
+			array('title'=>'其他信息', 'url'=>'__URL__/advShow/id/'.$vo['id'], 'selected'=>'true'),
+		)
+	))}
+	<present name="purchase">
+	<div class="tt">采购订货</div>
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'采购单号', 'name'=>'id', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'80', 'align'=>'left', 'func'=>'getStatus'),
+			array('display'=>'日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'到货期描述', 'name'=>'ship_date', 'width'=>'80', 'align'=>'left'),
+		),
+		'data'=>$purchase,
+	))}
+	<else/>
+	<div class="tips">暂无采购订货</div>
+	</present>
+	<present name="delivery">
+	<div class="tt">销售发货</div>
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'发货单号', 'name'=>'id', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/delivery/show/id/', 'url_id'=>'id'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'80', 'align'=>'left', 'func'=>'getDeliveryStatus'),
+			array('display'=>'申请日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'仓库', 'name'=>'warehouse_id', 'width'=>'80', 'align'=>'left', 'func'=>'getWarehouseName'),
+			array('display'=>'执行日期', 'name'=>'act_time', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'货运方式', 'name'=>'delivery_way', 'width'=>'80', 'align'=>'left', 'func'=>'getPicklistValue'),
+			array('display'=>'快递单号', 'name'=>'tracking_No', 'width'=>'80', 'align'=>'left'),
+			array('display'=>'摘要', 'name'=>'abstract', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$delivery,
+	))}
+	<else/>
+	<div class="tips">暂无销售发货</div>
+	</present>
+	<present name="returns">
+	<div class="tt">销售退货</div>
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'退货单号', 'name'=>'id', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/returns/show/id/', 'url_id'=>'id'),
+			array('display'=>'申请日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'仓库', 'name'=>'warehouse_id', 'width'=>'80', 'align'=>'left', 'func'=>'getWarehouseName'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'80', 'align'=>'left', 'func'=>'getStatus'),
+		),
+		'data'=>$returns,
+	))}
+	<else/>
+	<div class="tips">暂无销售退货</div>
+	</present>
+	<present name="invoice">
+	<div class="tt">销售发票</div>
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'发票单号', 'name'=>'id', 'width'=>'100', 'align'=>'left', 'url'=>'__APP__/invoice/show/id/', 'url_id'=>'id'),
+			array('display'=>'状态', 'name'=>'status', 'width'=>'80', 'align'=>'left', 'func'=>'getInvoiceStatus'),
+			array('display'=>'申请日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'申请人', 'name'=>'apply_uid', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'金额', 'name'=>'amount', 'width'=>'100', 'align'=>'right', 'func'=>'formatCurrency'),
+			array('display'=>'发票类型', 'name'=>'type_id', 'width'=>'120', 'align'=>'left', 'func'=>'getPicklistValue'),
+			array('display'=>'业务类型','name'=>'in_type', 'width'=>'80', 'align'=>'left', 'func'=>'getInvoiceType'),
+			array('display'=>'业务员', 'name'=>'assignto', 'width'=>'60', 'align'=>'left', 'func'=>'getUserInfoById'),
+			array('display'=>'摘要', 'name'=>'abstract', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$invoice,
+	))}
+	<else/>
+	<div class="tips">暂无销售发票</div>
+	</present>
+</div>
+<include file="Public:footer" />

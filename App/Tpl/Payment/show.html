@@ -1,0 +1,28 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">付款单列表</a>
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'付款单列表', 'url'=>'__URL__'),
+			array('title'=>'新建付款单', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'付款单-'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Payment',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	{:W("Workflow",array('module'=>MODULE_NAME,'vo'=>$vo,'allowApprove'=>$allowApprove))}
+	<div class="tt">操作：</div>
+	<eq name="vo.status" value="3">
+		<input type="button" class="action" onClick="javascript:window.location='__APP__/verification/add/vid/{$vender_id}'" value="核销" />
+	</eq>
+	{:W("EditButton",array('module'=>MODULE_NAME,'id'=>$vo['id']))}
+	{:W("Record",array('module'=>MODULE_NAME,'recordId'=>$vo['id']))}
+</div>
+<include file="Public:footer" />

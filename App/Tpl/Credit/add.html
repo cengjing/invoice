@@ -1,0 +1,22 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;<a href="__URL__">客户信用管理</a>&nbsp;&gt;&nbsp;新建信用
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'信用列表', 'url'=>'__URL__'),
+			array('title'=>'新建信用政策', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Credit',
+		'type'=>'add',
+		'data'=>$data,
+	))}
+	<div class="p5">
+		<input id="submit_insert" class="save" type="submit" value="保存" />
+	</div>
+</div>
+<include file="Public:footer" />

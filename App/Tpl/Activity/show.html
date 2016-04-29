@@ -1,0 +1,32 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;联系记录</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'联系记录', 'url'=>'__URL__'),
+			array('title'=>'新建联系记录', 'url'=>'__URL__/add', 'add'=>'true', 'showControl'=>true, 'show'=>$access['ACTIVITY']['ADD']),
+			array('title'=>'联系记录信息', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Activity',
+		'type'=>'show',
+		'data'=>$vo
+	))}
+	<h3 class="p5">内容：</h3>
+	<div class="shadow" style="padding:20px;">
+		{$vo.content|safeHtml}
+	</div>
+	
+	<div class="p5">
+		<present name="access.ACTIVITY.EDIT">
+		<input class="edit" type="button" value="编辑" onClick="window.location='__URL__/edit/id/{$vo.id}'"/>
+		</present>
+		<input class="edit" type="button" value="编辑" onClick="window.location='__URL__/edit/id/{$vo.id}'"/>
+	</div>
+	<div style="width:700px;">
+		{:W("Comment",array('module'=>MODULE_NAME,'recordId'=>$vo['id']))}
+	</div>
+</div>
+<include file="Public:footer" />

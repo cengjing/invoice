@@ -1,0 +1,135 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">核销单列表</a>&nbsp;&gt;&nbsp;新建核销单
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'核销单', 'url'=>'__URL__'),
+			array('title'=>'新建核销单', 'url'=>'__URL__/add', 'add'=>'true', 'selected'=>'true'),
+		)
+	))}
+	{:W('StepProcess', array(
+		'title'=>array('选择核销客户','填写核销明细','确认')
+	))}
+	<div id="tabs" style="padding-left: 20px;">
+		<div class="tab"></div>
+		<div class="tab"></div>
+		<div class="tab"></div>
+		
+		<div class="content form" id="contact_info">
+			<h3 class="p5">请选择要核销的客户:</h3>
+			<div class="p5">{:W('SelectContacts', array('data'=>$data))}</div>
+			<p class="p5" style="color:gray;">请先选择需要核销的客户，再填写核销明细。</p>
+			<div class="p5 clear">
+				<input id="next1" class="action" type="button" value="下一步" />
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="content">
+			<div id="order_details" style="overflow:hidden;"></div>
+			<div class="p5 clear">
+				<input id="previous1" class="action" type="button" value="上一步" />
+				<input id="next2" class="action" type="button" value="下一步" />
+			</div>
+		</div>
+		<div class="content">		
+			<div class="p5">
+				{:W("Form", array(
+					'formId'=>'form',
+					'module'=>'Reconciliation',
+					'type'=>'add',
+				))}
+			</div>
+			{:W("Grid", array(
+				'title'=>'明细',
+				'header'=>array(
+					array('display'=>'单据类型', 'name'=>'', 'width'=>'200', 'align'=>'left'),
+					array('display'=>'日期', 'name'=>'', 'width'=>'100', 'align'=>'left'),
+					array('display'=>'核销金额','name'=>'', 'width'=>'100', 'align'=>'right'),
+				),
+				'rowCache'=>true,
+				'name'=>'details',
+			))}
+			<div class="p5">
+				<input id="previous2" class="action" type="button" value="上一步" />
+				<input id="submit_insert" class="save" type="button" value="核销" />
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	window.addEvent('domready', function(){
+		$('next1').addEvent('click', function(e){
+			if($('content').getElement('.contact_id').get('value') == ''){
+				noti.show({ 
+				    title: '提示', 
+				    message: '请先选择客户。'
+				}); 
+				return;
+			}
+			new Request.HTML({
+				url: APP+'/reconciliation/showDetails',
+				format: 'page',
+				data: $('contact_info'),
+				update: $('order_details'),
+				onRequest: function(){ $('tabs').spin(); },
+				onSuccess: function(){
+					$('tabs').unspin();
+					$('next1').fireEvent('next');
+				}
+			}).send();
+			
+		});
+		$('next2').addEvent('click', function(e){
+			var amount,type,date,r=0,a=0;
+			
+			var tbody = grid_details.bDiv.getElement('tbody');
+			tbody.empty();
+			var row;
+			grid_re.bDiv.getElements('tr').each(function(el){
+				if(el.hasClass('row-selected')){
+					amount = el.getElement('div[col=amount]').get('text');
+					r += el.getElement('input[name=amount]').get('value').toFloat();
+					date = el.getElement('div[col=date]').get('text');
+					type = el.getElement('div[col=type]').get('text');
+					var trs = tbody.getElements('tr');
+					if(trs.length%2 == 1){
+						row.addClass('row');
+					}
+					row = grid_details.rowData.clone();
+					row.getElement('td:nth-child(1)').getElement('div').set('html',trs.length+1);
+					row.getElement('td:nth-child(2)').getElement('div').set('html',type);
+					row.getElement('td:nth-child(3)').getElement('div').set('html',date);
+					row.getElement('td:nth-child(4)').getElement('div').set('html','+'+amount);
+					row.inject( tbody, 'bottom' );
+					
+				}
+			});
+			grid_receipt.bDiv.getElements('tr').each(function(el){
+				if(el.hasClass('row-selected')){
+					amount = el.getElement('div[col=amount]').get('text');
+					a += el.getElement('input[name=amount]').get('value').toFloat();
+					date = el.getElement('div[col=date]').get('text');
+					type = el.getElement('div[col=type]').get('text');
+					var trs = tbody.getElements('tr');
+					row = grid_details.rowData.clone();
+					if(trs.length%2 == 1){
+						row.addClass('row');
+					}
+					row.getElement('td:nth-child(1)').getElement('div').set('html',trs.length+1);
+					row.getElement('td:nth-child(2)').getElement('div').set('html',type);
+					row.getElement('td:nth-child(3)').getElement('div').set('html',date);
+					row.getElement('td:nth-child(4)').getElement('div').set('html','-'+amount);
+					row.inject( tbody, 'bottom' );
+					
+				}
+			});
+			$('amount').set('value',formatGroupNumber((r>a)?a:r));
+			$('next2').fireEvent('next');
+		});
+	});
+	</script>
+</div>
+<include file="Public:footer" />

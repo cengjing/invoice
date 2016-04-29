@@ -1,0 +1,34 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/Invoice">销售发票列表</a>&nbsp;&gt;&nbsp;销售发票</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'销售发票', 'url'=>'__URL__'),
+			array('title'=>'新建销售发票', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'销售发票-'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Invoice',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'发票明细',
+		'header'=>array(
+			array('display'=>'订单编号', 'name'=>'order_id', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/salesorder/show/id/', 'url_id'=>'order_id'),
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'开票数量', 'name'=>'qty', 'width'=>'50', 'align'=>'right', 'func'=>'changeMinus'),
+			array('display'=>'售价', 'name'=>'sale_price', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'合计', 'name'=>'sum_price', 'width'=>'80', 'align'=>'right', 'func'=>'changeMinus'),
+			array('display'=>'单位', 'name'=>'unit', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'规格', 'name'=>'spec', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$details,
+	))}
+</div>
+<include file="Public:footer" />

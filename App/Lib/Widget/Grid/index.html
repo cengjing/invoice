@@ -1,0 +1,187 @@
+<link href="__PUBLIC__/css/grid.css" type="text/css" rel="stylesheet"/>
+<notempty name="title"><div class="form-header">{$title}</div></notempty>
+<div id="grid-{$rand}" class="grid clear" style="height: {$height}px;position:relative;overflow:hidden;">
+	<div class="hDiv">
+		<div style="float:left;padding-right:40px;width:26px;position:relative;">
+			<table cellspacing="0" cellpadding="0">
+				<thead>
+					<tr>
+						<th>
+							<div style="text-align: center; width: 20px;">#</div>
+						</th>
+						<eq name="selectable" value="true">
+							<th>
+								<div style="text-align: center; width: 20px;">
+									<input type="checkbox" class="check-all" title="全选/全部选"/>
+								</div>
+							</th>
+						</eq>
+					<volist name="header" id="h">
+						<th>
+							<div style="text-align: {$h['align']}; width: {$h['width']}px;">
+								<eq name="h.sort" value="1"><a href="{$h.sort_url}" title="{$h.display}，单击排序">{$h.display}</a>
+										<present name="h.sort_asc">
+											<eq name="h.sort_asc">↑<else/>↓</eq>
+										</present>
+								<else/>{$h.display}
+								</eq>
+							</div>
+						</th>
+					</volist>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+	
+	<div class="cDrag" style="top:0px; display: block;">
+	<div></div>
+	<eq name="selectable" value="true">
+	<div></div>
+	</eq>
+	<volist name="header" id="h">
+		<div></div>
+	</volist>
+	</div>
+	
+	<div class="bDiv {$class}" style="height: {$bDivHeight}px;">
+		<table cellspacing="0" cellpadding="0" border="0" style="display: table;">
+			<tbody>
+				<eq name="rowCache" value="true">
+				<tr class="rowItem row-data" style="display:none;">
+					<td><div class="grid_item" style="text-align: center; width: 20px;<eq name="sortable" value="true">cursor:move;</eq>"></div><input type="hidden" name="row[]" value="0" /></td>
+					<eq name="selectable" value="true">
+						<td>
+							<div style="text-align: center; width: 20px; padding:3px 5px;">
+								<input type="checkbox" name="item[]" class="grid-item" />
+							</div>
+						</td>
+					</eq>
+					
+					<volist name="header" id="h">
+					<td>
+						<div style="text-align: {$h['align']}; width: {$h['width']}px;<eq name="h.input_show" value="true"> padding:0 5px;</eq>" col="{$h['col']}">
+							<eq name="h.name" value="">
+								{$h['def']}
+							</eq>
+							
+							<present name="h[inputs]">
+								<volist name="h[inputs]" id="ipt">
+									<input type="{$ipt['type']}" name="{$ipt['name']}" col="{$ipt['col']}" value="{$vo[$ipt['value']]}" style="width:{$ipt['width']}px" />
+								</volist>
+							</present>
+							
+							<notempty name="h['input']">
+							<input {$h['input']} value="{$vo[$h['input_value']]}" class="input"/>
+							</notempty>
+						</div>
+					</td>
+					</volist>
+					
+				</tr>
+				</eq>
+				
+				<volist name="data" id="vo" key="k">
+				<tr class="rowItem">
+					<td><div class="grid_item" style="text-align: center; width: 20px;<eq name="sortable" value="true">cursor:move;</eq>">{$k}</div><input type="hidden" name="row[]" value="{$vo['id']}" /></td>
+					<eq name="selectable" value="true">
+						<td>
+							<div style="text-align: center; width: 20px; padding:3px 5px;">
+								<input type="checkbox" name="item[]" class="grid-item" value="{$vo['id']}" <if condition="$vo['_checked'] eq true"> checked </if> />
+							</div>
+						</td>
+					</eq>
+					<volist name="header" id="h">
+					<td>
+						<div style="text-align: {$h['align']}; width: {$h['width']}px;<eq name="h.input_show" value="true"> padding:0 5px;</eq>" col="{$h['col']}">
+							
+							<neq name="h.input_show" value="true">
+								<notempty name="h['url']">
+									<a href="{$h['url']}{$vo[$h['url_id']]}">
+								</notempty>
+								
+								<empty name="h['func']">
+									<if condition="$h['name'] eq ''">
+										{$h['def']}
+									<else/>
+										<empty name="h['forShow']">
+										{$vo[$h['name']]|Input::forShow}
+										<else/>
+										{$vo[$h['name']]}
+										</empty>
+									</if>
+								<else/>
+									<empty name="h['arg']">
+									{$vo[$h['name']]|$h['func']}
+									<else/>
+									{$vo[$h['name']]|$h['func']=$h['arg']}
+									</empty>
+								</empty>
+								
+								<notempty name="h['url']">
+									</a>
+								</notempty>
+								
+								<if condition="$h['name'] neq ''">
+									{$h['def']}
+								</if>
+								
+								<present name="h[inputs]">
+									<volist name="h[inputs]" id="ipt">
+										<input type="{$ipt['type']}" name="{$ipt['name']}" col="{$ipt['col']}" value="{$vo[$ipt['value']]}" style="width:{$ipt['width']}px" />
+									</volist>
+								</present>
+							</neq>
+							
+							<notempty name="h['input']">
+								<input {$h['input']} value="{$vo[$h['input_value']]}" class="input"/>
+							</notempty>
+						</div>
+					</td>
+					</volist>
+				</tr>
+				</volist>
+			</tbody>
+			<notempty name="sum">
+			<tfoot>
+				<tr title="总页数统计">
+					<td><div style="text-align: center; width: 20px;">总计</div></td>
+					<eq name="selectable" value="true">
+						<td><div style="width: 20px;"></div></td>
+					</eq>
+					<volist name="header" id="h">
+					<td>
+						<div style="text-align: {$h['align']}; width: {$h['width']}px; color: red; font-weight: bold;">
+						<php>
+							if(isset( $sum['sum_'.$h['name']] ))
+								echo $sum['sum_'.$h['name']];
+							else 
+								echo '&nbsp;';
+						</php>
+						</div>
+					</td>
+					</volist>
+				</tr>
+			</tfoot>
+			</notempty>
+		</table>
+	</div>
+</div>
+<eq name="sortable" value="true">
+<div class="tips">拖动行序号，可以排序</div>
+</eq>
+<notempty name="page">
+<div class="page">{$page}</div>
+</notempty>
+
+<eq name="emptyDataTips" value="true">
+<empty name="data">
+{:W('EmptyData')}
+</empty>
+</eq>
+<script type="text/javascript">
+var grid_{$name} = new Grid('grid-{$rand}');
+<eq name="sortable" value="true">
+grid_{$name}.sortable();
+</eq>
+</script>

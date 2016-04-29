@@ -1,0 +1,34 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;应付单列表</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'应付款', 'url'=>'__URL__'),
+			array('title'=>'新建应付款', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'应付款 - '.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'AccountPayable',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	<eq name="vo.status" value="3">
+		<input type="button" class="action" onClick="javascript:window.location='__APP__/verification/add/vid/{$vender_id}'" value="核销" />
+		<input type="button" class="action" onClick="del()" value="删除" />
+		<script type="text/javascript">
+		function del(){
+			if( confirm("您确定要删除吗？") ){
+				window.location='__URL__/delete/id/{$vo.id}';
+			}
+		}
+		</script>
+	<else/>
+		<neq name="vo.status" value="6">
+		{:W("Workflow",array('module'=>MODULE_NAME,'vo'=>$vo,'allowApprove'=>$allowApprove))}
+		</neq>
+	</eq>
+	{:W("Record",array('module'=>MODULE_NAME,'recordId'=>$vo['id']))}
+</div>
+<include file="Public:footer" />

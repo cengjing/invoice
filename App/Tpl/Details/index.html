@@ -1,0 +1,34 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;{$title}
+	</div>
+	{:W("Tabs", array(
+		'module'=>'User',
+		'tabs'=>array(
+			array('title'=>'统计条件-'.$title, 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Filter", array('module'=>$module, 'action'=>'__URL__', 'arr'=>$arr, 'type'=>'page', 'static'=>true))}
+	<div class="p5 clearfix">
+		<fieldset class="left" style="padding:10px; width:300px;">
+			<legend class="p5">分组统计</legend>
+			<div class="p5">
+			<input type="radio" name="group" id="group-1" value="1" checked /><label class="p5" for="group-1">全部商品</label>
+			</div>
+			<div class="p5">
+			<input type="radio" name="group" id="group-2" value="2" /><label class="p5" for="group-2">商品分类</label>
+			</div>
+			<div class="p5">
+			<input type="radio" name="group" id="group-3" value="3" /><label class="p5" for="group-3">品牌</label>
+			</div>
+		</fieldset>
+	</div>
+	<div class="p5">
+		<input type="hidden" name="module" value="{$module}"/>
+		<input id="submit" class="edit" type="submit" value="统计" />
+	</div>
+	<div id="chart_div"></div>
+	<iframe id="chart" width="100%" height="500px" frameborder="0"></iframe>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,73 @@
+<div class="form clearfix lineD">
+<volist name="field" id="f">
+	<if condition="($f['type'] eq 2) OR ($f['type'] eq 6) OR ($f['type'] eq 8)">
+		<div class="left p5 clearfix" style="width:650px;">
+	<else />
+		<div class="left p5 clearfix" style="width:320px;">
+	</if>
+		<div class="left ft">{$f.title}：<php>if($f['select_items'] == 1 && ($f['type'] == 1 || $f['type'] == 9))echo '<span class="rs" title="可以模糊查询">*</span>';</php></div>
+		<div class="left" <if condition="($f['type'] eq 8) OR ($f['type'] eq 6)"> style="width:400px;" </if>>
+			<switch name="f.type">
+				<case value="1||9">
+					<input type="text" class="bd" name="{$f.field}" value="<php>echo $arr[$f['field']]</php>" />
+				</case>
+				<case value="2">
+					<span style="line-height:19px;">大于等于&nbsp;</span><input type="text" class="bd" style="width:60px;" name="{$f.field}1" value="<php>echo $arr[$f['field'].'1']</php>" />&nbsp;
+					<span style="line-height:19px;">小于等于&nbsp;</span><input type="text" class="bd" style="width:60px;" name="{$f.field}2" value="<php>echo $arr[$f['field'].'2']</php>" />&nbsp;
+					<span style="line-height:19px;">等于&nbsp;</span><input type="text" class="bd" style="width:60px;" name="{$f.field}3" value="<php>echo $arr[$f['field'].'3']</php>" />
+				</case>
+				<case value="3">
+					<input type="text" name="{$f.field}1" class="bd date demo_vista" style="width:80px;" value="<php>echo $arr[$f['field'].'1']</php>" />&nbsp;~&nbsp;
+					<input type="text" name="{$f.field}2" class=" bd date demo_vista" style="width:80px;" value="<php>echo $arr[$f['field'].'2']</php>" />&nbsp;
+					<eq name="f.select_items" value="1">
+					<input type="checkbox" name="{$f.field}_null" title="选择后表示：查询全部空数据" />
+					</eq>
+				</case>
+				<case value="4">
+					{:W('SelectBox', array( 'name'=>$f['field'], 'module'=>$f['from_module'], 'filter'=>$f['select_items'] ))}
+				</case>
+				<case value="5">
+					<select class="bd" name="{$f.field}" style="width:80px;">
+						<option value="" >请选择...</option>
+						<volist name="f['items']" id="val">
+						<option value="{$val[0]}" <php>if( $arr[$f['field']] == $val[0])echo ' selected ';</php>>{$val[1]}</option>
+						</volist>
+					</select>
+				</case>
+				<case value="6">
+					{:W("SelectUser",array('module'=>$module, 'single'=>$f['select_items']))}
+				</case>
+				<case value="7">
+					<input type="text" class="bd" name="{$f.field}" value="<php>echo $arr[$f['field']]</php>" />
+				</case>
+				<case value="8">
+					{:W($f['from_module'],array('filter'=>'true'))}
+				</case>
+				<case value="10">
+					{:W('SelectBox', array( 'list'=>array(
+							'0'	=> array('id'=>'','title'=>'全部','level'=>'0'),
+							'1'	=> array('id'=>'1','title'=>'是','level'=>'0'),
+							'2'	=> array('id'=>'-1','title'=>'否','level'=>'0'),
+					), 'name'=>$f['field'], 'list_width'=>'140' ))}
+				</case>
+				<case value="11">
+					{:W('SelectBox', array( 'pick_id'=>$f['from_module'], 'name'=>$f['field'] ))}
+				</case>
+				<case value="12">
+					{:W('MultiSelectBox', array('name'=>$f['field'], 'module'=>$f['from_module'], 'filter'=>$f['select_items']))}
+				</case>
+			</switch>
+		</div>
+		</div>
+</volist>
+</div>
+<eq name="static" value="0">
+<volist name="default" id="d">
+	<input type="hidden" value="{$d.value}" name="{$d.name}" />
+</volist>
+<div class="p5 gray lineD">红色标记<span class="rs">&nbsp;*&nbsp;</span>为可以模糊查询</div>
+<div class="p5 form clearfix lineD">
+	<div class="left ft">行数：</div>
+	<div class="left"><input type="text" class="bd" name="listRows" value="{$listRows}" /></div>
+</div>
+</eq>

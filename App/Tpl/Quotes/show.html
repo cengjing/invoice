@@ -1,0 +1,46 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav"><a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+						<a href="__URL__">报价单列表</a>&nbsp;&gt;&nbsp;{$vo.id}</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'报价单列表', 'url'=>'__URL__'),
+			array('title'=>'新建报价单', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'报价单-'.$vo['id'], 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Quotes',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	{:W("Grid", array(
+		'title'=>'订单明细',
+		'header'=>array(
+			array('display'=>'商品名称', 'name'=>'productname', 'width'=>'100', 'align'=>'left', 'input'=>'type="hidden" col="pid"', 'input_value'=>'product_id'),
+			array('display'=>'商品编号', 'name'=>'catno', 'width'=>'80', 'align'=>'left', 'url'=>'__APP__/Products/show/id/', 'url_id'=>'product_id'),
+			array('display'=>'订单数量','name'=>'qty', 'width'=>'50', 'align'=>'right'),
+			array('display'=>'库存','name'=>'', 'width'=>'40', 'align'=>'center', 'def'=>'<a class="inventory-qty" href="javascript:;">查看</a>'),
+			array('display'=>'单价','name'=>'unit_price', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'折扣','name'=>'', 'width'=>'25', 'align'=>'center', 'def'=>'<a class="discount" href="javascript:;">计算</a>'),
+			array('display'=>'折扣(%)','name'=>'discount', 'width'=>'40', 'align'=>'right'),
+			array('display'=>'售价','name'=>'sale_price', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'其他费用','name'=>'other_price', 'width'=>'60', 'align'=>'right'),
+			array('display'=>'合计','name'=>'sum_price', 'width'=>'80', 'align'=>'right'),
+			array('display'=>'中文描述','name'=>'ch_description', 'width'=>'100', 'align'=>'left'),
+			array('display'=>'英文描述','name'=>'description', 'width'=>'100', 'align'=>'left'),
+		),
+		'data'=>$details,
+	))}
+	<div class="p5">
+		<eq name="vo.status" value="1">
+		<input type="button" class="edit" value="编辑" onClick="window.location=APP+'/Quotes/edit/id/{$vo.id}'">
+		<input type="button" class="action" value="转为订单" onClick="window.location=APP+'/Quotes/transfer/id/{$vo.id}'">
+		</eq>
+		<input type="button" class="print" value="打印" title="报表的打印和单据的导出" onClick="window.location='__URL__/report/id/{$vo.id}';">
+		<input type="hidden" class="company_id" value="{$vo.company_id}" />
+	</div>
+	{:W("Record",array('module'=>MODULE_NAME,'recordId'=>$vo['id']))}
+</div>
+<include file="Public:footer" />

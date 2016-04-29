@@ -1,0 +1,28 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">分组</a>&nbsp;&gt;&nbsp;分组模块</div>
+	{:W("Tabs", array(
+		'module'=>'User',
+		'tabs'=>array(
+			array('title'=>'分组模块', 'url'=>'__URL__', 'selected'=>true),
+		)
+	))}
+	<div class="p5 clearfix">
+		<div class="left" style="line-height:20px;">选择分组指定人：</div>
+		{:W("SelectUser", array('module'=>'group','single'=>true))}
+		<input class="left edit" type="button" value="分组绑定" onClick="javascript:redirectUser();" />
+	</div>
+	<volist name="groups" id="g">
+	<div class="p5" <eq name="g['sub']" value="true"> style="margin-left:40px;" </eq>>
+		<div class="pannel-subtitle">{$g.title}：
+		<volist name="g.users" id="u">
+			<a href="__URL__/show/uid/{$u}">{$u|getUserInfoById}</a>&nbsp;,&nbsp;
+			</volist>
+		</div>
+	</div>
+	</volist>
+
+</div>
+<include file="Public:footer" />

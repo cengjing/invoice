@@ -1,0 +1,21 @@
+<div style="width:600px;color:#888;border-bottom:1px solid #888;">
+	<div class="clearfix p5" style="font-weight:bold; border-top:1px solid #888;border-bottom:1px solid #888;">
+		<div class="left" style="padding:0 10px;width:300px;">文件名</div>
+		<div class="left" style="padding:0 10px;width:80px;">上传日期</div>
+		<div class="left" style="padding:0 10px;width:80px;">文件大小</div>
+	</div>
+	<volist name="files" id="f">
+	<div id="attach_{$f.id}" class="clearfix p5 plist">
+		<div class="left" style="padding:0 10px;width:300px;overflow: hidden;">
+			<a href="{:u('common/download', array('id'=>$f['id']))}" title="{$f.name}">{$f.name}</a>
+		</div>
+		<div class="left" style="padding:0 10px;width:80px;">{$f.uploadTime|getTime}</div>
+		<div class="left" style="padding:0 10px;width:80px;">{$f.size|byte_format}</div>
+		<div class="left" style="padding:0 10px;width:20px;">
+			<if condition="$uid eq $f['userId']">
+				<a href="javascript:deleteAttach({$f.id});" >&nbsp;<img src="__PUBLIC__/images/del.gif" title="删除"/></a>
+			</if>
+		</div>
+	</div>
+	</volist>
+</div>

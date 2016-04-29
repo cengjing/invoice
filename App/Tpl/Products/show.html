@@ -1,0 +1,80 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;商品目录
+	</div>
+	{:W("Tabs", array(
+		'module'=>'Products',
+		'tabs'=>array(
+			array('title'=>'商品目录', 'url'=>'__URL__'),
+			array('title'=>'添加商品', 'url'=>'__URL__/add', 'add'=>'true', 'showControl'=>true, 'show'=>$access['PRODUCTS']['ADD']),
+			array('title'=>$vo['productname'], 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'Products',
+		'type'=>'show',
+		'data'=>$vo,
+	))}
+	<div class="p5">
+		<present name="access.PRODUCTS.EDIT">
+		<input type="button" class="edit" onClick="javascript:window.location='__URL__/edit/id/{$vo.id}'" value="编辑" />
+		</present>
+		<present name="access.PRODUCTS.RECORD">
+		<input type="button" class="action" onClick="javascript:window.location='__URL__/record/id/{$vo.id}'" value="存货帐" />
+		</present>
+	</div>
+	<present name="access.WAREHOUSE.INDEX">
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'库存', 'url'=>'__URL__', 'selected'=>'true'),
+		)
+	))}
+	{:W("Grid", array(
+		'header'=>$header,
+		'data'=>$inventoryQty,
+	))}
+	</present>
+	<present name="access.PURCHASE.ADD">
+	<div class="clearfix">
+		<div class="left p5" style="width:45%">
+		{:W("Tabs", array(
+			'tabs'=>array(
+				array('title'=>'销售订单统计', 'url'=>'__URL__', 'selected'=>'true'),
+			)
+		))}
+		{:W("Grid", array(
+			'header'=>array(
+				array('display'=>'订单数量','name'=>'qty', 'col'=>'qty', 'width'=>'50', 'align'=>'right'),
+				array('display'=>'发货数量','name'=>'deli_qty', 'col'=>'deli_qty', 'width'=>'50', 'align'=>'right'),
+				array('display'=>'销售单价','name'=>'sale_price', 'col'=>'sale_price', 'width'=>'60', 'align'=>'right'),
+				array('display'=>'订单编号', 'name'=>'id', 'width'=>'70', 'align'=>'left', 'url'=>'__APP__/salesorder/show/id/', 'url_id'=>'id'),
+				array('display'=>'日期', 'name'=>'cTime', 'width'=>'70', 'align'=>'left', 'func'=>'getTime'),
+			),
+			'data'=>$orderDetails,
+		))}
+		</div>
+		<div class="left p5" style="width:45%">
+		{:W("Tabs", array(
+			'tabs'=>array(
+				array('title'=>'采购订单统计', 'url'=>'__URL__', 'selected'=>'true'),
+			)
+		))}
+		{:W("Grid", array(
+			'header'=>array(
+				array('display'=>'采购数量','name'=>'qty', 'col'=>'qty', 'width'=>'50', 'align'=>'right'),
+				array('display'=>'到货数量','name'=>'entry_qty', 'col'=>'deli_qty', 'width'=>'50', 'align'=>'right'),
+				array('display'=>'采购单价','name'=>'price', 'col'=>'price', 'width'=>'60', 'align'=>'right', 'func'=>'formatCurrency'),
+				array('display'=>'采购单号', 'name'=>'id', 'width'=>'70', 'align'=>'left', 'url'=>'__APP__/purchase/show/id/', 'url_id'=>'id'),
+				array('display'=>'日期', 'name'=>'cTime', 'width'=>'70', 'align'=>'left', 'func'=>'getTime'),
+				array('display'=>'状态','name'=>'status', 'width'=>'50', 'align'=>'left', 'func'=>'getStatus'),
+				array('display'=>'Mrp统计', 'name'=>'mrp', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+			),
+			'data'=>$purchaseDetails,
+		))}	
+		</div>
+	</div>
+	</present>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,26 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;已发邮件
+	</div>
+	{:W("Tabs", array(
+		'tabs'=>array(
+			array('title'=>'已发邮件', 'url'=>'__URL__', 'selected'=>'true'),
+			array('title'=>'新建邮件', 'url'=>'__URL__/add', 'add'=>'true'),
+		)
+	))}
+	{:W("Filter",array('module'=>'Mail', 'action'=>'__URL__'))}
+	{:W("Grid", array(
+		'header'=>array(
+			array('display'=>'日期', 'name'=>'cTime', 'width'=>'80', 'align'=>'left', 'func'=>'getTime'),
+			array('display'=>'主题','name'=>'subject', 'width'=>'400', 'align'=>'left', 'url'=>'__URL__/show/id/', 'url_id'=>'id'),
+			array('display'=>'成功发送','name'=>'status', 'width'=>'40', 'align'=>'center', 'func'=>'bool2text'),
+			array('display'=>'发件人','name'=>'uid', 'width'=>'80', 'align'=>'left', 'func'=>'getUserInfoById'),
+		),
+		'data'=>$list,
+		'page'=>$page,
+		'sum'=>$sum,
+		'emptyDataTips'=>true,
+	))}
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,36 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/setting">设置</a>&nbsp;&gt;&nbsp;
+		<a href="__APP__/user">用户</a>&nbsp;&gt;&nbsp;修改用户
+	</div>
+	{:W("Tabs", array(
+		'module'=>'User',
+		'tabs'=>array(
+			array('title'=>'用户列表', 'url'=>'__URL__'),
+			array('title'=>'修改', 'selected'=>'true'),
+		)
+	))}
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'User',
+		'type'=>'edit',
+		'data'=>$vo
+	))}
+	
+	<div class="p5 clearfix">
+		<div class="left p5">
+			<input type="hidden" name="id" value="{$vo.id}">
+			<input type="button" id="submit" class="save" value="修改" />
+			<input type="button" class="action" value="重置密码" onClick="javascript:window.location='__URL__/resetPassword/id/{$vo.id}';"/>
+			<input type="button" class="action" value="分组绑定" onClick="javascript:window.location='__APP__/group/show/uid/{$vo.id}';"/>
+		</div>
+		
+		<eq name="superAdmin" value="true">
+		<div class="right tips">
+			<label for="isAdmin">是否管理员</label><input type="checkbox" name="isAdmin" id="isAdmin"  <if condition="$vo['isAdmin'] eq 1"> checked </if> />
+		</div>
+		</eq>
+	</div>
+</div>
+<include file="Public:footer" />

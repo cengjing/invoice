@@ -1,0 +1,73 @@
+<volist name="fields" id="r">
+	<table class="form clear" cellspacing="0" cellpadding="0" border="0" width="100%">
+		<tbody>
+			<volist name="r.data" id="vo" mod="2">
+				<eq name="mod" value="0"><tr height="25px"></eq>
+				<td class="info" style="width:20%">
+					<div class="label">
+						<span><notempty name="vo.title">{$vo.title}：</notempty></span>
+					</div>
+				</td>
+				<td style="width:30%">
+					<div style="text-align:left; padding:3px 10px;">
+					<switch name="vo.type">
+						<case value="8||5">
+							<if condition="$vo['show_func'] neq ''">
+							{$data[$vo['field']]|Input::forShow|$vo['show_func']}
+							<else/>
+							{$data[$vo['field']]|Input::forShow}
+							</if>
+						</case>
+						<case value="1||2">
+							<if condition="$vo['show_func'] neq ''">
+							{$data[$vo['field']]|Input::forShow|$vo['show_func']}
+							<else/>
+							{$data[$vo['field']]|Input::forShow}
+							</if>
+							<if condition="$vo['type'] eq 2"><span style="line-height:22px;">&nbsp;{$vo.select_items}</span></if>
+						</case>
+						<case value="3">
+							{$data[$vo['field']]|getTime}
+						</case>
+						<case value="4">
+							{$data[$vo['field']]|$vo['show_func']}
+						</case>						
+						<case value="6">
+							{$data[$vo['field']]|getUserInfoById}
+						</case>
+						<case value="7">
+							{$data[$vo['field']]}
+						</case>
+						<case value="9">
+							{$data[$vo['field']]|Input::forShow}
+						</case>
+						<case value="10">
+							<if condition="$data[$vo['field']] eq 1">是<else/>否</if>
+						</case>
+						<case value="11">
+							{$data[$vo['field']]|getPicklistValue}
+						</case>
+						<case value="100">{$data[$vo['field']]}</case>
+					</switch>
+					</div>
+				</td>
+				<eq name="mod" value="1"></tr></eq>
+			</volist>
+		</tbody>
+	</table>
+</volist>
+<present name="def">
+<table class="form clear" cellspacing="0" cellpadding="0" border="0" width="100%">
+<volist name="def" id="d" mod="2">
+	<eq name="mod" value="0"><tr></eq>
+		<td class="field" style="width:20%"><div class="label"><span><notempty name="d.title">{$d.title}：</notempty></span></div></td>
+		<td style="width:30%"><div style="text-align:left; padding:3px 10px;">
+		<if condition="$d['dbfield'] neq ''">
+			{$data[$d['dbfield']]|Input::forShow}
+		<else />
+			&nbsp;
+		</if></div></td>
+	<eq name="mod" value="1"></tr></eq>
+</volist>
+</table>
+</present>

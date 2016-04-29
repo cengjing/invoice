@@ -1,0 +1,35 @@
+<include file="Public:header" />
+<div id="content">
+	<div class="topNav">
+		<a href="__APP__/">首页</a>&nbsp;&gt;&nbsp;
+		<a href="__URL__">商品目录</a>&nbsp;&gt;&nbsp;
+		导入商品
+	</div>
+	{:W("Tabs", array(
+		'module'=>'Products',
+		'tabs'=>array(
+			array('title'=>'商品目录', 'url'=>'__URL__'),
+			array('title'=>'新增商品', 'url'=>'__URL__/add', 'add'=>'true'),
+			array('title'=>'导入商品', 'url'=>'__URL__/add', 'selected'=>'true'),
+		)
+	))}
+	<form method="post" name="form" action="__URL__/doimport"  enctype="multipart/form-data">	
+	{:W("Form", array(
+		'formId'=>'form',
+		'module'=>'ProductsImport',
+		'type'=>'add',
+		'data'=>$data,
+	))}
+	<div class="tt">选择要导入商品的CSV文件：</div>
+	<input type="file" name="data" />
+	<div class="p5">
+		<input type="submit" class="action" value="导入" />
+	</div>
+	</form>
+	<div class="tips">
+		<p>说明：</p>
+		<p>请及时备份数据库。</p>
+		<p>上传数据库文件为CSV文件格式。第一列为商品编号，第二列为商品名称，第三列为价格，第四列为中文描述，第五列为英文描述。</p>
+	</div>
+</div>
+<include file="Public:footer" />
